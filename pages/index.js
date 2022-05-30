@@ -1,8 +1,8 @@
 import Header from '../components/Header'
 import Alchi from '../components/Alchi'
 import {useWeb3} from '@3rdweb/hooks'
-
-
+import { useEffect } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 const style = {
   wrapper: ``,
   walletConnectWrapper: `flex flex-col justify-center items-center h-screen w-screen bg-[#3b3d42] `,
@@ -10,9 +10,28 @@ const style = {
   details: `text-lg text-center text=[#282b2f] font-semibold mt-4`,
 }
 const Home = () => {
-  const {address, connectWallet} = useWeb3()
+  const {address, chainId, connectWallet} = useWeb3()
+  const welcome = (address, toatHandler = toast) => {
+    toatHandler.success(
+      `${address !== 'Unnamed' ? ` ${address}` : ''}`,
+      {
+        style: {
+          background: '#04111d',
+          color: '#fff',
+        },
+      }
+    )
+  }
+
+  useEffect(() => {
+    if (!address) return
+    welcome(address)
+    
+  }, [address])
+
   return (
     <div className={style.wrapper}>
+      <Toaster position="top-left" reverseOrder={false} />
       {address? (
         <>
           <Header/>
@@ -25,6 +44,7 @@ const Home = () => {
             >
               Connect Wallet
             </button>
+            
             <div className={style.details}>
               You need Chrome to run this App.
             </div>

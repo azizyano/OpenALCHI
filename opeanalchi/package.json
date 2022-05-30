@@ -2,7 +2,7 @@
   "name": "opeanalchi",
   "private": true,
   "version": "1.0.0",
-  "description": "This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs)",
+  "description": "This example shows how to use nft marketplace",
   "main": "package.json",
   "author": "yano aziz <yanoaziz@gmail.com>",
   "license": "UNLICENSED",
@@ -26,6 +26,7 @@
     "prop-types": "^15.7",
     "react": "^17.0",
     "react-dom": "^17.0",
+    "react-hot-toast": "^2.2.0",
     "react-icons": "^3.11.0",
     "styled-components": "^5.2.0"
   },

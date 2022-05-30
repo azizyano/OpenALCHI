@@ -31,7 +31,7 @@ const Header =()=>{
         </div>
         <div className={style.headerItems}>
             <Link href="/collections/0xd5d0c6b5578c179552a5d462c471051f2f87f189">
-            <div className={style.headerItem}> Collections</div>
+            <div className={style.headerItem}> Marketplace</div>
             </Link>
             <Link href="/Stats">
             <div className={style.headerItem}> Stats</div>
@@ -39,8 +39,8 @@ const Header =()=>{
             <Link  href="/Resources">
             <div className={style.headerItem}> Resources</div>
             </Link>
-            <Link  href="/Create">
-            <div className={style.headerItem}> Create</div>
+            <Link  href="/Profile">
+            <div className={style.headerItem}> Profile</div>
             </Link>
             <div className={style.headerIcon}> 
                 <CgProfile/>

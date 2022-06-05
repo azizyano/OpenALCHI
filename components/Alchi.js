@@ -23,14 +23,10 @@ const Alchi = () => {
         <div className={style.contentWrapper}>
           <div className={style.copyContainer}>
             <div className={style.title}>
-              Discover, collect, and sell extraordinary NFTs
+              Discover, The collection of Little Alchemy Elements
             </div>
             <div className={style.description}>
-              OpenSea is the world&apos;s first and largest NFT marketplace
-            </div>
-            <div className={style.ctaContainer}>
-              <button className={style.accentedButton}>Explore</button>
-              <button className={style.button}>Create</button>
+              Buy & Sell and search for new Elemets.
             </div>
           </div>
           <div className={style.cardContainer}>

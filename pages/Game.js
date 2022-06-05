@@ -211,73 +211,7 @@ const Gmae = () => {
   return (
     <div className=" overflow-hidden bg-gradient-to-l from-green-800 to-blue-800 ">
       <Header />
-      <div className={style.bannerImageContainer}>
-        <div className={style.statsContainer}>
-          <div className={style.info}>NFT balance
-            <div className={style.pValue}>
-              {NftBanalce.length}
-            </div> 
-          </div>
-          <div className={style.info}>Listed NFT
-            <div className={style.pValue}>
-              {items.length}
-            </div>
-          </div>
-          <div className={style.info}>Total earned </div>
-          <div className={style.info}>
-          
-            <img
-              src="https://netswap.io/static/media/metis.11931ddb.svg"
-              alt="Metis"
-              className={style.ethLogo}
-            />
-            {treasury} METIS 
-          </div>
-        </div>
-      </div>
-      <div className='overflow-hidden '>
-
-      <div className={style.info}>NFT balance</div>
-      <div className={style.listContainer}>
-      <div className="flex flex-wrap  ">
       
-        {NftBanalce.map((nftItem, id) => (
-          <div className={style.wrapper}>
-            <NFTCard1
-              key={id}
-              order={nftItem.tokenId}
-              nftItem={nftItem}
-              name={nftItem.name}
-              title={title[nftItem.tokenId]}
-              listings={nftItem.sold}
-              price={nftItem.price}
-              balance={nftItem.balance}
-            />
-          </div>
-        ))}
-      </div>
-      </div>
-      <div className={style.info}>Listed NFT </div>
-      <div className={style.listContainer}>
-      
-        <div className="flex flex-wrap ">
-        
-          {items.map((nftItem, id) => (
-            <div className={style.wrapper}>
-              <NFTCard2
-                key={id}
-                order={id}
-                nftItem={nftItem}
-                name={nftItem.name}
-                title={title[nftItem.tokenId]}
-                listings={nftItem.sold}
-                price={nftItem.price}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      </div>
       
     </div>
   )

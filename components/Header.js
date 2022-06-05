@@ -10,7 +10,7 @@ const style = {
     wrapper: `bg-[#04111d] w-screen px-[1.2rem] py-[0.8rem] flex `,
     logoContainer: `flex items-center cursor-pointer`,
     logoText: ` ml-[0.8rem] text-white font-semibold text-2xl`,
-    searchBar: `flex flex-1 mx-[0.8rem] w-max-[520px] items-center bg-[#363840] rounded-[0.8rem] hover:bg-[#4c505c]`,
+    searchBar: `flex flex-1 mx-[0.8rem] w-max-[520px] items-center  `,
     searchIcon: `text-[#8a939b] mx-3 font-bold text-lg`,
     searchInput: `h-[2.6rem] w-full border-0 bg-transparent outline-0 ring-0 px-2 pl-0 text-[#e6e8eb] placeholder:text-[#8a939b]`,
     headerItems: ` flex items-center justify-end`,
@@ -26,28 +26,17 @@ const Header =()=>{
             </div>
         </Link>
         <div className={style.searchBar}>
-            <AiOutlineSearch/>
-            <input className={style.searchInput} placeholder="Search items, collection and accounts"></input>
         </div>
         <div className={style.headerItems}>
-            <Link href="/collections/0xd5d0c6b5578c179552a5d462c471051f2f87f189">
+            <Link href="/collections/0">
             <div className={style.headerItem}> Marketplace</div>
             </Link>
-            <Link href="/Stats">
-            <div className={style.headerItem}> Stats</div>
-            </Link>
-            <Link  href="/Resources">
-            <div className={style.headerItem}> Resources</div>
-            </Link>
             <Link  href="/Profile">
-            <div className={style.headerItem}> Profile</div>
+                <div className={style.headerIcon}> 
+                    <CgProfile/>
+                </div>
             </Link>
-            <div className={style.headerIcon}> 
-                <CgProfile/>
-            </div>
-            <div className={style.headerIcon}> 
-                <MdOutlineAccountBalanceWallet/>
-            </div>
+            
         </div>
         
     </div>

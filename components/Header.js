@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import {AiOutlineSearch} from "react-icons/ai"
 import {MdOutlineAccountBalanceWallet} from "react-icons/md"
 import {CgProfile} from "react-icons/cg"
 import React from "react";
@@ -29,7 +28,10 @@ const Header =()=>{
         </div>
         <div className={style.headerItems}>
             <Link href="/collections/0">
-            <div className={style.headerItem}> Marketplace</div>
+                <div className={style.headerItem}> Marketplace</div>
+            </Link>
+            <Link href="/Game">
+                <div className={style.headerItem}> Game</div>
             </Link>
             <Link  href="/Profile">
                 <div className={style.headerIcon}> 

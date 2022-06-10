@@ -2,13 +2,10 @@ import Header from '../../components/Header'
 import { useEffect, useMemo, useState } from 'react'
 import { useWeb3 } from '@3rdweb/hooks'
 import { ethers } from 'ethers'
-import NFT from '../artifacts/LittleAlchemy.json'
-import Market from '../artifacts/NFTMarket.json'
 import { useRouter } from 'next/router'
 import NFTImage from '../../components/nft/NFTImage'
 import GeneralDetails from '../../components/nft/GeneralDetails'
 import ListNFT from '../../components/nft/ListNFT'
-import axios from 'axios'
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -61,13 +58,10 @@ const title = [
   'blockchain',
   'Bitcoin',
 ]
-const nftmarketaddress = '0x7909eA2c2a0BaAE7b89976a80E807E5e0c33Ea1A'
-const nftaddress = '0xbE9a81fE76f98cdca8aDB5eb8beaD0c4dd55D5e7'
-
 const style = {
-  wrapper: `flex flex-col items-center container-lg text-[#e5e8eb]`,
+  wrapper: ` flex flex-col items-center text-[#e5e8eb]`,
   container: `container p-6`,
-  topContent: `flex`,
+  topContent: `flex mx-4`,
   nftImgContainer: `flex-1 mr-4`,
   detailsContainer: `flex-[2] ml-4`,
 }

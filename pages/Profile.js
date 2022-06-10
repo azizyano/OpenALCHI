@@ -5,8 +5,8 @@ import Header from './../components/Header'
 import Market from './artifacts/NFTMarket.json'
 import NFTCard1 from './../components/NFTCard1'
 import NFTCard2 from './../components/NFTCard2'
-const nftaddress = '0xbE9a81fE76f98cdca8aDB5eb8beaD0c4dd55D5e7'
-const nftmarketaddress = '0x7909eA2c2a0BaAE7b89976a80E807E5e0c33Ea1A'
+const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
+const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -62,12 +62,12 @@ const title = [
 
 const style = {
   bannerImageContainer: `h-[20vh] w-screen overflow-hidden flex justify-center items-center`,
-  info: `flex justify-between text-[#e4e8eb] drop-shadow-xl`,
+  info: `flex mx-10 text-[#e4e8eb] text-xl drop-shadow-xl`,
   title: `text-5xl font-bold mb-4`,
-  statsContainer: `w-[44vw] flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
-  listContainer: `flex justify-between my-10 py-4 border border-[#151b22] rounded-xl mb-4`,
+  statsContainer: `w-[44vw] px-4 py-4 mx-10 flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
+  listContainer: `mx-10 px-10 py-10 flex justify-between my-10 py-4 border border-[#151b22] rounded-xl mb-4`,
   ethLogo: `h-6 mr-2`,
-  pValue: `w-full text-center text-xl font-bold mt-2`,
+  pValue: `w-full px-2 py-2 mx-2 text-[#68baba] text-center text-xl font-bold mt-2`,
   wrapper: `bg-[#303339]  my-10 mx-5 rounded-2xl overflow-hidden`,
 }
 
@@ -222,26 +222,27 @@ const Profile = () => {
       <Header />
       <div className={style.bannerImageContainer}>
         <div className={style.statsContainer}>
-          <div className={style.info}>NFT balance
-            <div className={style.pValue}>
+          <div className={style.info}>Balance
+            <div className={'px-10'}>
               {NftBanalce.length}
             </div> 
           </div>
           <div className={style.info}>Listed NFT
-            <div className={style.pValue}>
+            <div className={'px-10'}>
               {items.length}
             </div>
           </div>
-          <div className={style.info}>Total earned </div>
-          <div className={style.info}>
-          
-            <img
-              src="https://netswap.io/static/media/metis.11931ddb.svg"
-              alt="Metis"
-              className={style.ethLogo}
-            />
-            {treasury} METIS 
+          <div className={style.info}>Total earned 
+          <div className={'px-10'}>
+            {treasury}  
           </div>
+          <img
+              src="https://seeklogo.com/images/P/polygon-matic-logo-86F4D6D773-seeklogo.com.png"
+              alt="Metis"
+              className={'h-6'}
+            />
+          </div>
+          
         </div>
       </div>
       <div className='overflow-hidden '>

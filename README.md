@@ -1,21 +1,66 @@
-# Next.js + Tailwind CSS Example
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## OpenAlchi 
 
-## Deploy your own
+Encode x Polygon Hackathon 
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+https://medium.com/encode-club/announcing-the-encode-x-polygon-partnership-and-initiatives-544cbddc5a0b
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Introduction
 
-## How to use
+this project is a submission to polygon Hackathon, you can test the app after setting your Metamask to Mumbai testnet. 
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+# Little Alchemy
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+
+there are 2 contracts, the first for the little alchemy game, it's an NFT game where users search to mint new elements
+from the 4 standard elements Air, Fir, Earth, and Water.
+
+there are 23 elements. the last one is the Bitcoin.
+to mint, you need to have ALCHI token to pay a fee.
+
+the 2nd contract for the marketplace, users can put elements in the market for sale. 
+
+## Description
+
+### marketpalce
+list of listed element and prcie to buy. claick any element you will be derected to purchase page.
+
+### the game
+1- approuve contract to use your ALCHI token (contact me if you want to try the game i will send to you some ALCHI token)
+2- mint the 4 standart elements
+3- try to find new element to mint.
+
+### account
+all NFT balance: in your account, NFTs listed in the market
+
+## Getting Started
+
+try demo:
+
+or clone this repo and run it in you localhost
+
+```
+yarn 
+yarn dev
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+please contact me if you find any issue or to contribute 
+
+## Authors
+
+Contributors names and contact info
+
+EMC2
+[@arablockchain1](https://twitter.com/arablockchain1)
+
+## Version History
+
+* 0.1
+    * Initial Release
+
+
+## Acknowledgments
+
+Inspiration, code snippets, etc.
+* [CleverProgrammers](https://github.com/CleverProgrammers/opensea-blockchain-youtube)
+* [littlealchemy](https://littlealchemy.com/)

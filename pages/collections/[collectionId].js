@@ -1,16 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
-import axios from 'axios'
-import { CgWebsite } from 'react-icons/cg'
-import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai'
-import { HiDotsVertical } from 'react-icons/hi'
 import NFT from '../artifacts/LittleAlchemy.json'
 import Header from '../../components/Header'
 import Market from '../artifacts/NFTMarket.json'
 import NFTCard from '../../components/NFTCard'
-const nftaddress = '0xbE9a81fE76f98cdca8aDB5eb8beaD0c4dd55D5e7'
-const nftmarketaddress = '0x7909eA2c2a0BaAE7b89976a80E807E5e0c33Ea1A'
+const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
+const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -108,6 +104,7 @@ const Collection = () => {
     )
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
       const data = await marketContract.fetchMarketItems()
+      console.log(data)
       const items = await Promise.all(
         data.map(async (i) => {
           const meta = ''
@@ -133,7 +130,7 @@ const Collection = () => {
         })
       )
       setNfts(items)
-   
+        
   }
 
 

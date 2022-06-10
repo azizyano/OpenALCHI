@@ -21,7 +21,7 @@ const NFTImage = ({ selectedNft }) => {
       </div>
       <div>
         {console.log(selectedNft, '🎆')}
-        <img src={selectedNft?.image} />
+        <img className='px-4 py-4' src={selectedNft?.image} />
       </div>
     </div>
   )

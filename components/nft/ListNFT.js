@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import { HiTag } from 'react-icons/hi'
 import { IoMdWallet } from 'react-icons/io'
 import toast, { Toaster } from 'react-hot-toast'
 import NFT from '../../pages/artifacts/LittleAlchemy.json'
 import Market from '../../pages/artifacts/NFTMarket.json'
 
-const nftaddress = '0xbE9a81fE76f98cdca8aDB5eb8beaD0c4dd55D5e7'
-
-const nftmarketaddress = '0x7909eA2c2a0BaAE7b89976a80E807E5e0c33Ea1A'
+const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
+const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
 
 const style = {
   button: `mr-8 flex items-center py-2 px-12 rounded-lg cursor-pointer`,
   buttonIcon: `text-xl`,
   buttonText: `ml-2 text-lg font-semibold`,
   inputBar: `flex flex-1 mx-[0.8rem] w-max-[520px] items-center bg-[#363840] rounded-[0.8rem] hover:bg-[#4c505c]`,
-  Input: `h-[2.6rem] w-full border-0 bg-transparent outline-0 ring-0 px-2 pl-0 text-[#e6e8eb] placeholder:text-[#8a939b]`,
+  Input: `h-[2.6rem] w-full border-0 bg-transparent outline-0 px-4 py-4 mx-4 text-lg text-[#e6e8eb] placeholder:text-[#8a939b]`,
 
 }
 
@@ -89,17 +87,19 @@ async function ApproveMarket() {
     setAmount(target.value)
   }
   return (
-    <div className="flex h-20 w-full items-center rounded-lg border border-[#151c22] bg-[#303339] px-12">
+    <div className=" flex h-20 w-full items-center rounded-lg border border-[#151c22] bg-[#303339] px-12">
       <Toaster position="bottom-left" reverseOrder={false} />
         <>
-        <div className={style.inputBar}>
+        
+          {allowMarket ? 
+          <>
+          <div className={style.inputBar}>
             <input className={style.Input} 
             placeholder="  Listing price " 
             type="number"
             onChange={changeAmount}></input>
         </div>
-          {allowMarket ? 
-          <div
+        <div
             onClick={() => {ListItem(selectedNft)
             }}
             className={`${style.button} bg-[#2081e2] hover:bg-[#42a0ff]`}
@@ -107,6 +107,8 @@ async function ApproveMarket() {
             <IoMdWallet className={style.buttonIcon} />
             <div className={style.buttonText}>List Now</div>
           </div>
+          </>
+          
           : 
           <div
             onClick={() => {ApproveMarket()

@@ -1,9 +1,8 @@
 import React from "react";
-import logo from "../assets/logo.png"
 
 const style = {
     wrapper: `relative`,
-    container: `before:content-[''] before:bg-red-500 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('https://littlealchi.xyz/static/media/background1-min.839efe9f.png')] before:bg-cover before:bg-center before:opacity-30 before:blur`,
+    container: `before:content-[''] before:bg-red-500 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('https://littlealchi.xyz/static/media/background1-min.839efe9f.png')] before:bg-cover before:bg-center before:opacity-60 before:blur`,
     contentWrapper: `flex h-screen relative justify-center flex-wrap items-center`,
     copyContainer: `w-1/2`,
     title: `relative text-white text-[46px] font-semibold`,
@@ -27,30 +26,6 @@ const Alchi = () => {
             </div>
             <div className={style.description}>
               Buy & Sell and search for new Elemets.
-            </div>
-          </div>
-          <div className={style.cardContainer}>
-            <img
-              className="rounded-t-lg"
-              src="https://littlealchi.xyz/static/media/background1-min.839efe9f.png"
-              alt=""
-              width={400} height={400}
-            />
-            <div className={style.infoContainer}>
-              <img
-                className="h-[2.25rem] rounded-full"
-                src="https://littlealchi.xyz/static/media/background1-min.839efe9f.png"
-                alt=""
-              />
-              <div className={style.author}>
-                <div className={style.name}>ALCHIMetis</div>
-                <a
-                  className="text-[#1868b7]"
-                  href="https://littlealchi.xyz"
-                >
-                  ALCHI-Metis
-                </a>
-              </div>
             </div>
           </div>
         </div>

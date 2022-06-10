@@ -6,9 +6,9 @@ import toast, { Toaster } from 'react-hot-toast'
 import NFT from '../../pages/artifacts/LittleAlchemy.json'
 import Market from '../../pages/artifacts/NFTMarket.json'
 
-const nftaddress = '0xbE9a81fE76f98cdca8aDB5eb8beaD0c4dd55D5e7'
+const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
 
-const nftmarketaddress = '0x7909eA2c2a0BaAE7b89976a80E807E5e0c33Ea1A'
+const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
 
 const style = {
   button: `mr-8 flex items-center py-2 px-12 rounded-lg cursor-pointer`,

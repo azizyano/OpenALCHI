@@ -61,7 +61,7 @@ const title = [
   'blockchain',
   'Bitcoin',
 ]
-const nftmarketaddress = '0x7909eA2c2a0BaAE7b89976a80E807E5e0c33Ea1A'
+const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
 const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
 
 const style = {
@@ -90,10 +90,6 @@ const Nft = () => {
             signer
           )
         const data = await marketContract.fetchMarketItems()
-        console.log(data[selectedNftItem])
-        const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
-        let tokenUri = await tokenContract.uri(data[selectedNftItem].tokenId);
-        tokenUri = tokenUri.replace("{id}", data[selectedNftItem].tokenId);
         const meta = ''
           try {
              meta = imagelist[data[selectedNftItem].tokenId] ;

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import { HiTag } from 'react-icons/hi'
 import { IoMdWallet } from 'react-icons/io'
 import toast, { Toaster } from 'react-hot-toast'
-import NFT from '../../pages/artifacts/LittleAlchemy.json'
 import Market from '../../pages/artifacts/NFTMarket.json'
 
 const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
@@ -17,23 +15,12 @@ const style = {
 }
 
 const MakeOffer = ({ selectedNft}) => {
-  console.log(selectedNft)
-  const [enableButton, setEnableButton] = useState(false)
 
-  const confirmPurchase = (toastHandler = toast) =>
-    toastHandler.success(`Purchase successful!`, {
-      style: {
-        background: '#04111d',
-        color: '#fff',
-      },
-    })
+  const confirmClaim = (msg) => toast(msg)
 
   async function buyItem(nft) {
-    console.log(nft)
-    
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-
       const marketContract = new ethers.Contract(
         nftmarketaddress,
         Market.abi,
@@ -41,18 +28,38 @@ const MakeOffer = ({ selectedNft}) => {
       );
       const price = nft.price
       console.log("buy for :" + price, 'this toktn id; ' + nft.tokenId + '  ' + nft.item)
-      const transaction = await marketContract.createMarketSale(nftaddress, nft.item, {
-        value: price.toString()
-      })
-      await transaction.wait()
-      
-    
-    confirmPurchase()
+      try {
+        const transaction = await marketContract.createMarketSale(nftaddress, nft.item, {
+          value: price.toString()
+        })
+        await transaction.wait()
+        confirmClaim('Purchase successful!')
+      } catch (error) {
+        confirmClaim(error.data.message.toString())
+      }
   }
 
   return (
     <div className="flex h-20 w-full items-center rounded-lg border border-[#151c22] bg-[#303339] px-12">
-      <Toaster position="bottom-left" reverseOrder={false} />
+      <Toaster 
+      position="top-center"
+      reverseOrder={false}
+      gutter={8}
+      toastOptions={{
+        className: 'text-sm ',
+        duration: 5000,
+        style: {
+          background: '#363636',
+          color: '#fff',
+        },
+        success: {
+          duration: 3000,
+          theme: {
+            primary: 'green',
+            secondary: 'black',
+          },
+        },
+      }}  />
         <>
           <div
             onClick={() => {buyItem(selectedNft)

@@ -102,7 +102,6 @@ const Collection = () => {
       Market.abi,
       signer
     )
-    const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
       const data = await marketContract.fetchMarketItems()
       console.log(data)
       const items = await Promise.all(

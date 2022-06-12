@@ -74,18 +74,14 @@ const style = {
 const Profile = () => {
   const [account, setAccount] = useState()
   const [balanceArray, setBalanceArray] = useState([0])
-  const [imgsource, setimgsource] = useState([])
   const [NftBanalce, setNftBanalce] = useState([])
-  const [tokenBal, setTokenBal] = useState()
   const [collection, setCollection] = useState({})
   const [items, setNfts] = useState([])
-  const [listings, setListings] = useState([]) 
   const [treasury, setTreasury] = useState(0)
   useEffect(() => {
     if (!collection) return
     getAllListings()
     myElements()
-    console.log(imgsource)
   }, [collection])
   async function getAllListings() {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -128,7 +124,7 @@ const Profile = () => {
       })
     )
     setNfts(items)
-    setTreasury(treasury)
+    setTreasury(treasury.toFixed(2))
   }
   async function myElements() {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -238,8 +234,8 @@ const Profile = () => {
           </div>
           <img
               src="https://seeklogo.com/images/P/polygon-matic-logo-86F4D6D773-seeklogo.com.png"
-              alt="Metis"
               className={'h-6'}
+              alt="Metis"
             />
           </div>
           

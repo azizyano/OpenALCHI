@@ -19,7 +19,7 @@ const style = {
   likeIcon: `text-xl mr-2`,
 }
 
-const NFTCard = ({order, nftItem, name, title, listings, price }) => {
+const NFTCard = ({order, nftItem, price }) => {
   return (
     <div
       className={style.wrapper}
@@ -43,8 +43,9 @@ const NFTCard = ({order, nftItem, name, title, listings, price }) => {
               <div className={style.priceTag}>Price</div>
               <div className={style.priceValue}>
                 <img
-                  src="https://netswap.io/static/media/metis.11931ddb.svg"
-                  alt="Metis"
+                  src="https://seeklogo.com/images/P/polygon-matic-logo-86F4D6D773-seeklogo.com.png"
+                  
+                  alt="matic"
                   className={style.ethLogo}
                 />
                 {price}

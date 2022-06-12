@@ -11,8 +11,8 @@ const NftElement = ({item}) => {
         src={item.image}
         alt=""
         />
-        <div className={style.infoIcon}>Name: {item.name}</div>
-        <div className={style.infoIcon}>Balnce: {item.balance}</div>
+        <div className={style.infoIcon}> {item.name}</div>
+        <div className={style.infoIcon}>Balance: {item.balance}</div>
     </div>
   )
 }

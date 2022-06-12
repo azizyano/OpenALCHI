@@ -4,7 +4,7 @@ import Router from 'next/router'
 
 const style = {
   wrapper: `bg-[#303339] flex-auto w-[14rem] h-[22rem] my-10 mx-5 rounded-2xl overflow-hidden cursor-pointer`,
-  imgContainer: `h-2/3 w-full overflow-hidden flex justify-center items-center`,
+  imgContainer: `h-4/5 w-full overflow-hidden flex justify-center items-center`,
   nftImg: `w-40 h-50 w-full `,
   details: `p-3`,
   info: `flex justify-between text-[#e4e8eb] drop-shadow-xl`,
@@ -19,7 +19,7 @@ const style = {
   likeIcon: `text-xl mr-2`,
 }
 
-const NFTCard = ({order, nftItem, name, title, listings, price }) => {
+const NFTCard = ({order, nftItem }) => {
   return (
     <div
       className={style.wrapper}
@@ -39,25 +39,6 @@ const NFTCard = ({order, nftItem, name, title, listings, price }) => {
             <div className={style.assetName}>{nftItem.name}</div>
           </div>
           
-            <div className={style.infoRight}>
-              <div className={style.priceTag}>Price</div>
-              <div className={style.priceValue}>
-                <img
-                  src="https://netswap.io/static/media/metis.11931ddb.svg"
-                  alt="Metis"
-                  className={style.ethLogo}
-                />
-                {price}
-              </div>
-              
-            </div>
-          
-        </div>
-        <div className={style.likes}>
-          <span className={style.likeIcon}>
-            <BiHeart />
-          </span>{' '}
-          {nftItem.likes}
         </div>
       </div>
     </div>

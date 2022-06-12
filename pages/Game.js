@@ -115,7 +115,7 @@ const style = {
   container: `  bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 py-8 px-8 rounded-xl mb-4`,
   wrapper: `flex  py-10 px-10 items-stretch grid grid-flow-col gap-4`,
   titleContainer: `px-2 py-2 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
-  info: `flex justify-between text-[#151b22] text-lg drop-shadow-xl`,
+  info: `flex justify-between py-4 text-[#151b22] text-lg drop-shadow-xl`,
   priceValue: `flex justify-center  font-bold mt-2`,
   button: `bg-indigo-500 flex mx-auto text-[#9de8eb] text-lg py-4 px-4 rounded-lg cursor-pointer hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300`,
   mintbutton: `bg-indigo-700 mx-auto text-[#9de8eb] text-lg py-4 px-4 rounded-lg cursor-pointer hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300`,
@@ -137,8 +137,6 @@ const Game = () => {
   useEffect(() => {
     if (!collection) return
     accountInfo()
-    
-    
   }, [collection])
 
   const confirmClaim = (msg) => toast(msg)
@@ -165,7 +163,7 @@ const Game = () => {
       const transaction = await contract.approve(gameaddress, "20000000000000000000")
       await transaction.wait()
       setAllowance(true)
-      confirmClaim('Appriuve successful!')
+      confirmClaim('Approved successful!')
     }
   }
   async function Mint(element) {
@@ -313,12 +311,15 @@ const Game = () => {
             The Alchemist's Garden
           </div>
           <div className={style.priceValue}>
-            <div className='w-4/5 text-center bg-blue-500 py-8 px-8'>
+            <div className='w-4/5 text-center bg-blue-500 py-8 px-8 rounded-xl mb-4'>
               {elementA.label}
             </div>
-            <div className='w-4/5 text-center bg-blue-400 py-8 px-8'>
+            <div className='w-4/5 text-center bg-blue-400 py-8 px-8 rounded-xl mb-4'>
               {elementB.label}
             </div>
+
+          </div>
+          <div className='mx-auto py-10 px-10'>
 
           </div>
           <div className={style.info}>
@@ -359,13 +360,31 @@ const Game = () => {
                     />
                   </div>
                   <button className={style.button} onClick={() => magicFormula(elementA, elementB)}>try formula</button>
-                  <div className='justify-self-center my-4 py-8 px-8'>
+                  <div className='justify-self-center mx-auto py-4'>
                     {resultat === '0' ? (
                       <div className=' text-xl text-[#380208] text-center '> Bad Formulat !</div>
                     ) : (
                       <div className='flex '>
                         <button className={style.mintbutton} onClick={() => Mint(resultat)} > {resultat} </button>
-                        <Toaster />
+                        <Toaster
+                          position="top-center"
+                          reverseOrder={false}
+                          gutter={8}
+                          toastOptions={{
+                            className: '',
+                            duration: 5000,
+                            style: {
+                              background: '#363636',
+                              color: '#fff',
+                            },
+                            success: {
+                              duration: 3000,
+                              theme: {
+                                primary: 'green',
+                                secondary: 'black',
+                              },
+                            },
+                          }} />
                       </div>
                     )}
                   </div>
@@ -386,7 +405,7 @@ const Game = () => {
               <p className='text-sky-400 px-2 py-2'>Balance: {balance} ALCHI </p>
               <img
                 src="https://littlealchi.xyz/imgs/logo_name.png"
-                alt="Metis"
+                alt="ALCHI"
                 className='py-2 px-2 h-10 mr-2'
               />
               

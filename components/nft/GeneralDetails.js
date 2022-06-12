@@ -20,7 +20,6 @@ const style = {
 }
 
 const GeneralDetails = ({ selectedNft }) => {
-  console.log(selectedNft)
   return (
     <div className={style.wrapper}>
       <div className={style.infoContainer}>
@@ -33,7 +32,11 @@ const GeneralDetails = ({ selectedNft }) => {
           <div className={style.likes}>
             <AiFillHeart className={style.likeIcon} /> 2.3K favorites
           </div>
+          
         </div>
+        <div className={style.ownedBy}>
+            Price: <span className={style.accent}>{selectedNft?.price.toString()/(10**18)} Matic</span>
+          </div>
       </div>
       <div className={style.actionButtonsContainer}>
         <div className={style.actionButtons}>

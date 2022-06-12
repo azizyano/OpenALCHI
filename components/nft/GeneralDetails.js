@@ -34,9 +34,6 @@ const GeneralDetails = ({ selectedNft }) => {
           </div>
           
         </div>
-        <div className={style.ownedBy}>
-            Price: <span className={style.accent}>{selectedNft?.price.toString()/(10**18)} Matic</span>
-          </div>
       </div>
       <div className={style.actionButtonsContainer}>
         <div className={style.actionButtons}>

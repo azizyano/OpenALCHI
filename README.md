@@ -35,22 +35,28 @@ all NFT balance: in your account, NFTs listed in the market
 
 ## Getting Started
 
-try demo:
+1st set Metamask in Mumbai polygon testnet (you can use https://chainlist.org/chain/80001 to add network)
 
-or clone this repo and run it in you localhost
+- use this faucet to get some Matic https://faucet.polygon.technology/
+- buy some ALCHI token so you can mint NFT and play the game.
+- try demo: https://open-alchi.vercel.app/
 
-```
-yarn 
+to try the demo in your localhost :
+- clone this repo 
+`
+git clone https://github.com/azizyano/OpenALCHI.git
+cd OpenALCHI 
+yarn
+
 yarn dev
-```
+`
+
 
 please contact me if you find any issue or to contribute 
 
 ## Authors
 
-Contributors names and contact info
-
-EMC2
+Twiiter
 [@arablockchain1](https://twitter.com/arablockchain1)
 
 ## Version History
@@ -61,6 +67,6 @@ EMC2
 
 ## Acknowledgments
 
-Inspiration, code snippets, etc.
+Inspiration and  code snippets 
 * [CleverProgrammers](https://github.com/CleverProgrammers/opensea-blockchain-youtube)
 * [littlealchemy](https://littlealchemy.com/)

@@ -43,14 +43,17 @@ all NFT balance: in your account, NFTs listed in the market
 
 to try the demo in your localhost :
 - clone this repo 
-`
+
+```
 git clone https://github.com/azizyano/OpenALCHI.git
+
 cd OpenALCHI 
+
 yarn
 
 yarn dev
-`
 
+```
 
 please contact me if you find any issue or to contribute 
 

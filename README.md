@@ -42,11 +42,18 @@ all NFT balance: in your account, NFTs listed in the market
 1st set Metamask in Mumbai polygon testnet (you can use https://chainlist.org/chain/80001 to add network)
 
 - use this faucet to get some Matic https://faucet.polygon.technology/
+<<<<<<< HEAD
 - buy some ALCHI token so you can mint NFT and play the game. https://quickswap.exchange/#/swap?inputCurrency=0x8bC7cbA6AA0d62dcaB317F859125ce37345Fa666
 - try demo: https://open-alchi.vercel.app/
 
 to try the demo in your localhost :
 
+=======
+- buy some ALCHI token so you can mint NFT and play the game.
+- try demo: https://open-alchi.vercel.app/
+
+to try the demo in your localhost :
+>>>>>>> e8b46007629ffa228a76f59052c498d701967d53
 - clone this repo 
 
 ```
@@ -64,7 +71,11 @@ please contact me if you find any issue or to contribute
 
 ## Authors
 
+<<<<<<< HEAD
 Twitter
+=======
+Twiiter
+>>>>>>> e8b46007629ffa228a76f59052c498d701967d53
 [@arablockchain1](https://twitter.com/arablockchain1)
 
 ## Version History

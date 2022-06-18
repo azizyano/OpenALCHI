@@ -112,8 +112,8 @@ const elementsOptions = [
   { value: 23, label: 'Bitcoin' },
 ]
 const style = {
-  container: `  bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 py-8 px-8 rounded-xl mb-4`,
-  wrapper: `flex  py-10 px-10 items-stretch grid grid-flow-col gap-4`,
+  container: `  bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 py-10 px-10 rounded-xl mb-4`,
+  wrapper: `flex py-10 px-10 items-stretch grid grid-flow-col gap-4`,
   titleContainer: `px-2 py-2 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
   info: `flex justify-between py-4 text-[#151b22] text-lg drop-shadow-xl`,
   priceValue: `flex justify-center  font-bold mt-2`,
@@ -137,6 +137,9 @@ const Game = () => {
   useEffect(() => {
     if (!collection) return
     accountInfo()
+    window.ethereum.on('accountsChanged', function (accounts) {
+      accountInfo()
+    })
   }, [collection])
 
   const confirmClaim = (msg) => toast(msg)
@@ -303,7 +306,7 @@ const Game = () => {
    
   }
   return (
-    <div className="overflow-hidden  bg-gradient-to-l from-green-800 to-blue-800">
+    <div className="  bg-gradient-to-l from-green-800 to-blue-800">
       <Header />
       <div className={style.wrapper}>
         <div className={style.container}>

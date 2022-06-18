@@ -1,4 +1,3 @@
-
 ## OpenAlchi 
 
 Encode x Polygon Hackathon 
@@ -8,6 +7,11 @@ https://medium.com/encode-club/announcing-the-encode-x-polygon-partnership-and-i
 ## Introduction
 
 this project is a submission to polygon Hackathon, you can test the app after setting your Metamask to Mumbai testnet. 
+
+### Demo: 
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/A-5i950k3kQ/0.jpg)](https://www.youtube.com/watch?v=A-5i950k3kQ)
+
 
 # Little Alchemy
 
@@ -35,22 +39,32 @@ all NFT balance: in your account, NFTs listed in the market
 
 ## Getting Started
 
-try demo:
+1st set Metamask in Mumbai polygon testnet (you can use https://chainlist.org/chain/80001 to add network)
 
-or clone this repo and run it in you localhost
+- use this faucet to get some Matic https://faucet.polygon.technology/
+- buy some ALCHI token so you can mint NFT and play the game. https://quickswap.exchange/#/swap?inputCurrency=0x8bC7cbA6AA0d62dcaB317F859125ce37345Fa666
+- try demo: https://open-alchi.vercel.app/
+
+to try the demo in your localhost :
+
+- clone this repo 
 
 ```
-yarn 
+git clone https://github.com/azizyano/OpenALCHI.git
+
+cd OpenALCHI 
+
+yarn
+
 yarn dev
+
 ```
 
 please contact me if you find any issue or to contribute 
 
 ## Authors
 
-Contributors names and contact info
-
-EMC2
+Twitter
 [@arablockchain1](https://twitter.com/arablockchain1)
 
 ## Version History
@@ -61,6 +75,6 @@ EMC2
 
 ## Acknowledgments
 
-Inspiration, code snippets, etc.
+Inspiration and  code snippets 
 * [CleverProgrammers](https://github.com/CleverProgrammers/opensea-blockchain-youtube)
 * [littlealchemy](https://littlealchemy.com/)

@@ -92,6 +92,9 @@ const Collection = () => {
   useEffect(() => {
     if (!collectionId) return
     getAllListings()
+    window.ethereum.on('accountsChanged', function (accounts) {
+      getAllListings()
+    })
   }, [collectionId])
   async function getAllListings() {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -134,7 +137,7 @@ const Collection = () => {
 
 
   return (
-    <div className=" overflow-hidden bg-gradient-to-l from-green-800 to-blue-800 ">
+    <div className=" bg-gradient-to-l from-green-800 to-blue-800 ">
       <Header />
       <div className={style.bannerImageContainer}>
         <div className={style.statValue}>

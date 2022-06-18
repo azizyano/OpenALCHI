@@ -22,13 +22,7 @@ const MakeOffer = ({ selectedNft}) => {
   const [enableButton, setEnableButton] = useState(false)
   const [amount, setAmount] = useState('0')
   const [allowMarket, setApprovedMarket] = useState()
-  const confirmListing = (toastHandler = toast) =>
-    toastHandler.success(`listed successful!`, {
-      style: {
-        background: '#04111d',
-        color: '#fff',
-      },
-    })
+
   const confirmApproved = (toastHandler = toast) =>
     toastHandler.success(`Contract Approved!`, {
       style: {
@@ -36,6 +30,7 @@ const MakeOffer = ({ selectedNft}) => {
         color: '#fff',
       },
     })
+    const confirmClaim = (msg) => toast(msg)
   async function Approved() {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner()
@@ -79,9 +74,13 @@ async function ApproveMarket() {
       let listingPrice = await marketContract.getListingPrice()
       listingPrice = listingPrice.toString()
       console.log("Sell for :" + price, 'this toktn id; ' + nft.tokenId )
-      const transaction = await marketContract.createMarketItem(nftaddress, nft.tokenId, price, { value: listingPrice })
-      await transaction.wait()
-    confirmListing()
+      try {
+        const transaction = await marketContract.createMarketItem(nftaddress, nft.tokenId, price, { value: listingPrice })
+        await transaction.wait()
+        confirmClaim('listed successful!')
+      } catch (error) {
+        confirmClaim(error.data.message.toString())
+      }
   }
   const changeAmount = ({ target }) => {
     setAmount(target.value)

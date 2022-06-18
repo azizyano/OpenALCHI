@@ -82,6 +82,10 @@ const Profile = () => {
     if (!collection) return
     getAllListings()
     myElements()
+    window.ethereum.on('accountsChanged', function (accounts) {
+      getAllListings()
+      myElements()
+    })
   }, [collection])
   async function getAllListings() {
     const provider = new ethers.providers.Web3Provider(window.ethereum)

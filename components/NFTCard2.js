@@ -37,11 +37,7 @@ const NFTCard2 = ({ nftItem, listings, price, balance }) => {
             <div className={style.priceTag}>Balance: {balance}</div>
               <div className={style.priceTag}>Price</div>
               <div className={style.priceValue}>
-                <img
-                  src="https://seeklogo.com/images/P/polygon-matic-logo-86F4D6D773-seeklogo.com.png"
-                  alt="Matic"
-                  className={style.ethLogo}
-                />
+                
                 {price}
               </div>
               <div className={style.priceTag}>State: {listings}</div>

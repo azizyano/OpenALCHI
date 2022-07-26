@@ -4,9 +4,9 @@ import { IoMdWallet } from 'react-icons/io'
 import toast, { Toaster } from 'react-hot-toast'
 import Market from '../../pages/artifacts/NFTMarket.json'
 
-const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
+const nftaddress = '0xd5d0c6b5578c179552a5d462c471051f2f87f189'
 
-const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
+const nftmarketaddress = '0x588851fb3Ca38855FaB2880522E527476408911A'
 
 const style = {
   button: `mr-8 flex items-center py-2 px-12 rounded-lg cursor-pointer`,

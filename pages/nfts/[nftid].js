@@ -61,8 +61,7 @@ const title = [
   'blockchain',
   'Bitcoin',
 ]
-const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
-const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
+const nftmarketaddress = '0x588851fb3Ca38855FaB2880522E527476408911A'
 
 const style = {
   wrapper: `flex flex-col items-center container-lg text-[#e5e8eb]`,

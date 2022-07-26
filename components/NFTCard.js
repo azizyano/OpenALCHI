@@ -3,8 +3,8 @@ import { BiHeart } from 'react-icons/bi'
 import Router from 'next/router'
 
 const style = {
-  wrapper: `bg-[#303339] flex-auto w-[14rem] h-[22rem] my-10 mx-5 rounded-2xl overflow-hidden cursor-pointer`,
-  imgContainer: `h-2/3 w-full overflow-hidden flex justify-center items-center`,
+  wrapper: `bg-[#303339] w-[18rem] h-[22rem] my-10 mx-5 rounded-2xl overflow-hidden cursor-pointer`,
+  imgContainer: `h-2/3  flex justify-center items-center`,
   nftImg: `w-40 h-50 w-full `,
   details: `p-3`,
   info: `flex justify-between text-[#e4e8eb] drop-shadow-xl`,
@@ -42,12 +42,7 @@ const NFTCard = ({order, nftItem, price }) => {
             <div className={style.infoRight}>
               <div className={style.priceTag}>Price</div>
               <div className={style.priceValue}>
-                <img
-                  src="https://seeklogo.com/images/P/polygon-matic-logo-86F4D6D773-seeklogo.com.png"
-                  
-                  alt="matic"
-                  className={style.ethLogo}
-                />
+                
                 {price}
               </div>
               

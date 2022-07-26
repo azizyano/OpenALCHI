@@ -8,8 +8,8 @@ import Image from 'next/image'
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
 
-const TokenAddress = '0x8bC7cbA6AA0d62dcaB317F859125ce37345Fa666'
-const gameaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
+const TokenAddress = '0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B'
+const gameaddress = '0xd5d0c6b5578c179552a5d462c471051f2f87f189'
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -112,7 +112,7 @@ const elementsOptions = [
   { value: 23, label: 'Bitcoin' },
 ]
 const style = {
-  container: `  bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 py-10 px-10 rounded-xl mb-4`,
+  container: `  bg-gradient-to-r from-indigo-700 via-indigo-700 to-blue-700 py-10 px-10 rounded-xl mb-4`,
   wrapper: `flex py-10 px-10 items-stretch grid grid-flow-col gap-4`,
   titleContainer: `px-2 py-2 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
   info: `flex justify-between py-4 text-[#151b22] text-lg drop-shadow-xl`,
@@ -365,7 +365,7 @@ const Game = () => {
                   <button className={style.button} onClick={() => magicFormula(elementA, elementB)}>try formula</button>
                   <div className='justify-self-center mx-auto py-4'>
                     {resultat === '0' ? (
-                      <div className=' text-xl text-[#380208] text-center '> Bad Formulat !</div>
+                      <div className=' text-xl text-[#da4859] text-center '> Bad Formulat !</div>
                     ) : (
                       <div className='flex '>
                         <button className={style.mintbutton} onClick={() => Mint(resultat)} > {resultat} </button>

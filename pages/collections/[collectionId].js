@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
-import NFT from '../artifacts/LittleAlchemy.json'
 import Header from '../../components/Header'
 import Market from '../artifacts/NFTMarket.json'
 import NFTCard from '../../components/NFTCard'
-const nftaddress = '0xd6547D88b36DD4A8A952f6439eAdf73676062D19'
-const nftmarketaddress = '0x4F38cF64C66cDbaCc0be4646b21Aa557C29538AF'
+const nftmarketaddress = '0x588851fb3Ca38855FaB2880522E527476408911A'
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -145,7 +143,7 @@ const Collection = () => {
         </div>
       </div>
       <div className={'h-screen'}>
-      <div className="flex flex-wrap  bg-gradient-to-l from-green-600 to-blue-600 ">
+      <div className="flex flex-wrap bg-gradient-to-l from-green-600 to-blue-600 ">
         {items.map((nftItem, id) => (
           <NFTCard
             key={id}

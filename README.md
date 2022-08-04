@@ -1,8 +1,6 @@
 ## OpenAlchi 
 
-Encode x Polygon Hackathon 
-
-https://medium.com/encode-club/announcing-the-encode-x-polygon-partnership-and-initiatives-544cbddc5a0b
+Metis simple NFT game
 
 ## Introduction
 

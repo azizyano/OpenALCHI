@@ -61,7 +61,7 @@ const title = [
 ]
 
 const style = {
-  bannerImageContainer: `h-[20vh] w-screen overflow-hidden flex justify-center items-center`,
+  bannerImageContainer: ` overflow-hidden flex justify-center items-center`,
   info: `flex mx-10 text-[#e4e8eb] text-xl drop-shadow-xl`,
   title: `text-5xl font-bold mb-4`,
   statsContainer: `w-[44vw] px-4 py-4 mx-10 flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
@@ -218,7 +218,7 @@ const Profile = () => {
   }
 
   return (
-    <div className=" overflow-hidden bg-gradient-to-l from-green-800 to-blue-800 ">
+    <div className=" bg-gradient-to-l from-green-800 to-blue-800 ">
       <Header />
       <div className={style.bannerImageContainer}>
         <div className={style.statsContainer}>
@@ -235,21 +235,21 @@ const Profile = () => {
           <div className={style.info}>Total earned 
           <div className={'px-10'}>
             {treasury}  
+            <img
+                src="https://littlealchi.xyz/imgs/logo_name.png"
+                alt="ALCHI"
+                className='py-2 px-2 h-10 mr-2'
+              />
           </div>
-          <img
-              src="https://seeklogo.com/images/P/polygon-matic-logo-86F4D6D773-seeklogo.com.png"
-              className={'h-6'}
-              alt="Metis"
-            />
+          
           </div>
           
         </div>
       </div>
-      <div className='overflow-hidden '>
 
       <div className={style.info}>NFT balance</div>
       <div className={style.listContainer}>
-      <div className="flex flex-wrap  ">
+      <div className=" flex flex-wrap  ">
       
         {NftBanalce.map((nftItem, id) => (
           <div className={style.wrapper}>
@@ -270,7 +270,7 @@ const Profile = () => {
       <div className={style.info}>Listed NFT </div>
       <div className={style.listContainer}>
       
-        <div className="flex flex-wrap ">
+        <div className=" flex flex-wrap ">
         
           {items.map((nftItem, id) => (
             <div className={style.wrapper}>
@@ -286,7 +286,6 @@ const Profile = () => {
             </div>
           ))}
         </div>
-      </div>
       </div>
       
     </div>

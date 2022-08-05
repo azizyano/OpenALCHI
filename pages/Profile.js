@@ -218,7 +218,7 @@ const Profile = () => {
   }
 
   return (
-    <div className=" bg-gradient-to-l from-green-800 to-blue-800 ">
+    <div className="h-full-screen bg-gradient-to-l from-green-800 to-blue-800 ">
       <Header />
       <div className={style.bannerImageContainer}>
         <div className={style.statsContainer}>

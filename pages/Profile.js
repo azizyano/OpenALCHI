@@ -246,7 +246,6 @@ const Profile = () => {
           
         </div>
       </div>
-
       <div className={style.info}>NFT balance</div>
       <div className={style.listContainer}>
       <div className=" flex flex-wrap  ">

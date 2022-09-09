@@ -345,7 +345,16 @@ const Game = () => {
               {allowed ? (
                 <>
                   <div className={style.titleContainer}>
-                    Magic formulat
+                    <span> Magic formulat</span>
+                    
+                  </div>
+                  <div>
+                    <span className='px-4 py-4 flex justify-center  font-bold mt-2'>Buy ALCHI token to mint New Elements 
+                  <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7" 
+                    className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        <span className="mx-10 ">Buy</span>
+                    </a>
+                    </span>
                   </div>
                   <button className={style.button} onClick={() => mintStandard()}>Standards Elements</button>
                   <div className='w-4/5 flex mx-auto py-8 px-8 '>

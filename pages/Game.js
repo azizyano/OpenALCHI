@@ -4,9 +4,9 @@ import Select from 'react-select';
 import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
 import Header from './../components/Header'
-import Image from 'next/image'
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
+import Footer from '../components/Footer';
 
 const TokenAddress = '0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B'
 const gameaddress = '0xd5d0c6b5578c179552a5d462c471051f2f87f189'
@@ -306,7 +306,7 @@ const Game = () => {
    
   }
   return (
-    <div className="  bg-gradient-to-l from-green-800 to-blue-800">
+    <div className=" h-screen w-screen bg-gradient-to-l from-green-800 to-blue-800">
       <Header />
       <div className={style.wrapper}>
         <div className={style.container}>

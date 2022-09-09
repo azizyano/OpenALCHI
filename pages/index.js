@@ -1,5 +1,6 @@
 import Header from '../components/Header'
 import Alchi from '../components/Alchi'
+import Footer from '../components/Footer'
 import {useWeb3, useSwitchNetwork} from '@3rdweb/hooks'
 import { useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
@@ -38,6 +39,7 @@ const Home = () => {
         <>
           <Header/>
           <Alchi/>
+          <Footer/>
         </>
       ):(
         <div className={style.walletConnectWrapper}>

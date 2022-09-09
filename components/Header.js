@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import {MdOutlineAccountBalanceWallet} from "react-icons/md"
 import {CgProfile} from "react-icons/cg"
 import React from "react";
 import logo from "../assets/logo_name.png"

@@ -8,7 +8,7 @@ import logo from "../assets/logo_name.png"
 const Footer =()=>{
     return <div className="bg-white dark:bg-gray-900">
         <div className="py-6 px-4 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-            <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2022 <a href="https://www.littlealci.xyz/">ALCHIMetis NFT Game</a>. All Rights Reserved.
+            <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2022 <a href="https://www.littlealci.xyz/">ALCHIMetis NFT Game</a>. All Rights Reserved.
             </span> 
             <div className="flex mt-4 space-x-6 sm:justify-center md:mt-0">
                 

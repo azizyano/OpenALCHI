@@ -3,11 +3,9 @@ import { ethers } from 'ethers'
 import Select from 'react-select';
 import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
-import {useWeb3} from '@3rdweb/hooks'
 import Header from './../components/Header'
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
-import Footer from '../components/Footer';
 const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
 const TokenAddress = ['0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B','0xA99C4A1438c1200f64b47D2CC30f1e702577604c']
 const imagelist = [
@@ -136,17 +134,11 @@ const Game = () => {
   const [nftaddress, setnftaddress] = useState('')
   const [tokenAddress, setTokenAddress] = useState('')
   const [allowed, setAllowance] = useState()
-  const {chainId } = useWeb3()
-  console.log(tokenAddress)
+  searchnetwork()
   useEffect(() => {
     if (!collection) return
-    if (chainId == 1088){
-      setnftaddress(NFTaddress[0]);
-      setTokenAddress(TokenAddress[0])
-    } else if (chainId == 7700){
-      setnftaddress(NFTaddress[1]);
-      setTokenAddress(TokenAddress[1])
-    }
+    searchnetwork()
+    searchnetwork()
     accountInfo()
     window.ethereum.on('accountsChanged', function (accounts) {
       accountInfo()
@@ -155,6 +147,22 @@ const Game = () => {
 
   const confirmClaim = (msg) => toast(msg)
 
+  async function searchnetwork() {
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const network = await provider.getNetwork()
+      console.log(network)
+      if (network.chainId == 1088){
+        setnftaddress(NFTaddress[0]);
+        setTokenAddress(TokenAddress[0])
+      } else if (network.chainId == 7700){
+        setnftaddress(NFTaddress[1]);
+        setTokenAddress(TokenAddress[1])
+      }
+    } catch(e){
+        console.log(e)
+      }
+    }
   function magicFormula(elementA, elementB) {
 
     const fusion = elementA.label + elementB.label

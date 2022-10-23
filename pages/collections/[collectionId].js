@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
-import { useWeb3 } from '@3rdweb/hooks'
 import Header from '../../components/Header'
 import Market from '../artifacts/NFTMarket.json'
 import NFTCard from '../../components/NFTCard'
@@ -87,56 +86,70 @@ const Collection = () => {
   const { collectionId } = router.query
   const [items, setNfts] = useState([])
   const [nftmarketaddress, setnftmarketaddress] = useState('')
-  const {chainId } = useWeb3()
-  
+  searchnetwork()
   useEffect(() => {
-    if (chainId == 1088){
-      setnftmarketaddress(NFTmarketaddress[0])
-    } else if (chainId == 7700){
-      setnftmarketaddress(NFTmarketaddress[1])
-    }
-    if (!collectionId) return
+    searchnetwork()
+    if (!collectionId && nftmarketaddress) return
     getAllListings()
     window.ethereum.on('accountsChanged', function (accounts) {
       getAllListings()
     })
   }, [collectionId])
-  async function getAllListings() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
+  async function searchnetwork() {
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const network = await provider.getNetwork()
+      console.log(network.chainId)
+      if (network.chainId == 1088){
+        setnftmarketaddress(NFTmarketaddress[0])
+      } else if (network.chainId == 7700){
+        setnftmarketaddress(NFTmarketaddress[1])
+      }
+    } catch(e){
+        console.log(e)
+      }
+    }
 
-    const marketContract = new ethers.Contract(
-      nftmarketaddress,
-      Market.abi,
-      signer
-    )
-      const data = await marketContract.fetchMarketItems()
-      console.log(data)
-      const items = await Promise.all(
-        data.map(async (i) => {
-          const meta = ''
-          try {
-             meta = imagelist[i.tokenId] ;
-          } catch (error) {
-            console.log('meta error')
-            meta= 'https://littlealchi.xyz/static/media/background1-min.839efe9f.png'
-          }
-          
-          let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-          let item = {
-            price,
-            itemId: i.itemId.toNumber(),
-            tokenId: i.tokenId.toNumber(),
-            name: title[i.tokenId],
-            seller: i.seller,
-            owner: i.owner,
-            sold: i.sold,
-            image: meta,
-          }
-          return item;
-        })
+  async function getAllListings() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+  
+      const marketContract = new ethers.Contract(
+        nftmarketaddress,
+        Market.abi,
+        signer
       )
-      setNfts(items)
+        const data = await marketContract.fetchMarketItems()
+        console.log(data)
+        const items = await Promise.all(
+          data.map(async (i) => {
+            const meta = ''
+            try {
+               meta = imagelist[i.tokenId] ;
+            } catch (error) {
+              console.log('meta error')
+              meta= 'https://littlealchi.xyz/static/media/background1-min.839efe9f.png'
+            }
+            
+            let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+            let item = {
+              price,
+              itemId: i.itemId.toNumber(),
+              tokenId: i.tokenId.toNumber(),
+              name: title[i.tokenId],
+              seller: i.seller,
+              owner: i.owner,
+              sold: i.sold,
+              image: meta,
+            }
+            return item;
+          })
+        )
+        setNfts(items)
+    } catch(e){
+      console.log(e)
+    }
         
   }
 

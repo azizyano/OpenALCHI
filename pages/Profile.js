@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { ethers } from 'ethers'
-import {useWeb3} from '@3rdweb/hooks'
 import NFT from './artifacts/LittleAlchemy.json'
 import Header from './../components/Header'
 import Market from './artifacts/NFTMarket.json'
@@ -81,17 +80,10 @@ const Profile = () => {
   const [treasury, setTreasury] = useState(0)
   const [nftaddress, setnftaddress] = useState('')
   const [nftmarketaddress, setnftmarketaddress] = useState('')
-  const {chainId } = useWeb3()
-
+  searchnetwork()
   useEffect(() => {
     if (!collection) return
-    if (chainId == 1088){
-      setnftaddress(NFTaddress[0]);
-      setnftmarketaddress(NFTmarketaddress[0])
-    } else if (chainId == 7700){
-      setnftaddress(NFTaddress[1]);
-      setnftmarketaddress(NFTmarketaddress[1])
-    }
+    searchnetwork()
     getAllListings()
     myElements()
     window.ethereum.on('accountsChanged', function (accounts) {
@@ -99,10 +91,27 @@ const Profile = () => {
       myElements()
     })
   }, [collection])
+  async function searchnetwork() {
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const network = await provider.getNetwork()
+      console.log(network)
+      if (network.chainId == 1088){
+        setnftaddress(NFTaddress[0]);
+        setnftmarketaddress(NFTmarketaddress[0])
+      } else if (network.chainId == 7700){
+        setnftaddress(NFTaddress[1]);
+        setnftmarketaddress(NFTmarketaddress[1])
+      }
+    } catch(e){
+        console.log(e)
+      }
+    }
   async function getAllListings() {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
+      await provider.getNetwork()
       const marketContract = new ethers.Contract(
         nftmarketaddress,
         Market.abi,
@@ -148,89 +157,93 @@ const Profile = () => {
 
   }
   async function myElements() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer)
-    const account = await signer.getAddress()
-    setAccount(account)
-
-    if (account) {
-      const ownerAddress = [
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-      ]
-      const ownerIds = [
-        '0',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15',
-        '16',
-        '17',
-        '18',
-        '19',
-        '20',
-        '21',
-        '22',
-        '23',
-      ]
-
-      const balanceArray = await contract2.balanceOfBatch(
-        ownerAddress,
-        ownerIds
-      )
-      setBalanceArray(balanceArray)
-      const itemBalance = await Promise.all(
-        balanceArray.map(async (i, key) => {
-          if (i.toString() !== '0') {
-            let item = {
-              tokenId: key,
-              name: title[key],
-              image: imagelist[key],
-              balance: i.toString(),
-            }
-            return item
-          } else return
-        })
-      )
-      var filtered = itemBalance.filter((x) => x !== undefined)
-      setNftBanalce(filtered)
-      console.log(filtered)
-    } else {
-      console.log('You need to mint your first element')
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer)
+      const account = await signer.getAddress()
+      setAccount(account)
+  
+      if (account) {
+        const ownerAddress = [
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+        ]
+        const ownerIds = [
+          '0',
+          '1',
+          '2',
+          '3',
+          '4',
+          '5',
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12',
+          '13',
+          '14',
+          '15',
+          '16',
+          '17',
+          '18',
+          '19',
+          '20',
+          '21',
+          '22',
+          '23',
+        ]
+  
+        const balanceArray = await contract2.balanceOfBatch(
+          ownerAddress,
+          ownerIds
+        )
+        setBalanceArray(balanceArray)
+        const itemBalance = await Promise.all(
+          balanceArray.map(async (i, key) => {
+            if (i.toString() !== '0') {
+              let item = {
+                tokenId: key,
+                name: title[key],
+                image: imagelist[key],
+                balance: i.toString(),
+              }
+              return item
+            } else return
+          })
+        )
+        var filtered = itemBalance.filter((x) => x !== undefined)
+        setNftBanalce(filtered)
+        console.log(filtered)
+      } else {
+        console.log('You need to mint your first element')
+      }
+    } catch (e){
+      console.log(e)
     }
   }
 

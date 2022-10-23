@@ -52,7 +52,7 @@ const Home = () => {
             <div className='mx-auto justify justify-center '>
               <p className='mx-auto justify justify-center text-xl'>Switch network to: </p>
             {supportChainIds.map((cId) => (
-              <button className='mx-4 px-4 border text-white text-sm' onClick={() => switchNetwork(cId)}>
+              <button key={cId} className='mx-4 px-4 border text-white text-sm' onClick={() => switchNetwork(cId)}>
                 {getNetworkMetadata(cId)?.chainName ? getNetworkMetadata(cId)?.chainName : (cId == 7700 ? '  Canto  ' : 'Andromeda' ) }
               </button>
             ))}

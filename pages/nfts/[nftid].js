@@ -1,6 +1,5 @@
 import Header from '../../components/Header'
 import { useEffect, useMemo, useState } from 'react'
-import { useWeb3 } from '@3rdweb/hooks'
 import { ethers } from 'ethers'
 import Market from '../artifacts/NFTMarket.json'
 import { useRouter } from 'next/router'
@@ -75,14 +74,10 @@ const Nft = () => {
   const [selectedNft, setSelectedNft] = useState()
   const [nftmarketaddress, setnftmarketaddress] = useState('')
   const router = useRouter()
-  const {chainId } = useWeb3()
- 
+  
+  searchnetwork()
   useEffect(() => {
-    if (chainId == 1088){
-      setnftmarketaddress(NFTmarketaddress[0])
-    } else if (chainId == 7700){
-      setnftmarketaddress(NFTmarketaddress[1])
-    }
+    searchnetwork()
     const provider = new ethers.providers.Web3Provider(window.ethereum);
      if (!provider) return
     ;(async () => {
@@ -114,7 +109,20 @@ const Nft = () => {
       setSelectedNft(item)
     })()
   }, [provider])
-
+  async function searchnetwork() {
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const network = await provider.getNetwork()
+      console.log(network)
+      if (network.chainId == 1088){
+        setnftmarketaddress(NFTmarketaddress[0])
+      } else if (network.chainId == 7700){
+        setnftmarketaddress(NFTmarketaddress[1])
+      }
+    } catch(e){
+        console.log(e)
+      }
+    }
 
 
   return (

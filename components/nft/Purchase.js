@@ -17,19 +17,29 @@ const style = {
 const MakeOffer = ({ selectedNft}) => {
   const [nftaddress, setnftaddress] = useState('')
   const [nftmarketaddress, setnftmarketaddress] = useState('')
-  const {chainId } = useWeb3()
   const confirmClaim = (msg) => toast(msg)
+  searchnetwork()
   useEffect(() => {
-    if (chainId == 1088){
-      setnftaddress(NFTaddress[0]);
-      setnftmarketaddress(NFTmarketaddress[0])
-    } else if (chainId == 7700){
-      setnftaddress(NFTaddress[1]);
-      setnftmarketaddress(NFTmarketaddress[1])
-    }
     if (!selectedNft) return
-   
+    searchnetwork()
   }, [selectedNft])
+  async function searchnetwork() {
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const network = await provider.getNetwork()
+      console.log(network)
+      if (network.chainId == 1088){
+        setnftaddress(NFTaddress[0]);
+        setnftmarketaddress(NFTmarketaddress[0])
+      } else if (network.chainId == 7700){
+        setnftaddress(NFTaddress[1]);
+        setnftmarketaddress(NFTmarketaddress[1])
+      }
+    } catch(e){
+        console.log(e)
+      }
+    }
+
   async function buyItem(nft) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();

@@ -4,9 +4,9 @@ import { IoMdWallet } from 'react-icons/io'
 import toast, { Toaster } from 'react-hot-toast'
 import Market from '../../pages/artifacts/NFTMarket.json'
 
-const nftaddress = '0xd5d0c6b5578c179552a5d462c471051f2f87f189'
+const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
+const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
 
-const nftmarketaddress = '0x588851fb3Ca38855FaB2880522E527476408911A'
 
 const style = {
   button: `mr-8 flex items-center py-2 px-12 rounded-lg cursor-pointer`,
@@ -15,9 +15,21 @@ const style = {
 }
 
 const MakeOffer = ({ selectedNft}) => {
-
+  const [nftaddress, setnftaddress] = useState('')
+  const [nftmarketaddress, setnftmarketaddress] = useState('')
+  const {chainId } = useWeb3()
   const confirmClaim = (msg) => toast(msg)
-
+  useEffect(() => {
+    if (chainId == 1088){
+      setnftaddress(NFTaddress[0]);
+      setnftmarketaddress(NFTmarketaddress[0])
+    } else if (chainId == 7700){
+      setnftaddress(NFTaddress[1]);
+      setnftmarketaddress(NFTmarketaddress[1])
+    }
+    if (!selectedNft) return
+   
+  }, [selectedNft])
   async function buyItem(nft) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
+import { useWeb3 } from '@3rdweb/hooks'
 import Header from '../../components/Header'
 import Market from '../artifacts/NFTMarket.json'
 import NFTCard from '../../components/NFTCard'
-const nftmarketaddress = '0x588851fb3Ca38855FaB2880522E527476408911A'
+const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -84,10 +85,16 @@ const style = {
 const Collection = () => {
   const router = useRouter()
   const { collectionId } = router.query
-  const [collection, setCollection] = useState({})
   const [items, setNfts] = useState([])
-  const [listings, setListings] = useState([])
+  const [nftmarketaddress, setnftmarketaddress] = useState('')
+  const {chainId } = useWeb3()
+  
   useEffect(() => {
+    if (chainId == 1088){
+      setnftmarketaddress(NFTmarketaddress[0])
+    } else if (chainId == 7700){
+      setnftmarketaddress(NFTmarketaddress[1])
+    }
     if (!collectionId) return
     getAllListings()
     window.ethereum.on('accountsChanged', function (accounts) {

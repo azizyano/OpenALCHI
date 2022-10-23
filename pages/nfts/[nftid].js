@@ -2,13 +2,11 @@ import Header from '../../components/Header'
 import { useEffect, useMemo, useState } from 'react'
 import { useWeb3 } from '@3rdweb/hooks'
 import { ethers } from 'ethers'
-import NFT from '../artifacts/LittleAlchemy.json'
 import Market from '../artifacts/NFTMarket.json'
 import { useRouter } from 'next/router'
 import NFTImage from '../../components/nft/NFTImage'
 import GeneralDetails from '../../components/nft/GeneralDetails'
 import Purchase from '../../components/nft/Purchase'
-import axios from 'axios'
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -61,7 +59,8 @@ const title = [
   'blockchain',
   'Bitcoin',
 ]
-const nftmarketaddress = '0x588851fb3Ca38855FaB2880522E527476408911A'
+const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
+
 
 const style = {
   wrapper: `flex flex-col items-center container-lg text-[#e5e8eb]`,
@@ -74,10 +73,16 @@ const style = {
 const Nft = () => {
   const { provider } = useWeb3()
   const [selectedNft, setSelectedNft] = useState()
+  const [nftmarketaddress, setnftmarketaddress] = useState('')
   const router = useRouter()
-
+  const {chainId } = useWeb3()
  
   useEffect(() => {
+    if (chainId == 1088){
+      setnftmarketaddress(NFTmarketaddress[0])
+    } else if (chainId == 7700){
+      setnftmarketaddress(NFTmarketaddress[1])
+    }
     const provider = new ethers.providers.Web3Provider(window.ethereum);
      if (!provider) return
     ;(async () => {

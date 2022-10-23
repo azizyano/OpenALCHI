@@ -12,7 +12,7 @@ const style = {
 }
 const Home = () => {
   const {address, chainId, connectWallet, getNetworkMetadata } = useWeb3()
-  const supportChainIds = [1088];
+  const supportChainIds = [1088, 7700];
   const { switchNetwork } = useSwitchNetwork();
   const welcome = (address, toatHandler = toast) => {
     toatHandler.success(
@@ -35,10 +35,11 @@ const Home = () => {
   return (
     <div className={style.wrapper}>
       <Toaster position="top-left" reverseOrder={false} />
+
       {address ? ( 
         <>
-          <Header/>
-          <Alchi/>
+        <Header/>
+        <Alchi/>
           <Footer/>
         </>
       ):(
@@ -49,10 +50,10 @@ const Home = () => {
               Connect Wallet
             </button>
             <div className='mx-auto justify justify-center '>
-            <p className='mx-10 px-10 py-10 text-xl'>Switch Network</p>
+              <p className='mx-auto justify justify-center text-xl'>Switch network to: </p>
             {supportChainIds.map((cId) => (
-              <button className='mx-10 px-10 py-10 border text-white text-xl' onClick={() => switchNetwork(cId)}>
-                {getNetworkMetadata(cId)?.chainName ? getNetworkMetadata(cId)?.chainName : 'Andromeda mainnet'}
+              <button className='mx-4 px-4 border text-white text-sm' onClick={() => switchNetwork(cId)}>
+                {getNetworkMetadata(cId)?.chainName ? getNetworkMetadata(cId)?.chainName : (cId == 7700 ? '  Canto  ' : 'Andromeda' ) }
               </button>
             ))}
             </div>

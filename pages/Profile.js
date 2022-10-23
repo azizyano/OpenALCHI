@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { ethers } from 'ethers'
+import {useWeb3} from '@3rdweb/hooks'
 import NFT from './artifacts/LittleAlchemy.json'
 import Header from './../components/Header'
 import Market from './artifacts/NFTMarket.json'
 import NFTCard1 from './../components/NFTCard1'
 import NFTCard2 from './../components/NFTCard2'
-const nftaddress = '0xd5d0c6b5578c179552a5d462c471051f2f87f189'
-const nftmarketaddress = '0x588851fb3Ca38855FaB2880522E527476408911A'
+const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
+const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -78,8 +79,19 @@ const Profile = () => {
   const [collection, setCollection] = useState({})
   const [items, setNfts] = useState([])
   const [treasury, setTreasury] = useState(0)
+  const [nftaddress, setnftaddress] = useState('')
+  const [nftmarketaddress, setnftmarketaddress] = useState('')
+  const {chainId } = useWeb3()
+
   useEffect(() => {
     if (!collection) return
+    if (chainId == 1088){
+      setnftaddress(NFTaddress[0]);
+      setnftmarketaddress(NFTmarketaddress[0])
+    } else if (chainId == 7700){
+      setnftaddress(NFTaddress[1]);
+      setnftmarketaddress(NFTmarketaddress[1])
+    }
     getAllListings()
     myElements()
     window.ethereum.on('accountsChanged', function (accounts) {
@@ -88,47 +100,52 @@ const Profile = () => {
     })
   }, [collection])
   async function getAllListings() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const marketContract = new ethers.Contract(
-      nftmarketaddress,
-      Market.abi,
-      signer
-    )
-    const data = await marketContract.fetchItemsCreated()
-    let treasury = 0
-    const items = await Promise.all(
-      data.map(async (i) => {
-        const meta = ''
-        try {
-          meta = imagelist[i.tokenId]
-        } catch (error) {
-          console.log('meta error')
-          meta =
-            'https://littlealchi.xyz/static/media/background1-min.839efe9f.png'
-        }
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const marketContract = new ethers.Contract(
+        nftmarketaddress,
+        Market.abi,
+        signer
+      )
+      const data = await marketContract.fetchItemsCreated()
+      let treasury = 0
+      const items = await Promise.all(
+        data.map(async (i) => {
+          const meta = ''
+          try {
+            meta = imagelist[i.tokenId]
+          } catch (error) {
+            console.log('meta error')
+            meta =
+              'https://littlealchi.xyz/static/media/background1-min.839efe9f.png'
+          }
+  
+          let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+          let sold = 'Not yet'
+          if (i.sold) {
+            sold = 'Sold'
+            treasury = treasury + parseFloat(price)
+          }
+          let item = {
+            price,
+            itemId: i.itemId.toNumber(),
+            tokenId: i.tokenId.toNumber(),
+            name: title[i.tokenId],
+            seller: i.seller,
+            owner: i.owner,
+            sold: sold,
+            image: meta,
+          }
+          return item
+        })
+      )
+      setNfts(items)
+      setTreasury(treasury.toFixed(2))
+    } catch{
+      console.log(Error)
+    }
 
-        let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-        let sold = 'Not yet'
-        if (i.sold) {
-          sold = 'Sold'
-          treasury = treasury + parseFloat(price)
-        }
-        let item = {
-          price,
-          itemId: i.itemId.toNumber(),
-          tokenId: i.tokenId.toNumber(),
-          name: title[i.tokenId],
-          seller: i.seller,
-          owner: i.owner,
-          sold: sold,
-          image: meta,
-        }
-        return item
-      })
-    )
-    setNfts(items)
-    setTreasury(treasury.toFixed(2))
   }
   async function myElements() {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -218,7 +235,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-l from-green-800 to-blue-800 ">
+    <div className="h-screen  bg-gradient-to-l from-green-800 to-blue-800 ">
       <Header />
       <div className={style.bannerImageContainer}>
         <div className={style.statsContainer}>

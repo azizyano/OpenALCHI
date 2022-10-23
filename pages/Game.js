@@ -3,12 +3,13 @@ import { ethers } from 'ethers'
 import Select from 'react-select';
 import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
+import {useWeb3} from '@3rdweb/hooks'
 import Header from './../components/Header'
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
 import Footer from '../components/Footer';
-const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','']
-const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','']
+const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
+const TokenAddress = ['0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B','0xA99C4A1438c1200f64b47D2CC30f1e702577604c']
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -132,9 +133,20 @@ const Game = () => {
   const [element, setMintFunction] = useState({ value: 'mintStandard', label: 'Standards Elements' })
   const [elementA, setElementA] = useState({ value: 'mintStandard', label: 'Standards Elements' })
   const [elementB, setElementB] = useState({ value: 'mintStandard', label: 'Standards Elements' })
+  const [nftaddress, setnftaddress] = useState('')
+  const [tokenAddress, setTokenAddress] = useState('')
   const [allowed, setAllowance] = useState()
+  const {chainId } = useWeb3()
+  console.log(tokenAddress)
   useEffect(() => {
     if (!collection) return
+    if (chainId == 1088){
+      setnftaddress(NFTaddress[0]);
+      setTokenAddress(TokenAddress[0])
+    } else if (chainId == 7700){
+      setnftaddress(NFTaddress[1]);
+      setTokenAddress(TokenAddress[1])
+    }
     accountInfo()
     window.ethereum.on('accountsChanged', function (accounts) {
       accountInfo()
@@ -161,8 +173,8 @@ const Game = () => {
     if (account) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner()
-      const contract = new ethers.Contract(TokenAddress, Token.abi, signer)
-      const transaction = await contract.approve(gameaddress, "20000000000000000000")
+      const contract = new ethers.Contract(tokenAddress, Token.abi, signer)
+      const transaction = await contract.approve(nftaddress, "20000000000000000000")
       await transaction.wait()
       setAllowance(true)
       confirmClaim('Approved successful!')
@@ -173,7 +185,7 @@ const Game = () => {
       console.log(element);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contract2 = new ethers.Contract(gameaddress, NFT.abi, signer);
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
       const mintelement = element.toString();
       try {
         const transaction = await contract2[mintelement]();
@@ -195,7 +207,7 @@ const Game = () => {
     if (account) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contract2 = new ethers.Contract(gameaddress, NFT.abi, signer);
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
       try {
         const transaction = await contract2.mintStandard();
         await transaction.wait()
@@ -207,100 +219,104 @@ const Game = () => {
     }
   }
   async function accountInfo() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const contract1 = new ethers.Contract(TokenAddress, Token.abi, signer)
-    const contract2 = new ethers.Contract(gameaddress, NFT.abi, signer)
-    const account = await signer.getAddress()
-    const value = await contract1.allowance(account, gameaddress)
-    const amount = value.toString()
-    if (amount === '0') {
-      setAllowance(false)
-    } else {
-      setAllowance(true)
-    }
-    setAccount(account)
-    // balance
-    const balance = await contract1.balanceOf(account)
-    setBalance(parseFloat(ethers.utils.formatEther(balance)).toFixed(2))
-    // fee
-    const mintFee = await contract2.fee.call();
-    setmintFee(parseFloat(ethers.utils.formatEther(mintFee)));
-    if (account) {
-      const ownerAddress = [
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-        account,
-      ]
-      const ownerIds = [
-        '0',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15',
-        '16',
-        '17',
-        '18',
-        '19',
-        '20',
-        '21',
-        '22',
-        '23',
-      ]
-      const balanceArray = await contract2.balanceOfBatch(
-        ownerAddress,
-        ownerIds
-      )
-      setBalanceArray(balanceArray)
-      const itemBalance = await Promise.all(
-        balanceArray.map(async (i, key) => {
-          if (i.toString() !== '0') {
-            let item = {
-              tokenId: key,
-              name: title[key],
-              image: imagelist[key],
-              balance: i.toString(),
-            }
-            return item
-          } else return
-        })
-      )
-      var filtered = itemBalance.filter((x) => x !== undefined)
-      setNftBanalce(filtered)
-    } else {
-      console.log('You need to mint your first element')
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const contract1 = new ethers.Contract(tokenAddress, Token.abi, signer)
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer)
+      const account = await signer.getAddress()
+      const value = await contract1.allowance(account, nftaddress)
+      const amount = value.toString()
+      if (amount === '0') {
+        setAllowance(false)
+      } else {
+        setAllowance(true)
+      }
+      setAccount(account)
+      // balance
+      const balance = await contract1.balanceOf(account)
+      setBalance(parseFloat(ethers.utils.formatEther(balance)).toFixed(2))
+      // fee
+      const mintFee = await contract2.fee.call();
+      setmintFee(parseFloat(ethers.utils.formatEther(mintFee)));
+      if (account) {
+        const ownerAddress = [
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+          account,
+        ]
+        const ownerIds = [
+          '0',
+          '1',
+          '2',
+          '3',
+          '4',
+          '5',
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12',
+          '13',
+          '14',
+          '15',
+          '16',
+          '17',
+          '18',
+          '19',
+          '20',
+          '21',
+          '22',
+          '23',
+        ]
+        const balanceArray = await contract2.balanceOfBatch(
+          ownerAddress,
+          ownerIds
+        )
+        setBalanceArray(balanceArray)
+        const itemBalance = await Promise.all(
+          balanceArray.map(async (i, key) => {
+            if (i.toString() !== '0') {
+              let item = {
+                tokenId: key,
+                name: title[key],
+                image: imagelist[key],
+                balance: i.toString(),
+              }
+              return item
+            } else return
+          })
+        )
+        var filtered = itemBalance.filter((x) => x !== undefined)
+        setNftBanalce(filtered)
+      } else {
+        console.log('You need to mint your first element')
+      }
+    } catch (e){
+      console.log(e.message)
     }
    
   }

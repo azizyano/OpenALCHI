@@ -7,9 +7,8 @@ import Header from './../components/Header'
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
 import Footer from '../components/Footer';
-
-const TokenAddress = '0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B'
-const gameaddress = '0xd5d0c6b5578c179552a5d462c471051f2f87f189'
+const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','']
+const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','']
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',

@@ -22,7 +22,6 @@ const MakeOffer = ({ selectedNft}) => {
   const [nftmarketaddress, setnftmarketaddress] = useState('')
   const [amount, setAmount] = useState('0')
   const [allowMarket, setApprovedMarket] = useState()
-  searchnetwork()
   const confirmApproved = (toastHandler = toast) =>
     toastHandler.success(`Contract Approved!`, {
       style: {
@@ -47,6 +46,8 @@ const MakeOffer = ({ selectedNft}) => {
   }
   useEffect(() => {
     searchnetwork()
+  })
+  useEffect(() => {
     if (!selectedNft) return
     Approved()
   }, [selectedNft])

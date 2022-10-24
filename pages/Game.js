@@ -133,24 +133,24 @@ const Game = () => {
   const [nftaddress, setnftaddress] = useState('')
   const [tokenAddress, setTokenAddress] = useState('')
   const [allowed, setAllowance] = useState()
-  searchnetwork()
+ 
   useEffect(() => {
-    if (!collection) return
     searchnetwork()
-    searchnetwork()
+  })
+  useEffect(() => {
+    if (!tokenAddress) return
     accountInfo()
+    searchnetwork()
     window.ethereum.on('accountsChanged', function (accounts) {
       accountInfo()
     })
-  }, [collection])
-
+  }, [tokenAddress])
   const confirmClaim = (msg) => toast(msg)
 
   async function searchnetwork() {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
-      console.log(network)
       if (network.chainId == 1088){
         setnftaddress(NFTaddress[0]);
         setTokenAddress(TokenAddress[0])

@@ -4,6 +4,7 @@ import { ethers } from 'ethers'
 import Header from '../../components/Header'
 import Market from '../artifacts/NFTMarket.json'
 import NFTCard from '../../components/NFTCard'
+import { GiConsoleController } from 'react-icons/gi'
 const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
 const imagelist = [
   '../imgs/water.png',
@@ -86,15 +87,17 @@ const Collection = () => {
   const { collectionId } = router.query
   const [items, setNfts] = useState([])
   const [nftmarketaddress, setnftmarketaddress] = useState('')
-  searchnetwork()
   useEffect(() => {
+    if(!collectionId) return
     searchnetwork()
-    if (!collectionId && nftmarketaddress) return
+  },[!collectionId])
+  useEffect(() => {
+    if (nftmarketaddress == '') return
     getAllListings()
     window.ethereum.on('accountsChanged', function (accounts) {
       getAllListings()
     })
-  }, [collectionId])
+  }, [nftmarketaddress])
   async function searchnetwork() {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -114,7 +117,7 @@ const Collection = () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-  
+        console.log(nftmarketaddress)
       const marketContract = new ethers.Contract(
         nftmarketaddress,
         Market.abi,

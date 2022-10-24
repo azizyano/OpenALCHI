@@ -18,10 +18,12 @@ const MakeOffer = ({ selectedNft}) => {
   const [nftaddress, setnftaddress] = useState('')
   const [nftmarketaddress, setnftmarketaddress] = useState('')
   const confirmClaim = (msg) => toast(msg)
-  searchnetwork()
+
+  useEffect(() => {
+    searchnetwork()
+  })
   useEffect(() => {
     if (!selectedNft) return
-    searchnetwork()
   }, [selectedNft])
   async function searchnetwork() {
     try{

@@ -80,17 +80,19 @@ const Profile = () => {
   const [treasury, setTreasury] = useState(0)
   const [nftaddress, setnftaddress] = useState('')
   const [nftmarketaddress, setnftmarketaddress] = useState('')
-  searchnetwork()
+  
   useEffect(() => {
-    if (!collection) return
     searchnetwork()
+  })
+  useEffect(() => {
+    if (!nftmarketaddress) return
     getAllListings()
     myElements()
     window.ethereum.on('accountsChanged', function (accounts) {
       getAllListings()
       myElements()
     })
-  }, [collection])
+  }, [nftaddress])
   async function searchnetwork() {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)

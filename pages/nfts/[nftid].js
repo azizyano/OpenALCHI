@@ -75,10 +75,10 @@ const Nft = () => {
   const [selectedNft, setSelectedNft] = useState()
   const [nftmarketaddress, setnftmarketaddress] = useState('')
   const router = useRouter()
-  
-  searchnetwork()
   useEffect(() => {
     searchnetwork()
+  })
+  useEffect(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
      if (!provider) return
     ;(async () => {

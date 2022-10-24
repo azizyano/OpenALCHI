@@ -1,5 +1,6 @@
 import Header from '../../components/Header'
 import { useEffect, useMemo, useState } from 'react'
+import { useWeb3 } from '@3rdweb/hooks'
 import { ethers } from 'ethers'
 import Market from '../artifacts/NFTMarket.json'
 import { useRouter } from 'next/router'

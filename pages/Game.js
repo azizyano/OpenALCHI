@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import Select from 'react-select';
 import NFT from './artifacts/LittleAlchemy.json'
@@ -128,7 +128,6 @@ const Game = () => {
   const [mintFee, setmintFee] = useState([])
   const [formula, setFormula] = useState('')
   const [resultat, setResultat] = useState('0')
-  const [element, setMintFunction] = useState({ value: 'mintStandard', label: 'Standards Elements' })
   const [elementA, setElementA] = useState({ value: 'mintStandard', label: 'Standards Elements' })
   const [elementB, setElementB] = useState({ value: 'mintStandard', label: 'Standards Elements' })
   const [nftaddress, setnftaddress] = useState('')

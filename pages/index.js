@@ -11,7 +11,7 @@ const style = {
   details: `text-lg text-center text=[#282b2f] font-semibold mt-4`,
 }
 const Home = () => {
-  const {address, chainId, connectWallet, getNetworkMetadata } = useWeb3()
+  const {address, connectWallet, getNetworkMetadata } = useWeb3()
   const supportChainIds = [1088, 7700];
   const { switchNetwork } = useSwitchNetwork();
   const welcome = (address, toatHandler = toast) => {

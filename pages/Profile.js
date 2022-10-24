@@ -95,7 +95,6 @@ const Profile = () => {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
-      console.log(network)
       if (network.chainId == 1088){
         setnftaddress(NFTaddress[0]);
         setnftmarketaddress(NFTmarketaddress[0])

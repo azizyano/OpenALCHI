@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import NFT from './artifacts/LittleAlchemy.json'
 import Header from './../components/Header'
@@ -61,7 +61,7 @@ const title = [
 ]
 
 const style = {
-  bannerImageContainer: ` overflow-hidden flex justify-center items-center`,
+  bannerImageContainer: `overflow-hidden flex justify-center items-center`,
   info: `flex mx-10 text-[#e4e8eb] text-xl drop-shadow-xl`,
   title: `text-5xl font-bold mb-4`,
   statsContainer: `w-[44vw] px-4 py-4 mx-10 flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
@@ -92,7 +92,7 @@ const Profile = () => {
       getAllListings()
       myElements()
     })
-  }, [nftaddress])
+  }, [nftmarketaddress])
   async function searchnetwork() {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -249,75 +249,67 @@ const Profile = () => {
   }
 
   return (
-    <div className="h-screen  bg-gradient-to-l from-green-800 to-blue-800 ">
+    <div className=" h-screen bg-gradient-to-l from-green-800 to-blue-800 ">
       <Header />
-      <div className={style.bannerImageContainer}>
-        <div className={style.statsContainer}>
-          <div className={style.info}>Balance
-            <div className={'px-10'}>
-              {NftBanalce.length}
-            </div> 
-          </div>
-          <div className={style.info}>Listed NFT
-            <div className={'px-10'}>
-              {items.length}
-            </div>
-          </div>
-          <div className={style.info}>Total earned 
-          <div className={'px-10'}>
-            {treasury}  
-            <img
-                src="https://littlealchi.xyz/imgs/logo_name.png"
-                alt="ALCHI"
-                className='py-2 px-2 h-10 mr-2'
-              />
-          </div>
-          
-          </div>
-          
+        <div className="w-full bg-gradient-to-l from-green-700 to-blue-700 ">
+        <div className={style.bannerImageContainer}>
+                <div className="mx-4 flex">
+                  <div className={style.info}>Balance
+                    <div className={'px-10'}>
+                      {NftBanalce.length}
+                    </div> 
+                  </div>
+                  <div className={style.info}>Listed NFT
+                    <div className={'px-10'}>
+                      {items.length}
+                    </div>
+                  </div>
+                  <div className={style.info}>Total earned 
+                  <div className={'px-10'}>
+                    {treasury} 
+                  </div>
+                  
+                  </div>
+                  
+                </div>
+              </div>
+              <div className={style.info}>NFT balance</div>
+              <div className=" flex flex-wrap  ">
+              
+                {NftBanalce.map((nftItem, id) => (
+                  <div className={style.wrapper}>
+                    <NFTCard1
+                      key={id}
+                      order={nftItem.tokenId}
+                      nftItem={nftItem}
+                      name={nftItem.name}
+                      title={title[nftItem.tokenId]}
+                      listings={nftItem.sold}
+                      price={nftItem.price}
+                      balance={nftItem.balance}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className={style.info}>Listed NFT </div>
+              
+                <div className=" flex flex-wrap ">
+                
+                  {items.map((nftItem, id) => (
+                    <div className={style.wrapper}>
+                      <NFTCard2
+                        key={id}
+                        order={id}
+                        nftItem={nftItem}
+                        name={nftItem.name}
+                        title={title[nftItem.tokenId]}
+                        listings={nftItem.sold}
+                        price={nftItem.price}
+                      />
+                    </div>
+                  ))}
+                </div>
         </div>
-      </div>
-      <div className={style.info}>NFT balance</div>
-      <div className={style.listContainer}>
-      <div className=" flex flex-wrap  ">
-      
-        {NftBanalce.map((nftItem, id) => (
-          <div className={style.wrapper}>
-            <NFTCard1
-              key={id}
-              order={nftItem.tokenId}
-              nftItem={nftItem}
-              name={nftItem.name}
-              title={title[nftItem.tokenId]}
-              listings={nftItem.sold}
-              price={nftItem.price}
-              balance={nftItem.balance}
-            />
-          </div>
-        ))}
-      </div>
-      </div>
-      <div className={style.info}>Listed NFT </div>
-      <div className={style.listContainer}>
-      
-        <div className=" flex flex-wrap ">
-        
-          {items.map((nftItem, id) => (
-            <div className={style.wrapper}>
-              <NFTCard2
-                key={id}
-                order={id}
-                nftItem={nftItem}
-                name={nftItem.name}
-                title={title[nftItem.tokenId]}
-                listings={nftItem.sold}
-                price={nftItem.price}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      
     </div>
   )
 }

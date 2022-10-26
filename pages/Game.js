@@ -111,7 +111,7 @@ const elementsOptions = [
 ]
 const style = {
   container: `  bg-gradient-to-r from-indigo-700 via-indigo-700 to-blue-700 py-10 px-10 rounded-xl mb-4`,
-  wrapper: `flex py-10 px-10 items-stretch grid grid-flow-col gap-4`,
+  wrapper: `flex py-10 px-10 items-stretch grid grid-flow-col gap-4 bg-gradient-to-l from-green-800 to-blue-800`,
   titleContainer: `px-2 py-2 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
   info: `flex justify-between py-4 text-[#151b22] text-lg drop-shadow-xl`,
   priceValue: `flex justify-center  font-bold mt-2`,
@@ -133,7 +133,8 @@ const Game = () => {
   const [nftaddress, setnftaddress] = useState('')
   const [tokenAddress, setTokenAddress] = useState('')
   const [allowed, setAllowance] = useState()
- 
+  const [network, setnetwork] = useState('')
+
   useEffect(() => {
     searchnetwork()
   })
@@ -151,6 +152,7 @@ const Game = () => {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
+      setnetwork(network)
       if (network.chainId == 1088){
         setnftaddress(NFTaddress[0]);
         setTokenAddress(TokenAddress[0])
@@ -328,7 +330,7 @@ const Game = () => {
    
   }
   return (
-    <div className=" h-screen w-screen bg-gradient-to-l from-green-800 to-blue-800">
+    <div className="h-screen bg-gradient-to-l from-green-800 to-blue-800">
       <Header />
       <div className={style.wrapper}>
         <div className={style.container}>
@@ -372,10 +374,18 @@ const Game = () => {
                   </div>
                   <div>
                     <span className='px-4 py-4 flex justify-center  font-bold mt-2'>Buy ALCHI token to mint New Elements 
-                  <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7" 
-                    className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                        <span className="mx-10 ">Buy</span>
-                    </a>
+                  {network.chainId == 1088 ?
+                                   <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7" 
+                                   className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                                       <span className="mx-10 ">Netswap</span>
+                                   </a> : 
+                                    <a href="https://forteswap.xyz/" 
+                                    className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                                        <span className="mx-10 ">Forteswap</span>
+                                    </a>     
+                }
+                  
+
                     </span>
                   </div>
                   <button className={style.button} onClick={() => mintStandard()}>Standards Elements</button>

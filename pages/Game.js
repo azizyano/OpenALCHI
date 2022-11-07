@@ -6,8 +6,8 @@ import Token from './artifacts/Token.json'
 import Header from './../components/Header'
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
-const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
-const TokenAddress = ['0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B','0xA99C4A1438c1200f64b47D2CC30f1e702577604c']
+const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189', '0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
+const TokenAddress = ['0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B', '0xA99C4A1438c1200f64b47D2CC30f1e702577604c']
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -61,7 +61,7 @@ const title = [
   'Bitcoin',
 ]
 const options = [
-  { value: 'mintStandard', label: 'Standards Elements' },
+  { value: 'mintStandard', label: 'Standard Elements' },
   { value: 'mintPlant', label: 'RainEarth' },
   { value: 'mintSand', label: 'AirRock' },
   { value: 'mintRock', label: 'AirLava' },
@@ -123,47 +123,43 @@ const Game = () => {
   const [account, setAccount] = useState()
   const [balance, setBalance] = useState()
   const [balanceArray, setBalanceArray] = useState([0])
-  const [collection, setCollection] = useState({})
   const [NftBanalce, setNftBanalce] = useState([])
   const [mintFee, setmintFee] = useState([])
   const [formula, setFormula] = useState('')
   const [resultat, setResultat] = useState('0')
-  const [elementA, setElementA] = useState({ value: 'mintStandard', label: 'Standards Elements' })
-  const [elementB, setElementB] = useState({ value: 'mintStandard', label: 'Standards Elements' })
-  const [nftaddress, setnftaddress] = useState('')
-  const [tokenAddress, setTokenAddress] = useState('')
+  const [elementA, setElementA] = useState({ value: 'mintStandard', label: 'Standard Elements' })
+  const [elementB, setElementB] = useState({ value: 'mintStandard', label: 'Standard Elements' })
+  const [nftaddress, setnftaddress] = useState()
+  const [tokenAddress, setTokenAddress] = useState()
   const [allowed, setAllowance] = useState()
-  const [network, setnetwork] = useState('')
-
-  useEffect(() => {
+  const [network, setnetwork] = useState()
+  useEffect(async () => {
     searchnetwork()
-  })
+    console.log('nft address: ', nftaddress, 'account: ', account)
+  }, [nftaddress])
   useEffect(() => {
-    if (!tokenAddress) return
     accountInfo()
-    searchnetwork()
-    window.ethereum.on('accountsChanged', function (accounts) {
-      accountInfo()
-    })
-  }, [tokenAddress])
+    console.log('2nd')
+  }, [network])
   const confirmClaim = (msg) => toast(msg)
 
   async function searchnetwork() {
-    try{
+    try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       setnetwork(network)
-      if (network.chainId == 1088){
+      if (network.chainId == 1088) {
         setnftaddress(NFTaddress[0]);
         setTokenAddress(TokenAddress[0])
-      } else if (network.chainId == 7700){
+      } else if (network.chainId == 7700) {
         setnftaddress(NFTaddress[1]);
         setTokenAddress(TokenAddress[1])
       }
-    } catch(e){
-        console.log(e)
-      }
+    } catch (e) {
+      console.log(e)
     }
+  }
+
   function magicFormula(elementA, elementB) {
 
     const fusion = elementA.label + elementB.label
@@ -174,7 +170,7 @@ const Game = () => {
         setFormula(options[i].value)
         break
       }
-      setResultat('0')
+      setResultat(1)
     }
   }
 
@@ -203,10 +199,10 @@ const Game = () => {
         confirmClaim('transaction successful!')
       } catch (error) {
         console.log(error)
-        if (error.data){
+        if (error.data) {
           confirmClaim(error.data.message.toString())
           console.log(error.data.message.toString())
-        } else{
+        } else {
           confirmClaim("you can't mint this element")
         }
       }
@@ -324,10 +320,10 @@ const Game = () => {
       } else {
         console.log('You need to mint your first element')
       }
-    } catch (e){
+    } catch (e) {
       console.log(e.message)
     }
-   
+
   }
   return (
     <div className="h-screen bg-gradient-to-l from-green-800 to-blue-800">
@@ -369,26 +365,27 @@ const Game = () => {
               {allowed ? (
                 <>
                   <div className={style.titleContainer}>
-                    <span> Magic formulat</span>
-                    
+                    <span> Magic formula</span>
+
                   </div>
                   <div>
-                    <span className='px-4 py-4 flex justify-center  font-bold mt-2'>Buy ALCHI token to mint New Elements 
-                  {network.chainId == 1088 ?
-                                   <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7" 
-                                   className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                                       <span className="mx-10 ">Netswap</span>
-                                   </a> : 
-                                    <a href="https://forteswap.xyz/" 
-                                    className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                                        <span className="mx-10 ">Forteswap</span>
-                                    </a>     
-                }
-                  
+                    <span className='px-4 py-4 flex justify-center  font-bold mt-2'>Buy ALCHI token to mint New Elements
+                      {network.chainId == 1088 ?
+                        <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7"
+                          className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                          <span className="mx-10 ">Netswap</span>
+                        </a> :
+                        <a href="https://www.cantoswap.fi/#/swap"
+                          className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                          <span className="mx-10 ">CantoSwap</span>
+                        </a>
+                      }
+
 
                     </span>
                   </div>
-                  <button className={style.button} onClick={() => mintStandard()}>Standards Elements</button>
+                  <label className='px-1 py-2 flex justify-center  mt-2 text-sm'> To start you need first to have standard elements, there are 4 elements the total fee is {4 * mintFee} ALCHI.</label>
+                  <button className={style.button} onClick={() => mintStandard()}>Mint Standard Elements</button>
                   <div className='w-4/5 flex mx-auto py-8 px-8 '>
                     <Select
                       value={elementA}
@@ -403,39 +400,45 @@ const Game = () => {
                       className='w-4/5 mx-auto px-4'
                     />
                   </div>
+                  <label className='px-1 py-2 flex justify-center mt-2 text-sm'>you can now start searching for new elements, but you cant mint any new element <br />
+                    if you don't have a formula element. Example Air + fire = Energy <br />
+                    'your need to have Air and Fire in your balance'.
+                  </label>
                   <button className={style.button} onClick={() => magicFormula(elementA, elementB)}>try formula</button>
                   <div className='justify-self-center mx-auto py-4'>
-                    {resultat === '0' ? (
-                      <div className=' text-xl text-[#da4859] text-center '> Bad Formulat !</div>
-                    ) : (
-                      <div className='flex '>
-                        <button className={style.mintbutton} onClick={() => Mint(resultat)} > {resultat} </button>
-                        <Toaster
-                          position="top-center"
-                          reverseOrder={false}
-                          gutter={8}
-                          toastOptions={{
-                            className: '',
-                            duration: 5000,
-                            style: {
-                              background: '#363636',
-                              color: '#fff',
-                            },
-                            success: {
-                              duration: 3000,
-                              theme: {
-                                primary: 'green',
-                                secondary: 'black',
-                              },
-                            },
-                          }} />
-                      </div>
-                    )}
+                    {resultat == '0' ?
+                      (<div className=''> </div>) :
+                      resultat == 1 ?
+                        <div className=' text-xl text-[#da4859] text-center '>Try new Formula </div>
+                        : (
+                          <div className='flex '>
+                            <button className={style.mintbutton} onClick={() => Mint(resultat)} > {resultat} </button>
+                            <Toaster
+                              position="top-center"
+                              reverseOrder={false}
+                              gutter={8}
+                              toastOptions={{
+                                className: '',
+                                duration: 5000,
+                                style: {
+                                  background: '#363636',
+                                  color: '#fff',
+                                },
+                                success: {
+                                  duration: 3000,
+                                  theme: {
+                                    primary: 'green',
+                                    secondary: 'black',
+                                  },
+                                },
+                              }} />
+                          </div>
+                        )}
                   </div>
                 </>
               ) : (
                 <div>
-                  <button className={style.button} onClick={() => Approuve()} >Approuve to access</button>
+                  <button className={style.button} onClick={() => Approuve()} >Approve to access</button>
                   <Toaster />
                 </div>
               )
@@ -452,11 +455,11 @@ const Game = () => {
                 alt="ALCHI"
                 className='py-2 px-2 h-10 mr-2'
               />
-              
+
             </div>
             <div className={style.priceValue}>
               <p className='text-sky-400 px-2 py-2'> Mint Fee: {mintFee} ALCHI </p>
-              
+
               <img
                 src="https://littlealchi.xyz/imgs/logo_name.png"
                 alt="MATIC"

@@ -60,7 +60,7 @@ const title = [
 ]
 
 const style = {
-  bannerImageContainer: `h-[20vh] w-screen overflow-hidden flex justify-center items-center`,
+  bannerImageContainer: `h-[20vh] overflow-hidden flex justify-center items-center`,
   listContainer: ` flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
   bannerImage: `w-full object-cover`,
   infoContainer: `w-screen px-4`,

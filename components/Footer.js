@@ -1,9 +1,7 @@
-import Link from "next/link";
-import Image from "next/image";
+
 import {AiFillMediumCircle} from "react-icons/ai";
 import {ImTelegram, ImTwitter} from "react-icons/im";
 import React from "react";
-import logo from "../assets/logo_name.png"
 
 const Footer =()=>{
     return <div className="bg-white dark:bg-gray-900">

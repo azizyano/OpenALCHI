@@ -5,7 +5,7 @@ import bg from '../assets/bg.png';
 import elric from "../assets/elric-alphonse.png"
 
 const style = {
-    wrapper: `relative h-screen w-screen`,
+    wrapper: `relative h-screen `,
     container: ` before:content-[''] before:bg-red-500 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('../assets/fullmetal.png')] before:bg-cover before:bg-center before:opacity-60 before:blur`,
     contentWrapper: `flex relative justify-center flex-wrap items-center`,
     copyContainer: `w-1/2`,
@@ -18,7 +18,6 @@ const style = {
     infoContainer: `h-20 bg-[#313338] p-4 rounded-b-lg flex items-center text-white`,
     author: `justify-center ml-4`,
     name: `text-2xl `,
-    infoIcon: `flex justify-end items-center flex-1 text-[#8a939b] text-3xl font-bold`,
   }
 const Alchi = () => {
     return <div className={style.wrapper}>

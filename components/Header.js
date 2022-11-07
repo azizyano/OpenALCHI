@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import logo from "../assets/logo_name.png"
 
 const style = {
-    wrapper: `bg-[#04111d] w-screen px-[1.2rem] py-[0.8rem] flex `,
+    wrapper: `bg-[#04111d] px-[1.2rem] py-[0.8rem] flex `,
     logoContainer: `flex items-center cursor-pointer`,
     logoText: ` ml-[0.8rem] text-white font-semibold text-2xl`,
     searchBar: `flex flex-1 mx-[0.8rem] w-max-[320px] items-center  `,

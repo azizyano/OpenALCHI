@@ -277,7 +277,7 @@ const Profile = () => {
               <div className=" flex flex-wrap  ">
               
                 {NftBanalce.map((nftItem, id) => (
-                  <div className={style.wrapper}>
+                  <div  className={style.wrapper} key={id}>
                     <NFTCard1
                       key={id}
                       order={nftItem.tokenId}
@@ -296,7 +296,7 @@ const Profile = () => {
                 <div className=" flex flex-wrap ">
                 
                   {items.map((nftItem, id) => (
-                    <div className={style.wrapper}>
+                    <div className={style.wrapper} key={id}>
                       <NFTCard2
                         key={id}
                         order={id}

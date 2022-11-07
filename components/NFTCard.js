@@ -3,8 +3,8 @@ import { BiHeart } from 'react-icons/bi'
 import Router from 'next/router'
 
 const style = {
-  wrapper: `bg-[#303339] w-[18rem] h-[22rem] my-10 mx-5 rounded-2xl overflow-hidden cursor-pointer`,
-  imgContainer: `h-2/3  flex justify-center items-center`,
+  wrapper: `bg-[#303339] w-[17rem] h-[22rem] my-2 m-auto rounded-2xl overflow-hidden cursor-pointer`,
+  imgContainer: `h-3/4  flex justify-center items-center`,
   nftImg: `w-40 h-50 w-full `,
   details: `p-3`,
   info: `flex justify-between text-[#e4e8eb] drop-shadow-xl`,
@@ -35,25 +35,15 @@ const NFTCard = ({order, nftItem, price }) => {
       <div className={style.details}>
         <div className={style.info}>
           <div className={style.infoLeft}>
-            <div className={style.collectionName}>Name:</div>
             <div className={style.assetName}>{nftItem.name}</div>
           </div>
           
             <div className={style.infoRight}>
-              <div className={style.priceTag}>Price</div>
-              <div className={style.priceValue}>
-                
-                {price}
-              </div>
+              <div className={style.priceTag}>Price: {price}</div>
+              
               
             </div>
           
-        </div>
-        <div className={style.likes}>
-          <span className={style.likeIcon}>
-            <BiHeart />
-          </span>{' '}
-          {nftItem.likes}
         </div>
       </div>
     </div>

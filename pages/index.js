@@ -5,10 +5,8 @@ import {useWeb3, useSwitchNetwork} from '@3rdweb/hooks'
 import { useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 const style = {
-  wrapper: ``,
   walletConnectWrapper: `flex flex-col justify-center items-center h-screen w-screen bg-[#3b3d42] `,
   button: `border border-[#282b2f] bg-[#2081e2] p-[0.8rem] text-xl font-semibold rounded-lg cursor-pointer text-black`,
-  details: `text-lg text-center text=[#282b2f] font-semibold mt-4`,
 }
 const Home = () => {
   const {address, connectWallet, getNetworkMetadata } = useWeb3()
@@ -33,14 +31,14 @@ const Home = () => {
   }, [address])
 
   return (
-    <div className={style.wrapper}>
+    <div className='w-full m-auto'>
       <Toaster position="top-left" reverseOrder={false} />
 
       {address ? ( 
         <>
         <Header/>
         <Alchi/>
-          <Footer/>
+        <Footer/>
         </>
       ):(
         <div className={style.walletConnectWrapper}>

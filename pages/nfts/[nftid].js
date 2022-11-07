@@ -80,7 +80,7 @@ const Nft = () => {
   })
   useEffect(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-     if (!provider) return
+     if (!nftmarketaddress) return
     ;(async () => {
         const selectedNftItem = router.query.nftid
         const signer = provider.getSigner();
@@ -109,7 +109,7 @@ const Nft = () => {
        console.log(item)
       setSelectedNft(item)
     })()
-  }, [provider])
+  }, [nftmarketaddress])
   async function searchnetwork() {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)

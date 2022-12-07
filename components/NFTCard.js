@@ -3,14 +3,14 @@ import { BiHeart } from 'react-icons/bi'
 import Router from 'next/router'
 
 const style = {
-  wrapper: `bg-[#303339] w-[17rem] h-[22rem] my-2 m-auto rounded-2xl overflow-hidden cursor-pointer`,
+  wrapper: `bg-[#3d4a57] border border-sky-500 w-[18rem] h-[25rem] my-2 m-auto rounded-2xl overflow-hidden cursor-pointer drop-shadow-lg`,
   imgContainer: `h-3/4  flex justify-center items-center`,
   nftImg: `w-40 h-50 w-full `,
-  details: `p-3`,
-  info: `flex justify-between text-[#e4e8eb] drop-shadow-xl`,
+  details: `border-t-4 border-indigo-500 p-3`,
+  info: `flex justify-between text-[#e4e8eb] font-serif drop-shadow-xl`,
   infoLeft: `flex-0.6 flex-wrap`,
-  collectionName: `font-semibold text-sm text-[#8a939b]`,
-  assetName: `font-bold text-lg mt-2`,
+  collectionName: `font-semibold text-sm font-serif text-[#8a939b]`,
+  assetName: `font-bold text-lg font-serif mt-2`,
   infoRight: `flex-0.4 text-right`,
   priceTag: `font-semibold text-sm text-[#8a939b]`,
   priceValue: `flex items-center text-xl font-bold mt-2`,

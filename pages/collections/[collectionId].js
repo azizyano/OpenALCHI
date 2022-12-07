@@ -158,15 +158,11 @@ const Collection = () => {
 
 
   return (
-    <div className=" bg-gradient-to-l from-green-800 to-blue-800 ">
+    <div className=" bg-sky-700 ">
       <Header />
-      <div className={style.bannerImageContainer}>
-        <div className={style.statValue}>
-          Little Alchemy Marketplace
-        </div>
-      </div>
-      <div className={'h-screen'}>
-      <div className="flex flex-wrap bg-gradient-to-l from-green-600 to-blue-600 ">
+   
+      <div className={'p-10 h-full'}>
+      <div className="flex flex-wrap  ">
         {items.map((nftItem, id) => (
           <NFTCard
             key={id}

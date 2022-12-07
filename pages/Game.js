@@ -110,13 +110,13 @@ const elementsOptions = [
   { value: 23, label: 'Bitcoin' },
 ]
 const style = {
-  container: `  bg-gradient-to-r from-indigo-700 via-indigo-700 to-blue-700 py-10 px-10 rounded-xl mb-4`,
-  wrapper: `flex py-10 px-10 items-stretch grid grid-flow-col gap-4 bg-gradient-to-l from-green-800 to-blue-800`,
-  titleContainer: `px-2 py-2 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
+  container: `  bg-gradient-to-r  py-10 px-10 rounded-xl mb-4`,
+  wrapper: `flex py-10 px-10 items-stretch  `,
+  titleContainer: `p-4 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
   info: `flex justify-between py-4 text-[#151b22] text-lg drop-shadow-xl`,
   priceValue: `flex justify-center  font-bold mt-2`,
-  button: `bg-indigo-500 flex mx-auto text-[#9de8eb] text-lg py-4 px-4 rounded-lg cursor-pointer hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300`,
-  mintbutton: `bg-indigo-700 mx-auto text-[#9de8eb] text-lg py-4 px-4 rounded-lg cursor-pointer hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300`,
+  button: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
+  mintbutton: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
 }
 
 const Game = () => {
@@ -326,14 +326,15 @@ const Game = () => {
 
   }
   return (
-    <div className="h-screen bg-gradient-to-l from-green-800 to-blue-800">
+    <div className="bg-sky-700 h-full">
       <Header />
       <div className={style.wrapper}>
+      <div className='w-1/2 p-10 '>
         <div className={style.container}>
           <div className={style.titleContainer}>
             The Alchemist's Garden
           </div>
-          <div className={style.priceValue}>
+          <div className={style.info}>
             <div className='w-4/5 text-center bg-blue-500 py-8 px-8 rounded-xl mb-4'>
               {elementA.label}
             </div>
@@ -359,7 +360,8 @@ const Game = () => {
           </div>
 
         </div>
-        <div className=''>
+        </div>
+        <div className='w-1/2 p-10 '>
           <div className='justify-self-end '>
             <div className=''>
               {allowed ? (

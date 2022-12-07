@@ -9,7 +9,7 @@ const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A
 
 
 const style = {
-  button: `mr-8 flex items-center py-2 px-12 rounded-lg cursor-pointer`,
+  button: `mr-8 flex items-center py-2 px-12 rounded-lg cursor-pointer text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800`,
   buttonIcon: `text-xl`,
   buttonText: `ml-2 text-lg font-semibold`,
 }

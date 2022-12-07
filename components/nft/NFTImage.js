@@ -8,14 +8,14 @@ const style = {
 }
 
 const NFTImage = ({ selectedNft }) => {
+  console.log(selectedNft)
   return (
-    <div>
+    <div className=' bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700'>
       <div className={style.topBar}>
         <div className={style.topBarContent}>
           <IoMdSnow />
           <div className={style.likesCounter}>
-            <AiOutlineHeart />
-            2.3K
+            Price : {selectedNft?.price.toString()/10**18}
           </div>
         </div>
       </div>

@@ -7,8 +7,8 @@ import { GiShare } from 'react-icons/gi'
 const style = {
   wrapper: `flex`,
   infoContainer: `h-36 flex flex-col flex-1 justify-between mb-6`,
-  accent: `text-[#2081e2]`,
-  nftTitle: `text-3xl font-extrabold`,
+  accent: `mb-2 text-xl font-bold text-gray-900 dark:text-[#2081e2]`,
+  nftTitle: `mb-2 text-3xl font-bold text-gray-900 dark:text-black`,
   otherInfo: `flex`,
   ownedBy: `text-[#8a939b] mr-4`,
   likes: `flex items-center text-[#8a939b]`,
@@ -23,14 +23,11 @@ const GeneralDetails = ({ selectedNft }) => {
   return (
     <div className={style.wrapper}>
       <div className={style.infoContainer}>
-        <div className={style.accent}>Allchemy Elements</div>
+        <div className={style.accent}> Element name:</div>
         <div className={style.nftTitle}>{selectedNft?.name}</div>
         <div className={style.otherInfo}>
           <div className={style.ownedBy}>
             Owned by <span className={style.accent}>{selectedNft?.seller}</span>
-          </div>
-          <div className={style.likes}>
-            <AiFillHeart className={style.likeIcon} /> 2.3K favorites
           </div>
           
         </div>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
+import constants from './constants'
 import NFT from './artifacts/LittleAlchemy.json'
 import Header from './../components/Header'
 import Market from './artifacts/NFTMarket.json'
 import NFTCard1 from './../components/NFTCard1'
 import NFTCard2 from './../components/NFTCard2'
-const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
-const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -62,7 +61,7 @@ const title = [
 
 const style = {
   bannerImageContainer: `overflow-hidden flex justify-center items-center`,
-  info: `flex mx-10 text-[#e4e8eb] text-xl drop-shadow-xl`,
+  info: `flex justfy-between mx-auto text-[#e4e8eb] text-l drop-shadow-xl`,
   title: `text-5xl font-bold mb-4`,
   statsContainer: `w-[44vw] px-4 py-4 mx-10 flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
   listContainer: `mx-10 px-10 py-10 flex justify-between my-10 py-4 border border-[#151b22] rounded-xl mb-4`,
@@ -74,6 +73,7 @@ const style = {
 const Profile = () => {
   const [account, setAccount] = useState()
   const [balanceArray, setBalanceArray] = useState([0])
+  const [tokenName, setTokenName] = useState('')
   const [NftBanalce, setNftBanalce] = useState([])
   const [collection, setCollection] = useState({})
   const [items, setNfts] = useState([])
@@ -98,11 +98,17 @@ const Profile = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       if (network.chainId == 1088){
-        setnftaddress(NFTaddress[0]);
-        setnftmarketaddress(NFTmarketaddress[0])
+        setnftaddress(constants.Mgame);
+        setnftmarketaddress(constants.Mmarket)
+        setTokenName('Metis')
       } else if (network.chainId == 7700){
-        setnftaddress(NFTaddress[1]);
-        setnftmarketaddress(NFTmarketaddress[1])
+        setnftaddress(constants.Cgame);
+        setnftmarketaddress(constants.Cmarket)
+        setTokenName('Canto')
+      } else if (network.chainId == 250){
+        setnftaddress(constants.Fgame);
+        setnftmarketaddress(constants.Fmarket)
+        setTokenName('FTM')
       }
     } catch(e){
         console.log(e)
@@ -151,6 +157,7 @@ const Profile = () => {
         })
       )
       setNfts(items)
+      console.log("read data")
       setTreasury(treasury.toFixed(2))
     } catch{
       console.log(Error)
@@ -253,20 +260,20 @@ const Profile = () => {
       <Header />
         <div className="w-full bg-gradient-to-l from-green-700 to-blue-700 ">
         <div className={style.bannerImageContainer}>
-                <div className="mx-4 flex">
+                <div className=" flex">
                   <div className={style.info}>Balance
-                    <div className={'px-10'}>
+                    <div className={'text-sm text-sky-400 m-auto px-4'}>
                       {NftBanalce.length}
                     </div> 
                   </div>
                   <div className={style.info}>Listed NFT
-                    <div className={'px-10'}>
+                    <div className={'text-sm text-sky-400 m-auto px-4'}>
                       {items.length}
                     </div>
                   </div>
                   <div className={style.info}>Total earned 
-                  <div className={'px-10'}>
-                    {treasury} 
+                  <div className={'text-sm text-sky-400 m-auto px-4'}>
+                    {treasury} { tokenName}
                   </div>
                   
                   </div>

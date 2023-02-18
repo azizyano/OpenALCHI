@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { IoMdWallet } from 'react-icons/io'
 import toast, { Toaster } from 'react-hot-toast'
+import constants from '../../pages/constants'
 import Market from '../../pages/artifacts/NFTMarket.json'
 
-const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189','0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
-const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
 
 
 const style = {
@@ -23,23 +22,27 @@ const MakeOffer = ({ selectedNft}) => {
     searchnetwork()
   })
   useEffect(() => {
-    if (!selectedNft) return
-  }, [selectedNft])
+    console.log(selectedNft)
+  }, [])
   async function searchnetwork() {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       console.log(network)
       if (network.chainId == 1088){
-        setnftaddress(NFTaddress[0]);
-        setnftmarketaddress(NFTmarketaddress[0])
+        setnftaddress(constants.Mgame);
+        setnftmarketaddress(constants.Mmarket)
       } else if (network.chainId == 7700){
-        setnftaddress(NFTaddress[1]);
-        setnftmarketaddress(NFTmarketaddress[1])
+        setnftaddress(constants.Cgame);
+        setnftmarketaddress(constants.Cmarket)
+      } else if (network.chainId == 250){
+        setnftaddress(constants.Fgame);
+        setnftmarketaddress(constants.Fmarket)
       }
     } catch(e){
         console.log(e)
       }
+      console.log('set address')
     }
 
   async function buyItem(nft) {
@@ -59,7 +62,8 @@ const MakeOffer = ({ selectedNft}) => {
         await transaction.wait()
         confirmClaim('Purchase successful!')
       } catch (error) {
-        confirmClaim(error.data.message.toString())
+        console.log(error)
+        confirmClaim(error.toString())
       }
   }
 

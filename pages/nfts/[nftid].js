@@ -1,6 +1,7 @@
 import Header from '../../components/Header'
 import { useEffect, useMemo, useState } from 'react'
 import { useWeb3 } from '@3rdweb/hooks'
+import constants from '../constants'
 import { ethers } from 'ethers'
 import Market from '../artifacts/NFTMarket.json'
 import { useRouter } from 'next/router'
@@ -88,7 +89,7 @@ const Nft = () => {
             nftmarketaddress,
             Market.abi,
             signer
-          )
+          ) 
         const data = await marketContract.fetchMarketItems()
         const meta = ''
           try {
@@ -116,9 +117,11 @@ const Nft = () => {
       const network = await provider.getNetwork()
       console.log(network)
       if (network.chainId == 1088){
-        setnftmarketaddress(NFTmarketaddress[0])
+        setnftmarketaddress(constants.Mmarket)
       } else if (network.chainId == 7700){
-        setnftmarketaddress(NFTmarketaddress[1])
+        setnftmarketaddress(constants.Cmarket)
+      } else if (network.chainId == 250){
+        setnftmarketaddress(constants.Fmarket)
       }
     } catch(e){
         console.log(e)

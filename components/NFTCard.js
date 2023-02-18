@@ -18,8 +18,8 @@ const style = {
   likes: `text-[#8a939b] font-bold flex items-center w-full justify-end mt-3`,
   likeIcon: `text-xl mr-2`,
 }
-
-const NFTCard = ({order, nftItem, price }) => {
+ 
+const NFTCard = ({order, nftItem, price, tokenName }) => {
   return (
     <div
       className={style.wrapper}
@@ -39,9 +39,7 @@ const NFTCard = ({order, nftItem, price }) => {
           </div>
           
             <div className={style.infoRight}>
-              <div className={style.priceTag}>Price: {price}</div>
-              
-              
+              <div className={style.priceTag}>Price: {price + ' ' + tokenName}</div>
             </div>
           
         </div>

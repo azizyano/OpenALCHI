@@ -15,7 +15,7 @@ const NFTImage = ({ selectedNft }) => {
         <div className={style.topBarContent}>
           <IoMdSnow />
           <div className={style.likesCounter}>
-            Price : {selectedNft?.price.toString()/10**18}
+            Price : {selectedNft?.price?.toString()/10**18 }
           </div>
         </div>
       </div>

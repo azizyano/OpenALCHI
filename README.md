@@ -1,16 +1,9 @@
-## OpenAlchi 
+fantom testnet
+token deployed to: 0x142e9F429e4ECF181C2Ac9b53966D947c4f6D84C
+Game deployed to: 0x51dDcB73f8F1204450c860c6e3CD41791d3b5a2E
+Market deployed to: 0x36996c8642810add6c5bb814ed7a7ca8abc26fe0
 
-Metis simple NFT game
-
-## Introduction
-
-this project is a submission to polygon Hackathon, you can test the app after setting your Metamask to Mumbai testnet. 
-
-### Demo: 
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/A-5i950k3kQ/0.jpg)](https://www.youtube.com/watch?v=A-5i950k3kQ)
-
-
+0x5f2E88786214Ab5E4993d14C49f38ceA031B1004
 # Little Alchemy
 
 

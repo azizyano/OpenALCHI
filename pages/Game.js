@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import Select from 'react-select';
+import constants from './constants'
 import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
 import Header from './../components/Header'
+import Footer from './../components/Footer'
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
-const NFTaddress = ['0xd5d0c6b5578c179552a5d462c471051f2f87f189', '0x97C534CdEa1aA1730944ae27A3A11431C4e038Eb']
-const TokenAddress = ['0x1d94Cc954FcE49dB542A61D68901F787B874Cf4B', '0xA99C4A1438c1200f64b47D2CC30f1e702577604c']
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -110,18 +110,19 @@ const elementsOptions = [
   { value: 23, label: 'Bitcoin' },
 ]
 const style = {
-  container: `  bg-gradient-to-r  py-10 px-10 rounded-xl mb-4`,
-  wrapper: `flex py-10 px-10 items-stretch  `,
+  container: ` py-4 px-4 rounded-xl `,
+  wrapper: `justify-between items-stretch grid gap-6 mb-6 md:grid-cols-2 `,
   titleContainer: `p-4 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
   info: `flex justify-between py-4 text-[#151b22] text-lg drop-shadow-xl`,
   priceValue: `flex justify-center  font-bold mt-2`,
-  button: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
+  button: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
   mintbutton: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
 }
 
 const Game = () => {
   const [account, setAccount] = useState()
   const [balance, setBalance] = useState()
+  const [loading, setLoading] = useState(true)
   const [balanceArray, setBalanceArray] = useState([0])
   const [NftBanalce, setNftBanalce] = useState([])
   const [mintFee, setmintFee] = useState([])
@@ -133,14 +134,17 @@ const Game = () => {
   const [tokenAddress, setTokenAddress] = useState()
   const [allowed, setAllowance] = useState()
   const [network, setnetwork] = useState()
-  useEffect(async () => {
+  useEffect( () => {
     searchnetwork()
-    console.log('nft address: ', nftaddress, 'account: ', account)
-  }, [nftaddress])
-  useEffect(() => {
+  },[nftaddress])
+  useEffect( () => {
+    if (!tokenAddress) return
     accountInfo()
-    console.log('2nd')
-  }, [network])
+    window.ethereum.on('accountsChanged', function (accounts) {
+      searchnetwork()
+      accountInfo()
+    })
+  }, [tokenAddress])
   const confirmClaim = (msg) => toast(msg)
 
   async function searchnetwork() {
@@ -149,79 +153,19 @@ const Game = () => {
       const network = await provider.getNetwork()
       setnetwork(network)
       if (network.chainId == 1088) {
-        setnftaddress(NFTaddress[0]);
-        setTokenAddress(TokenAddress[0])
+        setnftaddress(constants.Mgame);
+        setTokenAddress(constants.Mtoken)
       } else if (network.chainId == 7700) {
-        setnftaddress(NFTaddress[1]);
-        setTokenAddress(TokenAddress[1])
+        setnftaddress(constants.Cgame);
+        setTokenAddress(constants.Ctoken)
+      } else if (network.chainId == 250) {
+        setnftaddress(constants.Fgame);
+        setTokenAddress(constants.Ftoken)
       }
     } catch (e) {
       console.log(e)
     }
-  }
-
-  function magicFormula(elementA, elementB) {
-
-    const fusion = elementA.label + elementB.label
-    const fusion0 = elementB.label + elementA.label
-    for (let i = 0; i < options.length; i++) {
-      if (fusion == options[i].label || fusion0 == options[i].label) {
-        setResultat(options[i].value)
-        setFormula(options[i].value)
-        break
-      }
-      setResultat(1)
-    }
-  }
-
-  async function Approuve() {
-    if (account) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner()
-      const contract = new ethers.Contract(tokenAddress, Token.abi, signer)
-      const transaction = await contract.approve(nftaddress, "20000000000000000000")
-      await transaction.wait()
-      setAllowance(true)
-      confirmClaim('Approved successful!')
-    }
-  }
-  async function Mint(element) {
-    if (account) {
-      console.log(element);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
-      const mintelement = element.toString();
-      try {
-        const transaction = await contract2[mintelement]();
-        await transaction.wait()
-        accountInfo()
-        confirmClaim('transaction successful!')
-      } catch (error) {
-        console.log(error)
-        if (error.data) {
-          confirmClaim(error.data.message.toString())
-          console.log(error.data.message.toString())
-        } else {
-          confirmClaim("you can't mint this element")
-        }
-      }
-    }
-  }
-  async function mintStandard() {
-    if (account) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
-      try {
-        const transaction = await contract2.mintStandard();
-        await transaction.wait()
-        accountInfo()
-        confirmClaim('transaction successful!')
-      } catch (error) {
-        console.log(error)
-      }
-    }
+    console.log("setaddress")
   }
   async function accountInfo() {
     try {
@@ -323,13 +267,87 @@ const Game = () => {
     } catch (e) {
       console.log(e.message)
     }
-
+    console.log('loading account')
+    setLoading(false)
   }
+  function magicFormula(elementA, elementB) {
+
+    const fusion = elementA.label + elementB.label
+    const fusion0 = elementB.label + elementA.label
+    for (let i = 0; i < options.length; i++) {
+      if (fusion == options[i].label || fusion0 == options[i].label) {
+        setResultat(options[i].value)
+        setFormula(options[i].value)
+        break
+      }
+      setResultat(1)
+    }
+  }
+
+  async function Approuve() {
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner()
+      const contract = new ethers.Contract(tokenAddress, Token.abi, signer)
+      const transaction = await contract.approve(nftaddress, "4400000000000000000000000000")
+      await transaction.wait()
+      setAllowance(true)
+      confirmClaim('Approved successful!')
+    }
+  }
+  async function setfundAddress() {
+    if (account ) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner()
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
+      const transaction = await contract2.setfundAddress("0x2e72Bd602522F937e350d872D572451f877BC8ec")
+      await transaction.wait()
+    }
+  }
+  async function Mint(element) {
+    if (account) {
+      console.log(element);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
+      const mintelement = element.toString();
+      try {
+        const transaction = await contract2[mintelement]();
+        await transaction.wait()
+        accountInfo()
+        confirmClaim('transaction successful!')
+      } catch (error) {
+        console.log(error)
+        if (error.data) {
+          confirmClaim(error.data.message.toString())
+          console.log(error.data.message.toString())
+        } else {
+          confirmClaim("you can't mint this element")
+        }
+      }
+    }
+  }
+  async function mintStandard() {
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
+      try {
+        const transaction = await contract2.mintStandard();
+        await transaction.wait()
+        accountInfo()
+        confirmClaim('transaction successful!')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
   return (
-    <div className="bg-sky-700 h-full">
+    <div className="bg-sky-700 ">
       <Header />
       <div className={style.wrapper}>
-      <div className='w-1/2 p-10 '>
+      <div className='m-2 '>
         <div className={style.container}>
           <div className={style.titleContainer}>
             The Alchemist's Garden
@@ -361,9 +379,20 @@ const Game = () => {
 
         </div>
         </div>
-        <div className='w-1/2 p-10 '>
-          <div className='justify-self-end '>
-            <div className=''>
+        <div className='m-2'>
+          <div className=' justify-self-end '>
+
+            {loading ? (
+              <div role="status">
+              <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                  <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+              </svg>
+              <span class="sr-only">Loading...</span>
+          </div>
+        
+            ):(
+              <div className=''>
               {allowed ? (
                 <>
                   <div className={style.titleContainer}>
@@ -376,11 +405,16 @@ const Game = () => {
                         <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7"
                           className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
                           <span className="mx-10 ">Netswap</span>
-                        </a> :
-                        <a href="https://www.cantoswap.fi/#/swap"
+                        </a> : (network.chainId == 250 ? (
+                          <a href="https://spooky.fi/#/swap?inputCurrency=FTM&outputCurrency=0x36996c8642810add6c5bb814ed7a7ca8abc26fe0"
                           className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                          <span className="mx-10 ">CantoSwap</span>
+                          <span className="mx-10 ">SpookySwap</span>
                         </a>
+                        ): (<a href="https://www.cantoswap.fi/#/swap"
+                        className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        <span className="mx-10 ">CantoSwap</span>
+                      </a>) )
+                        
                       }
 
 
@@ -402,12 +436,13 @@ const Game = () => {
                       className='w-4/5 mx-auto px-4'
                     />
                   </div>
-                  <label className='px-1 py-2 flex justify-center mt-2 text-sm'>you can now start searching for new elements, but you cant mint any new element <br />
-                    if you don't have a formula element. Example Air + fire = Energy <br />
-                    'your need to have Air and Fire in your balance'.
+                  <label className='px-1 py-2 flex justify-center mt-2 text-sm'>Start searching for new elements, remember! you cant mint any new element <br />
+                    if you don't owne element formula. Example Air + fire = Energy <br />
+                    Your wallet need to have Air and Fire NFT.
                   </label>
                   <button className={style.button} onClick={() => magicFormula(elementA, elementB)}>try formula</button>
                   <div className='justify-self-center mx-auto py-4'>
+
                     {resultat == '0' ?
                       (<div className=''> </div>) :
                       resultat == 1 ?
@@ -447,6 +482,9 @@ const Game = () => {
 
               }
             </div>
+            )
+          }
+
             <div className={style.titleContainer}>
               Account
             </div>
@@ -488,6 +526,7 @@ const Game = () => {
         </div>
 
       </div>
+      <Footer/>
     </div>
   )
 }

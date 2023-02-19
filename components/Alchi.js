@@ -52,7 +52,7 @@ const Alchi = () => {
             <div className={style.infoContainer}>
               
               <div className={style.author}>
-                <div className={style.name}>ALCHIMetis</div>
+                <div className={style.name}>OpenALCHI</div>
               </div>
             </div>
           </div>

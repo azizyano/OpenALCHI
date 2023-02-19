@@ -12,7 +12,7 @@ const NftElement = ({item}) => {
         alt=""
         />
         <div className={style.infoIcon}> {item.name}</div>
-        <div className={style.infoIcon}>Balance: {item.balance}</div>
+        <div className={style.infoIcon}>N: {item.balance}</div>
     </div>
   )
 }

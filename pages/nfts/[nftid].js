@@ -1,7 +1,7 @@
 import Header from '../../components/Header'
 import { useEffect, useMemo, useState } from 'react'
 import { useWeb3 } from '@3rdweb/hooks'
-import constants from '../constants'
+import constants from '../../components/constants'
 import { ethers } from 'ethers'
 import Market from '../artifacts/NFTMarket.json'
 import { useRouter } from 'next/router'
@@ -91,7 +91,7 @@ const Nft = () => {
             signer
           ) 
         const data = await marketContract.fetchMarketItems()
-        const meta = ''
+        var meta = ''
           try {
              meta = imagelist[data[selectedNftItem].tokenId] ;
           } catch (error) {

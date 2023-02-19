@@ -5,7 +5,7 @@ import Router from 'next/router'
 const style = {
   wrapper: `bg-[#3d4a57] border border-sky-500 w-[18rem] h-[25rem] my-2 m-auto rounded-2xl overflow-hidden cursor-pointer drop-shadow-lg`,
   imgContainer: `h-3/4  flex justify-center items-center`,
-  nftImg: `w-40 h-50 w-full `,
+  nftImg: `w-40 h-50 `,
   details: `border-t-4 border-indigo-500 p-3`,
   info: `flex justify-between text-[#e4e8eb] font-serif drop-shadow-xl`,
   infoLeft: `flex-0.6 flex-wrap`,

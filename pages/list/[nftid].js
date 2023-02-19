@@ -77,7 +77,7 @@ const Nft = () => {
      if (!provider) return
     ;(async () => {
         const selectedNftItem = router.query.nftid
-        const meta = ''
+        var meta = ''
           try {
              meta = imagelist[selectedNftItem] ;
           } catch (error) {

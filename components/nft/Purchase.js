@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { IoMdWallet } from 'react-icons/io'
 import toast, { Toaster } from 'react-hot-toast'
-import constants from '../../pages/constants'
+import constants from '../constants'
 import Market from '../../pages/artifacts/NFTMarket.json'
 
 

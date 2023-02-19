@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import Select from 'react-select';
-import constants from './constants'
+import constants from './../components/constants'
 import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
 import Header from './../components/Header'

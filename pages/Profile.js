@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import constants from './constants'
+import constants from './../components/constants'
 import NFT from './artifacts/LittleAlchemy.json'
 import Header from './../components/Header'
 import Market from './artifacts/NFTMarket.json'
@@ -128,7 +128,7 @@ const Profile = () => {
       let treasury = 0
       const items = await Promise.all(
         data.map(async (i) => {
-          const meta = ''
+          var meta = ''
           try {
             meta = imagelist[i.tokenId]
           } catch (error) {

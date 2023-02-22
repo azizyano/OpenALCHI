@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
-import constants from '../../components/constants'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
-import Market from '../artifacts/NFTMarket.json'
-import NFTCard from '../../components/NFTCard'
+import constants from './../components/constants'
+import Header from './../components/Header'
+import Footer from './../components/Footer'
+import Market from './artifacts/NFTMarket.json'
+import NFT from './artifacts/LittleAlchemy.json'
+import NFTCard from './../components/NFTCard'
+import axios from 'axios'
+
 const imagelist = [
   '../imgs/water.png',
   '../imgs/air.png',
@@ -63,17 +66,17 @@ const style = {
   title: `text-5xl font-bold mb-4`,
 }
 
-const Collection = () => {
+const Marketpalce = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [tokenName, setTokenName] = useState('')
+  const [nftaddress, setnftaddress] = useState()
   const { collectionId } = router.query
   const [items, setNfts] = useState([])
   const [nftmarketaddress, setnftmarketaddress] = useState('')
   useEffect(() => {
-    if(!collectionId) return
     searchnetwork()
-  },[!collectionId])
+  },[nftmarketaddress])
   useEffect(() => {
     if (nftmarketaddress == '') return
     getAllListings()
@@ -88,12 +91,15 @@ const Collection = () => {
       console.log(network.chainId)
       if (network.chainId == 1088){
         setnftmarketaddress(constants.Mmarket)
+        setnftaddress(constants.Mgame);
         setTokenName('Metis')
       } else if (network.chainId == 7700){
         setnftmarketaddress(constants.Cmarket)
+        setnftaddress(constants.Cgame);
         setTokenName('Canto')
       } else if (network.chainId == 250){
         setnftmarketaddress(constants.Fmarket)
+        setnftaddress(constants.Fgame);
         setTokenName('FTM')
       }
     } catch(e){
@@ -105,7 +111,11 @@ const Collection = () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-        console.log(nftmarketaddress)
+      const GameContract = new ethers.Contract(
+          nftaddress,
+          NFT.abi,
+          signer
+        )
       const marketContract = new ethers.Contract(
         nftmarketaddress,
         Market.abi,
@@ -115,26 +125,30 @@ const Collection = () => {
         console.log(data)
         const items = await Promise.all(
           data.map(async (i) => {
-            var meta = ''
             try {
-               meta = imagelist[i.tokenId] ;
-            } catch (error) {
-              console.log('meta error')
-              meta= 'https://littlealchi.xyz/static/media/background1-min.839efe9f.png'
-            }
-            
-            let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-            let item = {
-              price,
-              itemId: i.itemId.toNumber(),
-              tokenId: i.tokenId.toNumber(),
-              name: title[i.tokenId],
-              seller: i.seller,
-              owner: i.owner,
-              sold: i.sold,
-              image: meta,
-            }
+              const tokenURI = await GameContract.uri(i.tokenId)
+              const tokendata = tokenURI.replace("{id}", i.tokenId)
+              console.log(tokendata)
+              const meta = await axios.get(tokendata)
+              console.log(meta)
+              const imageuri = imagelist[i.tokenId] ;
+              let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+              let item = {
+                price,
+                itemId: i.itemId.toNumber(),
+                tokenId: i.tokenId.toNumber(),
+                name: title[i.tokenId],
+                seller: i.seller,
+                owner: i.owner,
+                sold: i.sold,
+                image: imageuri,
+                description: meta.data.description
+              }
             return item;
+              } catch (error) {
+                console.log('meta error')
+                meta= 'https://littlealchi.xyz/static/media/background1-min.839efe9f.png'
+              }
           })
         )
         setNfts(items)
@@ -146,9 +160,9 @@ const Collection = () => {
 
 
   return (
-    <div className=" bg-sky-700 h-full">
+    <div className=" bg-[#392b5e] h-full">
       <Header />
-      <div className='m-auto p-4'>
+      <div className='px-[1.2rem] py-[0.8rem] flex '>
         { loading ?
          (<div className='flex justify-center items-center'>
          <div role="status ">
@@ -176,10 +190,7 @@ const Collection = () => {
             </div>
            </div>)}
       </div>
-   
-
-      <Footer/>
     </div>
   )
 }
-export default Collection
+export default Marketpalce

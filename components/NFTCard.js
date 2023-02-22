@@ -3,14 +3,15 @@ import { BiHeart } from 'react-icons/bi'
 import Router from 'next/router'
 
 const style = {
-  wrapper: `bg-[#3d4a57] border border-sky-500 w-[18rem] h-[25rem] my-2 m-auto rounded-2xl overflow-hidden cursor-pointer drop-shadow-lg`,
+  wrapper: `bg-gradient-to-t from-sky-800 to-violet-800 border border-sky-500 w-[18rem] h-[25rem] my-2 m-auto rounded-2xl overflow-hidden cursor-pointer drop-shadow-lg`,
   imgContainer: `h-3/4  flex justify-center items-center`,
-  nftImg: `w-40 h-50`,
-  details: `border-t-4 border-indigo-500 p-3`,
+  nftImg: `w-40 h-50 drop-shadow-lg`,
+  details: `border p-2 rounded-lg  border-sky-200 `,
   info: `flex justify-between text-[#e4e8eb] font-serif drop-shadow-xl`,
   infoLeft: `flex-0.6 flex-wrap`,
   collectionName: `font-semibold text-sm font-serif text-[#8a939b]`,
   assetName: `font-bold text-lg font-serif mt-2`,
+  assetName2: `font-bold text-sm font-serif mt-2`,
   infoRight: `flex-0.4 text-right`,
   priceTag: `font-semibold text-sm text-[#8a939b]`,
   priceValue: `flex items-center text-xl font-bold mt-2`,
@@ -36,6 +37,10 @@ const NFTCard = ({order, nftItem, price, tokenName }) => {
         <div className={style.info}>
           <div className={style.infoLeft}>
             <div className={style.assetName}>{nftItem.name}</div>
+            <div className='border p-2 rounded-lg  border-sky-200 '>
+            <div className={style.assetName2}>{nftItem.description}</div>
+            </div>
+            
           </div>
           
             <div className={style.infoRight}>

@@ -19,8 +19,8 @@ const NFTImage = ({ selectedNft }) => {
           </div>
         </div>
       </div>
-      <div>
-        <img className='px-4 py-4' src={selectedNft?.image} />
+      <div className=' '>
+        <img className='px-4 py-4' src={selectedNft?.image}  />
       </div>
     </div>
   )

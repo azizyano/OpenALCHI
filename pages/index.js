@@ -36,30 +36,7 @@ const Home = () => {
     <div className='w-full m-auto'>
       <Toaster position="top-left" reverseOrder={false} />
       <Header/>
-      {address ? ( 
-        <>
-        <Alchi/>
-        </>
-      ):(
-        <div className={style.walletConnectWrapper}>
-            <button className={style.button}
-            onClick={() => connectWallet('injected')}
-            >
-              Connect Wallet
-            </button>
-            <div className='mx-auto justify justify-center '>
-              <p className='mx-auto p-2 justify justify-center text-xl'>Switch network to: </p>
-            {supportChainIds.map((cId) => (
-              <button key={cId} className={style.netbutton} onClick={() => switchNetwork(cId)}>
-                {getNetworkMetadata(cId)?.chainName ? getNetworkMetadata(cId)?.chainName : (cId == 7700 ? '  Canto  ' : (cId == 250 ? '  Fantom  ' : 'Metis' ) ) }
-              </button>
-            ))}
-            </div>
-           
-            
-        </div>
-        
-      )}
+      <Alchi/>
       <Footer/>
     </div>
   )

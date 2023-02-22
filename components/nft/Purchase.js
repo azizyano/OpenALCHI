@@ -63,7 +63,7 @@ const MakeOffer = ({ selectedNft}) => {
         confirmClaim('Purchase successful!')
       } catch (error) {
         console.log(error)
-        confirmClaim(error.toString())
+        confirmClaim('transaction rejected')
       }
   }
 

@@ -1,17 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import elric from "../assets/elric-alphonse.png"
+import elric from "../assets/elric-alphonse.jpg"
 import air from "../assets/air.png"
 import fire from "../assets/fire.png"
 import energy from "../assets/energy.png"
 import {useWeb3, useSwitchNetwork} from '@3rdweb/hooks'
-import { useEffect } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
 
 const style = {
     wrapper: `relative  `,
-    container: ` before:content-[''] before:bg-red-500 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('../assets/fullmetal.png')] before:bg-cover before:bg-center before:opacity-60 before:blur`,
+    container: ` before:content-[''] before:bg-red-800 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('../assets/fullmetal.png')] before:bg-cover before:bg-center before:opacity-60 before:blur`,
     contentWrapper: `flex relative justify-center flex-wrap items-center`,
     copyContainer: `w-1/2`,
     title: `relative text-white text-[46px] font-semibold`,
@@ -40,16 +38,16 @@ const Alchi = () => {
               Discover, The collection of Little Alchemy Elements
             </div>
             <div className={style.description}>
-              Buy & Sell and search for new Alchemy Elemets.
+              Buy & Sell and search for new Alchemy Elements.
             </div>
             <div className={style.ctaContainer}>
             {address ? ( 
               <>
               <Link href="/Marketpalce">
-              <button className={style.accentedButton}>Marketplace</button>
+              <button className='relative text-lg font-semibold px-12 py-4 bg-sky-600 rounded-lg mr-5 text-white hover:bg-blue-800 cursor-pointer'>Marketplace</button>
               </Link>
               <Link href="/Game">
-              <button className={style.accentedButton2}>Game</button>
+              <button className='relative text-lg font-semibold px-12 py-4 bg-sky-400 rounded-lg mr-5 text-white hover:bg-blue-600 cursor-pointer'>Elements</button>
               </Link>
               </>
               ):(

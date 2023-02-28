@@ -4,10 +4,20 @@ import {ImTelegram, ImTwitter} from "react-icons/im";
 import React from "react";
 
 const Footer =()=>{
-    return <div className="bg-white dark:bg-gray-900">
-        <div className="py-6 px-4 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-            <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2022 <a href="https://www.littlealci.xyz/">ALCHIMetis NFT Game</a>. All Rights Reserved.
-            </span> 
+    return <footer className="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+            <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2022 <a href="https://www.littlealci.xyz/">OpznALCHI</a>. All Rights Reserved.
+            </span>
+            <ul className="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+                <li>
+                    <a href="#" className="mr-4 hover:underline md:mr-6 ">About</a>
+                </li>
+                <li>
+                    <a href="#" className="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="/LegalDisclaimer" className="mr-4 hover:underline md:mr-6">Legal Disclaimer</a>
+                </li>
+            </ul>
             <div className="flex mt-4 space-x-6 sm:justify-center md:mt-0">
                 
                 <a href="https://twitter.com/AlchiMetis" className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
@@ -23,7 +33,6 @@ const Footer =()=>{
                     <span className="sr-only">Medium</span>
                 </a>
             </div>
-        </div>
-    </div>
+        </footer>
 }
 export default Footer

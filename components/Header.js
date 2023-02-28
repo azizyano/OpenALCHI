@@ -1,70 +1,122 @@
+import React, { useEffect, useState } from 'react'
 import Link from "next/link";
 import Image from "next/image";
+import Select, { components } from 'react-select';
 import { ethers } from 'ethers'
-import {CgProfile} from "react-icons/cg"
-import React, { useEffect, useState } from 'react'
+import {useWeb3, useSwitchNetwork} from '@3rdweb/hooks'
+import {CgProfile, CgShoppingCart, CgListTree} from "react-icons/cg"
 import logo from "../assets/logo_name.png"
 
-const style = {
-    wrapper: `bg-gradient-to-r from-cyan-800 to-blue-800  px-[1.2rem] py-[0.8rem] flex `,
-    logoContainer: `flex items-center cursor-pointer`,
-    logoText: ` ml-[0.8rem] text-white font-semibold text-2xl`,
-    searchBar: `flex flex-1 m-[0.8rem] w-max-[320px] items-center  `,
-    searchIcon: `text-[#c8cacd] mx-3 font-bold text-sm`,
-    searchInput: ` border-0 bg-transparent outline-0 ring-0 px-2 pl-0 text-[#e6e8eb] placeholder:text-[#8a939b]`,
-    headerItems: ` flex items-center justify-end cursor-pointer`,
-    headerItem: `text-[#9fc5e8] text-xl font-semibold px-4 hover:text-white cursor-pointer`,
-    headerIcon: `text-[#9fc5e8] text-3xl font-semibold px-4 hover:text-white cursor-pointer`,
-  }
 const Header =()=>{
-    const [network, setnetwork] = useState('')
+    const [networkId, setNetworkId] = useState({ })
+    const { switchNetwork } = useSwitchNetwork();
+    const supportChainIds = [
+      { value: 1088, label: 'Metis' },
+      { value: 7700, label: 'Canto' },
+      { value: 250, label: 'Fantom' }];
+      
     useEffect(() => {
         searchnetwork()
-      })
+        console.log(networkId)
+      },[!networkId])
+      useEffect(() => {
+        if (!networkId) return
+        window.ethereum.on('accountsChanged', function (accounts) {
+          searchnetwork()
+        })
+        window.ethereum.on('networkChanged', function(networkId){
+          searchnetwork()
+        });
+      },[networkId])
+    var handleChange = (selected) => {
+        switchNetwork(selected.value)
+        searchnetwork()
+        console.log(networkId)
+      };
     async function searchnetwork() {
         try{
           const provider = new ethers.providers.Web3Provider(window.ethereum)
           const network = await provider.getNetwork()
           if (network.chainId == 1088){
-            setnetwork("Andromeda(Metis)");
+            setNetworkId({value: network.chainId, label: "Andromeda(Metis)"})
           } else if (network.chainId == 7700){
-            setnetwork("Canto");
+            setNetworkId({value: network.chainId, label: "Canto"})
           } else if (network.chainId == 250){
-            setnetwork("Fantom");
+            setNetworkId({value: network.chainId, label: "Fantom"})
           } else {
-            setnetwork("Unsupported");
+            setNetworkId({value: network.chainId, label: "Unsupported"})
           }
         } catch(e){
             console.log(e)
           }
         }
-    return <div className={style.wrapper}>
-        <Link href="/">
-            <div className={style.logoContainer}>
-                <Image src={logo} height={40} width={40}/>
-                <div className={style.logoText}>OpenALCHI</div>
-            </div>
-        </Link>
-        <div className={style.searchBar}>
-        <div className={style.searchIcon}> {network}</div>
-        </div>
-        <div className={style.headerItems}>
-            <Link href="/Marketpalce">
-                <div className={style.headerItem}> Marketplace</div>
-            </Link>
-            <Link href="/Game">
-                <div className={style.headerItem}> Game</div>
-            </Link>
-            
-            <Link  href="/Profile">
-                <div className={style.headerIcon}> 
-                    <CgProfile/>
-                </div>
-            </Link>
-            
-            
-        </div>
-        
-    </div>
+        const customStyles = {
+          option: (defaultStyles, state) => ({
+            ...defaultStyles,
+            color: state.isSelected ? "#212529" : "#fff",
+            backgroundColor: state.isSelected ? "#a0a0a0" : "#212529",
+          }),
+      
+          control: (defaultStyles) => ({
+            ...defaultStyles,
+            backgroundColor: "#212529",
+            border: "none",
+            boxShadow: "none",
+          }),
+          singleValue: (defaultStyles) => ({ ...defaultStyles, color: "#5ce1e6" }),
+        };
+        const Control = ({ children, ...props }) => (
+          
+          <components.Control {...props}>
+            network {children} 
+          </components.Control>
+        );
+    return <nav className="  px-4 py-3 text-gray-700 border border-gray-200 sm:flex sm:px-5 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">     
+                  <ul className="flex flex-wrap m-auto items-center">
+                      <li>
+                          <Link href="/" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <Image 
+                            className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            src={logo} 
+                            height={40} 
+                            width={40}
+                            alt=''
+                            />
+                          <span className="ml-3">OpenALCH</span>
+                          </Link>
+                      </li>
+                      <li>
+                        <ol className="flex items-center mx-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                          
+                          <Select
+                            value={networkId}
+                            styles={customStyles}
+                            onChange={handleChange}
+                            options={supportChainIds}
+                          />
+                        </ol>
+                        
+                      </li>
+                        <li>
+                          <Link href="/Game" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <CgListTree/>
+                          <span className="flex-1 ml-3 whitespace-nowrap">New Elements</span>
+                          </Link>
+                      </li>
+                      <li>
+                          <Link href="/Marketpalce" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <CgShoppingCart/>
+                          <span className="flex-1 ml-3 whitespace-nowrap">Marketpalce</span>
+                          </Link>
+                      </li>
+                      <li>
+                          <Link  href="/Profile" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <CgProfile/>
+                          <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
+                          </Link>
+                      </li>
+                  </ul>
+                
+    </nav>
 }
 export default Header

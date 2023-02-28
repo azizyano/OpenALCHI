@@ -258,68 +258,47 @@ const Profile = () => {
   return (
     <div className=" h-screen  bg-gray-700 ">
       <Header />
-        <div className={style.bannerImageContainer}>
-          <div className=" flex">
-            <div className={style.info}>Balance
-              <div className={'text-sm text-sky-400 m-auto px-4'}>
-                {NftBanalce.length}
-              </div> 
-            </div>
-            <div className={style.info}>Listed NFT
-              <div className={'text-sm text-sky-400 m-auto px-4'}>
-                {items.length}
-              </div>
-            </div>
-            <div className={style.info}>Total earned 
-            <div className={'text-sm text-sky-400 m-auto px-4'}>
-              {treasury} { tokenName}
-            </div>
-            
-            </div>
-            
-          </div>
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Legal Disclaimer
+                </h3>
         </div>
-              <div className='p-4 m-4 border rounded-lg'>
-                <span className="flex-1 ml-3 whitespace-nowrap dark:text-gray-200 ">NFT balance</span>
-                <div className=" m-auto p-2 flex flex-wrap justify-center ">
-                
-                  {NftBanalce.map((nftItem, id) => (
-                    <div  className='flex justify-between p-2 ' key={id}>
-                      <NFTCard1
-                        key={id}
-                        order={nftItem.tokenId}
-                        nftItem={nftItem}
-                        name={nftItem.name}
-                        title={title[nftItem.tokenId]}
-                        listings={nftItem.sold}
-                        price={nftItem.price}
-                        balance={nftItem.balance}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className='p-4 m-4 border rounded-lg'>
-                <span className="flex-1 ml-3 whitespace-nowrap dark:text-gray-200">Listed NFT</span>
-              
-              <div className=" m-auto p-2 flex flex-wrap justify-center ">
-                
-                  {items.map((nftItem, id) => (
-                    <div className='flex justify-between p-2' key={id}>
-                      <NFTCard2
-                        key={id}
-                        order={id}
-                        nftItem={nftItem}
-                        name={nftItem.name}
-                        title={title[nftItem.tokenId]}
-                        listings={nftItem.sold}
-                        price={nftItem.price}
-                      />
-                    </div>
-                  ))}
-              </div>
-              </div>
-        
+            <div class="p-6 space-y-6">
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    Please read this disclaimer carefully before using https://www.littlealci.xyz/ and/or any of its sub-domains (hereinafter referred to as the "Website").
+                    By using the Website, you confirm that you accept this legal disclaimer and agree to comply with it. If you do not agree, you must not use the Website.
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                    </p>
+            </div>
+            <div class="p-6 space-y-6">
+                <h3 class="text-l font-semibold text-gray-900 dark:text-white">
+                    Usage risks
+                </h3>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The Website will not be responsible for any losses, damages, or claims arising from events falling within the scope of events like, but not limited to: mistakes made by the user (e.g., payments sent to wrong addresses),
+                     software problems of the Website or any related software or service (e.g., malware or unsafe cryptographic libraries), technical failures (e.g., hardware wallets malfunction), security problems experienced by the user (e.g., unauthorized access to wallets), actions or inactions of third parties (e.g., bankruptcy of service providers, information security attacks on service providers, and fraud conducted by third parties).
+                    </p>
+            </div>
+            <div class="p-6 space-y-6">
+                <h3 class="text-l font-semibold text-gray-900 dark:text-white">
+                Security
+                </h3>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    Security audits don't eliminate risks completely. The Website is not guaranteed to be secure or free from bugs or viruses.
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    As a commitment towards the safety of our users and partners, we want to be transparent about the changes and the status of the security audits of our smart contracts.
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    OpenALCHI smart contract was adapted from Solidly, which codebase was open sourced. Since its release on Fantom network, no security incidents related to Solidly smart contracts were reported.
+                    
+                    </p>
+            </div>
+           
+       </div> 
     </div>
   )
 }

@@ -5,7 +5,7 @@ import constants from './../components/constants'
 import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
 import Header from './../components/Header'
-import Footer from './../components/Footer'
+import {CgProfile, CgShoppingCart,CgShoppingBag, CgListTree} from "react-icons/cg"
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
 const imagelist = [
@@ -112,17 +112,18 @@ const elementsOptions = [
 const style = {
   container: ` py-4 px-4 rounded-xl `,
   wrapper: `justify-between items-stretch grid gap-6 mb-6 md:grid-cols-2 `,
-  titleContainer: `p-4 text-xl drop-shadow-xl text-sky-400 border border-sky-500 rounded-xl mb-4`,
-  info: `flex justify-between py-4 text-[#151b22] text-lg drop-shadow-xl`,
+  titleContainer: `text-4xl font-bold text-white mb-4`,
+  info: `text-lg text-white mb-8`,
   priceValue: `flex justify-center  font-bold mt-2`,
-  button: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
+  button0: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 `,
+  button: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 `,
   mintbutton: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
 }
 
 const Game = () => {
   const [account, setAccount] = useState()
   const [balance, setBalance] = useState()
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [balanceArray, setBalanceArray] = useState([0])
   const [NftBanalce, setNftBanalce] = useState([])
   const [mintFee, setmintFee] = useState([])
@@ -132,19 +133,24 @@ const Game = () => {
   const [elementB, setElementB] = useState({ value: 'mintStandard', label: 'Standard Elements' })
   const [nftaddress, setnftaddress] = useState()
   const [tokenAddress, setTokenAddress] = useState()
+  const [ImageIndex, setImageIndex] = useState()
   const [allowed, setAllowance] = useState()
   const [network, setnetwork] = useState()
-  useEffect( () => {
+  useEffect(() => {
     searchnetwork()
-  },[nftaddress])
-  useEffect( () => {
-    if (!tokenAddress) return
+  }, [nftaddress])
+  useEffect(() => {
+    if (!tokenAddress || !network) return
     accountInfo()
     window.ethereum.on('accountsChanged', function (accounts) {
       searchnetwork()
       accountInfo()
     })
-  }, [tokenAddress])
+    window.ethereum.on('networkChanged', function(networkId){
+      searchnetwork()
+      accountInfo()
+    });
+  }, [tokenAddress, network])
   const confirmClaim = (msg) => toast(msg)
 
   async function searchnetwork() {
@@ -184,7 +190,7 @@ const Game = () => {
       setAccount(account)
       // balance
       const balance = await contract1.balanceOf(account)
-      setBalance(parseFloat(ethers.utils.formatEther(balance)).toFixed(2))
+      setBalance(parseFloat(ethers.utils.formatEther(balance)).toFixed(1))
       // fee
       const mintFee = await contract2.fee.call();
       setmintFee(parseFloat(ethers.utils.formatEther(mintFee)));
@@ -278,6 +284,8 @@ const Game = () => {
       if (fusion == options[i].label || fusion0 == options[i].label) {
         setResultat(options[i].value)
         setFormula(options[i].value)
+        const index = title.indexOf(options[i].value.replace('mint', ''))
+        setImageIndex(index)
         break
       }
       setResultat(1)
@@ -296,7 +304,7 @@ const Game = () => {
     }
   }
   async function setfundAddress() {
-    if (account ) {
+    if (account) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner()
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
@@ -306,7 +314,7 @@ const Game = () => {
   }
   async function Mint(element) {
     if (account) {
-      console.log(element);
+      setLoading(true)
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
@@ -325,10 +333,12 @@ const Game = () => {
           confirmClaim("you can't mint this element")
         }
       }
+      setLoading(false)
     }
   }
   async function mintStandard() {
     if (account) {
+      setLoading(true)
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
@@ -339,194 +349,220 @@ const Game = () => {
         confirmClaim('transaction successful!')
       } catch (error) {
         console.log(error)
+        if (error.data) {
+          confirmClaim(error.data.message.toString())
+        } else {
+          confirmClaim("transaction failed try again!")
+        }
       }
+      setLoading(false)
     }
   }
 
   return (
-    <div className="bg-sky-700 ">
+    <div className="bg-gray-700 h-screen ">
       <Header />
-      <div className={style.wrapper}>
-      <div className='m-2 '>
-        <div className={style.container}>
-          <div className={style.titleContainer}>
-            The Alchemist's Garden
-          </div>
-          <div className={style.info}>
-            <div className='w-4/5 text-center bg-blue-500 py-8 px-8 rounded-xl mb-4'>
-              {elementA.label}
-            </div>
-            <div className='w-4/5 text-center bg-blue-400 py-8 px-8 rounded-xl mb-4'>
-              {elementB.label}
-            </div>
-
-          </div>
-          <div className='mx-auto py-10 px-10'>
-
-          </div>
-          <div className={style.info}>
-            <img
-              className="justify-items-start h-[10rem] mx-auto animate-bounce "
-              src={imagelist[elementA.value]}
-              alt=""
-            />
-            <img
-              className="justify-items-end h-[10rem] mx-auto  animate-bounce "
-              src={imagelist[elementB.value]}
-              alt=""
-            />
-          </div>
-
-        </div>
-        </div>
-        <div className='m-2'>
-          <div className=' justify-self-end '>
-
-            {loading ? (
-              <div role="status">
-              <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                  <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-              </svg>
-              <span class="sr-only">Loading...</span>
-          </div>
-        
-            ):(
-              <div className=''>
-              {allowed ? (
-                <>
-                  <div className={style.titleContainer}>
-                    <span> Magic formula</span>
-
-                  </div>
-                  <div>
-                    <span className='px-4 py-4 flex justify-center  font-bold mt-2'>Buy ALCHI token to mint New Elements
-                      {network.chainId == 1088 ?
-                        <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7"
-                          className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                          <span className="mx-10 ">Netswap</span>
-                        </a> : (network.chainId == 250 ? (
-                          <a href="https://spooky.fi/#/swap?inputCurrency=FTM&outputCurrency=0x36996c8642810add6c5bb814ed7a7ca8abc26fe0"
-                          className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                          <span className="mx-10 ">SpookySwap</span>
-                        </a>
-                        ): (<a href="https://www.cantoswap.fi/#/swap"
-                        className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                        <span className="mx-10 ">CantoSwap</span>
-                      </a>) )
+      <aside className="fixed left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar" >
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+          <ul className="space-y-2">
+            <li>
+              <div className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <span className="ml-3">Balance </span>
+                <span className="ml-3 text-sky-400 "> {balance}</span>
+                <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">ALCHI</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <span className="ml-3">Mint Fee </span>
+                <span className="ml-3 text-sky-400 "> {mintFee}</span>
+                <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">ALCHI</span>
+              </div>
+            </li>
+            <li>
+              <div className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <span className="ml-3 text-sky-400 ">Buy ALCHI</span>
+                <li className="ml-3 "> {network?.chainId == 1088 ?
+                      <a href="https://netswap.io/swap?inputCurrency=0x1d94cc954fce49db542a61d68901f787b874cf4b&outputCurrency/swap#/analytics/pairs/0xf2ad6d2bc50447c3688242c509a99bdd026ddcd7"
+                        >
+                        <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">Netswap </span>
                         
-                      }
+                      </a> : (network?.chainId == 250 ? (
+                        <a href="https://spooky.fi/#/swap?inputCurrency=FTM&outputCurrency=0x36996c8642810add6c5bb814ed7a7ca8abc26fe0"
+                          className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                          <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">SpookySwap</span>
+                        </a>
+                      ) : (<a href="https://www.cantoswap.fi/#/swap"
+                       >
+                        <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">CantoSwap</span>
+                      </a>))
 
-
-                    </span>
-                  </div>
-                  <label className='px-1 py-2 flex justify-center  mt-2 text-sm'> To start you need first to have standard elements, there are 4 elements the total fee is {4 * mintFee} ALCHI.</label>
-                  <button className={style.button} onClick={() => mintStandard()}>Mint Standard Elements</button>
-                  <div className='w-4/5 flex mx-auto py-8 px-8 '>
-                    <Select
-                      value={elementA}
-                      onChange={setElementA}
-                      options={elementsOptions}
-                      className='w-4/5 mx-auto px-4'
-                    />
-                    <Select
-                      value={elementB}
-                      onChange={setElementB}
-                      options={elementsOptions}
-                      className='w-4/5 mx-auto px-4'
-                    />
-                  </div>
-                  <label className='px-1 py-2 flex justify-center mt-2 text-sm'>Start searching for new elements, remember! you cant mint any new element <br />
-                    if you don't owne element formula. Example Air + fire = Energy <br />
-                    Your wallet need to have Air and Fire NFT.
-                  </label>
-                  <button className={style.button} onClick={() => magicFormula(elementA, elementB)}>try formula</button>
-                  <div className='justify-self-center mx-auto py-4'>
-
-                    {resultat == '0' ?
-                      (<div className=''> </div>) :
-                      resultat == 1 ?
-                        <div className=' text-xl text-[#da4859] text-center '>Try new Formula </div>
-                        : (
-                          <div className='flex '>
-                            <button className={style.mintbutton} onClick={() => Mint(resultat)} > {resultat} </button>
-                            <Toaster
-                              position="top-center"
-                              reverseOrder={false}
-                              gutter={8}
-                              toastOptions={{
-                                className: '',
-                                duration: 5000,
-                                style: {
-                                  background: '#363636',
-                                  color: '#fff',
-                                },
-                                success: {
-                                  duration: 3000,
-                                  theme: {
-                                    primary: 'green',
-                                    secondary: 'black',
-                                  },
-                                },
-                              }} />
-                          </div>
-                        )}
-                  </div>
-                </>
-              ) : (
-                <div>
-                  <button className={style.button} onClick={() => Approuve()} >Approve to access</button>
-                  <Toaster />
-                </div>
-              )
-
+                    }</li>
+              </div>
+            </li>
+            
+            <li>
+              <div className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white ">
+                  <CgShoppingBag/>
+                <span className="flex-1 ml-3 whitespace-nowrap">NFT balance</span>
+              </div>
+            </li>
+            <div className='bg-gray-700 flex flex-wrap rounded-lg'>
+              {
+                NftBanalce?.map((item, index) => (
+                  <NftElement
+                    key={index}
+                    item={item}
+                  />
+                )
+                )
               }
             </div>
-            )
-          }
+          </ul>
 
-            <div className={style.titleContainer}>
-              Account
-            </div>
-            <div className={style.priceValue}>
-              <p className='text-sky-400 px-2 py-2'>Balance: {balance} ALCHI </p>
-              <img
-                src="https://littlealchi.xyz/imgs/logo_name.png"
-                alt="ALCHI"
-                className='py-2 px-2 h-10 mr-2'
-              />
+        </div>
+      </aside>
+      <div className="p-2 sm:ml-64">
 
-            </div>
-            <div className={style.priceValue}>
-              <p className='text-sky-400 px-2 py-2'> Mint Fee: {mintFee} ALCHI </p>
+        <div className=' p-2 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700' >
+          {allowed ? (
+            <>
+            
+              <div class="flex flex-wrap items-center justify-center p-4 mb-2 rounded bg-gray-50 dark:bg-gray-800">
+              <p class="mb-2 p-4 font-light text-gray-400 dark:text-gray-300">To start you need first to have standard elements "Air", "Fire", "Earth" and "Water", total fee to mint is {4 * mintFee} ALCHI.</p>
+                {loading ? (
+                  <div role="status">
+                    <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                      <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                    </svg>
+                    <span className="sr-only">Loading...</span>
+                  </div>
 
-              <img
-                src="https://littlealchi.xyz/imgs/logo_name.png"
-                alt="MATIC"
-                className='py-2 px-2 h-10 mr-2'
-              />
-            </div>
-            <div className=" grid justify-items-stretch ">
-              <p className={style.titleContainer}>ELEMENTS</p>
-              <div className='flex grid grid-cols-4 gap-4 '>
-                {
-                  NftBanalce.map((item, index) => (
-                    <NftElement
-                      key={index}
-                      item={item}
-                    />
-                  )
-                  )
-                }
+                ) : (
+                  <button className={style.button0} onClick={() => mintStandard()}>Mint Standard Elements</button>
+                )}
               </div>
+              <div className="grid grid-cols-3 gap-4 mb-2">
+                <div className="flex flex-wrap items-center justify-center  rounded bg-gray-50 dark:bg-gray-800">
+                  <label for="element" className="block m-2 text-sm font-medium text-gray-900 dark:text-white">Select element</label>
+                  <Select
+                    className='m-4'
+                    value={elementA}
+                    onChange={setElementA}
+                    options={elementsOptions}
+                  />
+                  <img
+                          width='20'
+                          src={imagelist[elementA.value]}
+                          alt=""
+                        />
+                </div>
+                <div className="flex items-center justify-center rounded">
 
+                  <button className={style.button} onClick={() => magicFormula(elementA, elementB)}>
+                    <svg width="60px" height="60px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle fill="#2C3E50" cx="50" cy="50" r="50" /><path clip-rule="evenodd" d="M16.488 73.027L70.906 18.61c1.172-1.172 4.021-.222 6.364 2.121s3.293 5.193 2.121 6.364L24.973 81.513l-8.485-8.486z" fill="none" /><path fill-rule="evenodd" clip-rule="evenodd" fill="#ECF0F1" d="M64.906 29.609L12.018 82.497a50.269 50.269 0 0 0 8.847 8.124l52.527-52.527c1.172-1.171.222-4.021-2.121-6.364-2.344-2.342-5.194-3.292-6.365-2.121z" /><path fill="#F0C419" d="M88.5 23.002c.767-6.901 4.6-10.735 11.5-11.501-6.9-.767-10.734-4.6-11.5-11.5-.767 6.9-4.6 10.734-11.5 11.5 6.899.766 10.733 4.6 11.5 11.501zM31.5 0c-.5 4.5-3 7-7.501 7.501 4.5.5 7.001 3 7.501 7.5.5-4.5 3-7 7.501-7.5C34.5 7 32 4.5 31.5 0zm60 46.001c-.5 4.5-3 7-7.501 7.501 4.5.5 7.001 3 7.501 7.5.5-4.5 3-7 7.501-7.5C94.5 53.001 92 50.5 91.5 46.001z" /><path fill="#ffffff" d="M71.5 53c-.367 3.299-2.2 5.133-5.5 5.5 3.3.366 5.134 2.2 5.5 5.499.367-3.299 2.2-5.133 5.5-5.499-3.3-.367-5.134-2.202-5.5-5.5zm-25-31.001c-.367 3.3-2.2 5.134-5.5 5.501 3.3.367 5.134 2.199 5.5 5.5.367-3.301 2.2-5.133 5.5-5.5-3.3-.367-5.134-2.201-5.5-5.501zM58.5 3c-.367 3.298-2.2 5.133-5.5 5.5 3.3.366 5.134 2.2 5.5 5.499.366-3.299 2.2-5.133 5.5-5.499-3.3-.367-5.134-2.202-5.5-5.5z" /></svg>
+                    <span className="">Fusion </span>
+                  </button>
+                </div>
+                <div className="flex flex-wrap items-center justify-center  rounded bg-gray-50 dark:bg-gray-800">
+                  <img
+                          width='20'
+                          src={imagelist[elementB.value]}
+                          alt=""
+                        />
+                  <Select
+                    className='m-4'
+                    value={elementB}
+                    onChange={setElementB}
+                    options={elementsOptions}
+                  />
+                  <label for="element" className="block m-2 text-sm font-medium text-gray-900 dark:text-white">Select element </label>
+
+                </div>
+
+              </div>
+              <div class="flex flex-wrap items-center justify-center py-4 m-auto rounded bg-gray-50 dark:bg-gray-800">
+                
+                {resultat == '0' ?
+                  (<div className=''> </div>) :
+                  resultat == 1 ?
+                    <div>
+                      <div className='py-4 flex flex-wrap'>
+                        <img
+                          width='100'
+                          className="p-2 mx-auto  animate-bounce "
+                          src={imagelist[elementA.value]}
+                          alt=""
+                        />
+                        <img
+                          width='100'
+                          className="p-2 mx-auto animate-bounce "
+                          src={imagelist[elementB.value]}
+                          alt=""
+                        />
+                      </div>
+                      <div className='block m-2 text-sm font-medium dark:text-[#fc7d8b] '>You cant combine these elements </div>
+                    </div>
+
+                    : (
+                      <div className='py-4 space-y-2'>
+                        <img
+                          width="100"
+                          className="  animate-bounce "
+                          src={imagelist[ImageIndex]}
+                          alt=""
+                        />
+                        <div className='flex p-2'>
+                          {loading ? (
+                            <div role="status">
+                              <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                              </svg>
+                              <span className="sr-only">Loading...</span>
+                            </div>
+
+                          ) : (
+                            <button className={style.mintbutton} onClick={() => Mint(resultat)} > {resultat} </button>
+                          )}
+                        </div>
+                        <Toaster
+                          position="top-center"
+                          reverseOrder={false}
+                          gutter={8}
+                          toastOptions={{
+                            className: '',
+                            duration: 5000,
+                            style: {
+                              background: '#363636',
+                              color: '#fff',
+                            },
+                            success: {
+                              duration: 3000,
+                              theme: {
+                                primary: 'green',
+                                secondary: 'black',
+                              },
+                            },
+                          }} />
+                      </div>
+                    )}
+
+              </div>
+            </>
+          ) : (
+            <div className='p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700' >
+
+              <button className={style.button} onClick={() => Approuve()} >Approve to try the game</button>
+
+              <Toaster />
             </div>
+          )}
 
-          </div>
         </div>
 
       </div>
-      <Footer/>
     </div>
   )
 }

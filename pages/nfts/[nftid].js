@@ -60,11 +60,10 @@ const title = [
   'blockchain',
   'Bitcoin',
 ]
-const NFTmarketaddress = ['0x588851fb3Ca38855FaB2880522E527476408911A','0x79CA4A4DDF4aff4EA91E5F0c678bF36d5A19Da7e']
 
 
 const style = {
-  wrapper: `flex flex-col items-center  text-[#e5e8eb]`,
+  wrapper: `bg-gray-600 m-auto p-2 flex flex-col items-center  text-[#e5e8eb]`,
   container: `container p-6`,
   topContent: `flex`,
   nftImgContainer: `flex-1 mr-4`,
@@ -132,7 +131,7 @@ const Nft = () => {
   return (
     <div>
       <Header />
-      <div className={style.wrapper}>
+      <div className='bg-gray-700 h-screen'>
         <div className={style.container}>
           <div className={style.topContent}>
             <div className={style.nftImgContainer}>

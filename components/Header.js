@@ -9,6 +9,7 @@ import logo from "../assets/logo_name.png"
 
 const Header =()=>{
     const [networkId, setNetworkId] = useState({ })
+    const {address, connectWallet } = useWeb3()
     const { switchNetwork } = useSwitchNetwork();
     const supportChainIds = [
       { value: 1088, label: 'Metis' },
@@ -21,12 +22,18 @@ const Header =()=>{
       },[!networkId])
       useEffect(() => {
         if (!networkId) return
-        window.ethereum.on('accountsChanged', function (accounts) {
+        try {
+          window.ethereum.on('accountsChanged', function (accounts) {
           searchnetwork()
         })
         window.ethereum.on('networkChanged', function(networkId){
           searchnetwork()
         });
+        } catch (error) {
+          alert('you need Metamask extension to run this App')
+          console.log(error)
+        }
+        
       },[networkId])
     var handleChange = (selected) => {
         switchNetwork(selected.value)
@@ -65,14 +72,9 @@ const Header =()=>{
           }),
           singleValue: (defaultStyles) => ({ ...defaultStyles, color: "#5ce1e6" }),
         };
-        const Control = ({ children, ...props }) => (
-          
-          <components.Control {...props}>
-            network {children} 
-          </components.Control>
-        );
-    return <nav className="  px-4 py-3 text-gray-700 border border-gray-200 sm:flex sm:px-5 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">     
-                  <ul className="flex flex-wrap m-auto items-center">
+       
+    return <nav className="justify-between px-4 py-3 text-gray-700 border border-gray-200  sm:flex sm:px-5 bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">     
+                  <ul className="inline-flex items-center space-x-1 md:space-x-3 sm:mb-0">
                       <li>
                           <Link href="/" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                           <Image 
@@ -85,7 +87,9 @@ const Header =()=>{
                           <span className="ml-3">OpenALCH</span>
                           </Link>
                       </li>
-                      <li>
+                      {address ? (
+                        <>
+                        <li>
                         <ol className="flex items-center mx-4 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                           
                           <Select
@@ -95,7 +99,6 @@ const Header =()=>{
                             options={supportChainIds}
                           />
                         </ol>
-                        
                       </li>
                         <li>
                           <Link href="/Game" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -115,8 +118,16 @@ const Header =()=>{
                           <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
                           </Link>
                       </li>
+                        </>
+                      ): (
+                        <div className=''>
+                        <button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mx-4 px-5 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+                          onClick={() => connectWallet('injected')}>
+                            Connect Wallet
+                          </button></div>
+                      )}
+                      
                   </ul>
-                
     </nav>
 }
 export default Header

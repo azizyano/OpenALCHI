@@ -256,70 +256,71 @@ const Profile = () => {
   }
 
   return (
-    <div className=" h-screen  bg-gray-700 ">
+    <div className="h-full bg-gray-700 ">
       <Header />
-        <div className={style.bannerImageContainer}>
-          <div className=" flex">
-            <div className={style.info}>Balance
-              <div className={'text-sm text-sky-400 m-auto px-4'}>
-                {NftBanalce.length}
-              </div> 
-            </div>
-            <div className={style.info}>Listed NFT
-              <div className={'text-sm text-sky-400 m-auto px-4'}>
-                {items.length}
+        <div className='p-2 '>
+          <div className={style.bannerImageContainer}>
+            <div className=" flex">
+              <div className={style.info}>Balance
+                <div className={'text-sm text-sky-400 m-auto px-4'}>
+                  {NftBanalce.length}
+                </div> 
               </div>
-            </div>
-            <div className={style.info}>Total earned 
-            <div className={'text-sm text-sky-400 m-auto px-4'}>
-              {treasury} { tokenName}
-            </div>
-            
-            </div>
-            
-          </div>
-        </div>
-              <div className='p-4 m-4 border rounded-lg'>
-                <span className="flex-1 ml-3 whitespace-nowrap dark:text-gray-200 ">NFT balance</span>
-                <div className=" m-auto p-2 flex flex-wrap justify-center ">
-                
-                  {NftBanalce.map((nftItem, id) => (
-                    <div  className='flex justify-between p-2 ' key={id}>
-                      <NFTCard1
-                        key={id}
-                        order={nftItem.tokenId}
-                        nftItem={nftItem}
-                        name={nftItem.name}
-                        title={title[nftItem.tokenId]}
-                        listings={nftItem.sold}
-                        price={nftItem.price}
-                        balance={nftItem.balance}
-                      />
-                    </div>
-                  ))}
+              <div className={style.info}>Listed NFT
+                <div className={'text-sm text-sky-400 m-auto px-4'}>
+                  {items.length}
                 </div>
               </div>
-              <div className='p-4 m-4 border rounded-lg'>
-                <span className="flex-1 ml-3 whitespace-nowrap dark:text-gray-200">Listed NFT</span>
+              <div className={style.info}>Total earned 
+              <div className={'text-sm text-sky-400 m-auto px-4'}>
+                {treasury} { tokenName}
+              </div>
               
-              <div className=" m-auto p-2 flex flex-wrap justify-center ">
-                
-                  {items.map((nftItem, id) => (
-                    <div className='flex justify-between p-2' key={id}>
-                      <NFTCard2
-                        key={id}
-                        order={id}
-                        nftItem={nftItem}
-                        name={nftItem.name}
-                        title={title[nftItem.tokenId]}
-                        listings={nftItem.sold}
-                        price={nftItem.price}
-                      />
-                    </div>
-                  ))}
               </div>
-              </div>
-        
+              
+            </div>
+          </div>
+          <div className='p-4 m-2 border rounded-lg'>
+            <span className="flex-1 ml-3 whitespace-nowrap dark:text-gray-200 ">NFT balance</span>
+            <div className=" m-auto p-2 flex flex-wrap justify-center ">
+            
+              {NftBanalce.map((nftItem, id) => (
+                <div  className='flex justify-between p-2 ' key={id}>
+                  <NFTCard1
+                    key={id}
+                    order={nftItem.tokenId}
+                    nftItem={nftItem}
+                    name={nftItem.name}
+                    title={title[nftItem.tokenId]}
+                    listings={nftItem.sold}
+                    price={nftItem.price}
+                    balance={nftItem.balance}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className='p-4 m-2 border rounded-lg'>
+            <span className="flex-1 ml-3 whitespace-nowrap dark:text-gray-200">Listed NFT</span>
+          
+          <div className=" m-auto p-2 flex flex-wrap justify-center ">
+            
+              {items.map((nftItem, id) => (
+                <div className='flex justify-between p-2' key={id}>
+                  <NFTCard2
+                    key={id}
+                    order={id}
+                    nftItem={nftItem}
+                    name={nftItem.name}
+                    title={title[nftItem.tokenId]}
+                    listings={nftItem.sold}
+                    price={nftItem.price}
+                  />
+                </div>
+              ))}
+          </div>
+          </div>
+        </div>
     </div>
   )
 }

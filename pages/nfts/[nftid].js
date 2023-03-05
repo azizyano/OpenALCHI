@@ -121,6 +121,8 @@ const Nft = () => {
         setnftmarketaddress(constants.Cmarket)
       } else if (network.chainId == 250){
         setnftmarketaddress(constants.Fmarket)
+      } else if (network.chainId == 10){
+        setnftmarketaddress(constants.Omarket)
       }
     } catch(e){
         console.log(e)

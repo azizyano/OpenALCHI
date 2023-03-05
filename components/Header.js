@@ -12,6 +12,7 @@ const Header =()=>{
     const {address, connectWallet } = useWeb3()
     const { switchNetwork } = useSwitchNetwork();
     const supportChainIds = [
+      { value: 10, label: 'Optimism' },
       { value: 1088, label: 'Metis' },
       { value: 7700, label: 'Canto' },
       { value: 250, label: 'Fantom' }];
@@ -50,9 +51,11 @@ const Header =()=>{
             setNetworkId({value: network.chainId, label: "Canto"})
           } else if (network.chainId == 250){
             setNetworkId({value: network.chainId, label: "Fantom"})
+          } else if (network.chainId == 10){
+            setNetworkId({value: network.chainId, label: "Optimism"})
           } else {
             setNetworkId({value: network.chainId, label: "Unsupported"})
-          }
+          } 
         } catch(e){
             console.log(e)
           }

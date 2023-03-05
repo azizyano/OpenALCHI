@@ -64,6 +64,9 @@ const MakeOffer = ({ selectedNft}) => {
       } else if (network.chainId == 250){
         setnftaddress(constants.Fgame);
         setnftmarketaddress(constants.Fmarket)
+      } else if (network.chainId == 10){
+        setnftaddress(constants.Ogame);
+        setnftmarketaddress(constants.Omarket)
       }
     } catch(e){
         console.log(e)
@@ -78,6 +81,16 @@ async function ApproveMarket() {
   let transaction = await contract.setApprovalForAll(address, true)
   await transaction.wait()
   setApprovedMarket(true)
+  confirmApproved()
+}
+async function UnApproveMarket() {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner()
+  const address = nftmarketaddress.toString()
+  const contract = new ethers.Contract(nftaddress, NFT.abi, signer)
+  let transaction = await contract.setApprovalForAll(address, false)
+  await transaction.wait()
+  setApprovedMarket(false)
   confirmApproved()
 }
 
@@ -125,14 +138,14 @@ async function ApproveMarket() {
           >
             <IoMdWallet className={style.buttonIcon} />
             <div className={style.buttonText}>List Now</div>
+            
           </div>
+          
           </>
           
           : 
           <div
-            onClick={() => {ApproveMarket()
-            }}
-            className={`${style.button} bg-[#2081e2] hover:bg-[#42a0ff]`}
+            onClick={() => {ApproveMarket()}} className={`${style.button} bg-[#2081e2] hover:bg-[#42a0ff]`}
           >
             <IoMdWallet className={style.buttonIcon} />
             <div className={style.buttonText}>Approve</div>

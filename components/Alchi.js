@@ -27,7 +27,7 @@ const style = {
   }
 const Alchi = () => {
   const {address, connectWallet, getNetworkMetadata } = useWeb3()
-  const supportChainIds = [1088, 7700, 250];
+  const supportChainIds = [10, 1088, 7700, 250];
   const { switchNetwork } = useSwitchNetwork();
 
     return <div className={style.wrapper}>
@@ -61,7 +61,7 @@ const Alchi = () => {
                       <p className='mx-auto p-2 justify justify-center text-xl'>switch to your favorite network</p>
                     {supportChainIds.map((cId) => (
                       <button key={cId} className={style.netbutton} onClick={() => switchNetwork(cId)}>
-                        {getNetworkMetadata(cId)?.chainName ? getNetworkMetadata(cId)?.chainName : (cId == 7700 ? '  Canto  ' : (cId == 250 ? '  Fantom  ' : 'Metis' ) ) }
+                        {getNetworkMetadata(cId)?.chainName ? getNetworkMetadata(cId)?.chainName : (cId == 10 ? '  Optimism  ' : (cId == 7700 ? '  Canto  ' : (cId == 250 ? '  Fantom  ' : 'Metis' ) )) }
                       </button>
                     ))}
                     </div>

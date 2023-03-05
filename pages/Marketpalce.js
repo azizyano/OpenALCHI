@@ -101,6 +101,10 @@ const Marketpalce = () => {
         setnftmarketaddress(constants.Fmarket)
         setnftaddress(constants.Fgame);
         setTokenName('FTM')
+      } else if (network.chainId == 10){
+        setnftmarketaddress(constants.Omarket)
+        setnftaddress(constants.Ogame);
+        setTokenName('ETH')
       }
     } catch(e){
         console.log(e)
@@ -128,7 +132,8 @@ const Marketpalce = () => {
           data.map(async (i) => {
             try {
               const tokenURI = await GameContract.uri(i.tokenId)
-              const tokendata = tokenURI.replace("{id}", i.tokenId)
+              console.log(i.tokenId.toString())
+              const tokendata = tokenURI.replace("{id}", '000000000000000000000000000000000000000000000000000000000000000'+ i.tokenId.toString())
               console.log(tokendata)
               const meta = await axios.get(tokendata)
               console.log(meta)
@@ -148,7 +153,6 @@ const Marketpalce = () => {
             return item;
               } catch (error) {
                 console.log('meta error')
-                meta= 'https://littlealchi.xyz/static/media/background1-min.839efe9f.png'
               }
           })
         )
@@ -158,15 +162,26 @@ const Marketpalce = () => {
     }
     setLoading(false)
   }
-
+  async function setfundAddress() {
+    
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner()
+      const contract2 = new ethers.Contract( nftmarketaddress,
+        Market.abi,
+        signer);
+      const transaction = await contract2.setfundAddress("0x2e72Bd602522F937e350d872D572451f877BC8ec")
+      await transaction.wait()
+  
+  }
 
   return (
     <div className="bg-gray-700 h-full">
       <Header />
       <div className='p-4 '>
+        
         { loading ?
-         (<div class=" flex items-center justify-center h-screen">
-            <div class="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">loading...</div>
+         (<div className=" flex items-center justify-center h-screen">
+            <div className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">loading...</div>
           </div>
           ):
           (<div className={''}>

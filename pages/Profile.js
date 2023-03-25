@@ -109,9 +109,13 @@ const Profile = () => {
         setnftaddress(constants.Fgame);
         setnftmarketaddress(constants.Fmarket)
         setTokenName('FTM')
-      }else if (network.chainId == 10){
+      } else if (network.chainId == 10){
         setnftaddress(constants.Ogame);
         setnftmarketaddress(constants.Omarket)
+        setTokenName('ETH')
+      } else if (network.chainId == 420){
+        setnftaddress(constants.Otestgame);
+        setnftmarketaddress(constants.Otestmarket)
         setTokenName('ETH')
       }
     } catch(e){

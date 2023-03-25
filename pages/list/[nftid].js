@@ -59,7 +59,7 @@ const title = [
   'Bitcoin',
 ]
 const style = {
-  wrapper: ` flex flex-col items-center text-[#e5e8eb]`,
+  wrapper: `bg-gray-700 h-screen flex flex-col items-center text-[#e5e8eb]`,
   container: `container p-6`,
   topContent: `flex mx-4`,
   nftImgContainer: `flex-1 mr-4`,

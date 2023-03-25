@@ -105,6 +105,10 @@ const Marketpalce = () => {
         setnftmarketaddress(constants.Omarket)
         setnftaddress(constants.Ogame);
         setTokenName('ETH')
+      } else if (network.chainId == 420){
+        setnftmarketaddress(constants.Otestmarket)
+        setnftaddress(constants.Otestgame);
+        setTokenName('ETH')
       }
     } catch(e){
         console.log(e)
@@ -173,12 +177,11 @@ const Marketpalce = () => {
       await transaction.wait()
   
   }
-
+ 
   return (
     <div className="bg-gray-700 h-full">
       <Header />
       <div className='p-4 '>
-        
         { loading ?
          (<div className=" flex items-center justify-center h-screen">
             <div className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">loading...</div>

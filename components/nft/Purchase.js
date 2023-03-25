@@ -41,6 +41,9 @@ const MakeOffer = ({ selectedNft}) => {
       } else if (network.chainId == 10){
         setnftaddress(constants.Ogame);
         setnftmarketaddress(constants.Omarket)
+      } else if (network.chainId == 420){
+        setnftaddress(constants.Otestgame);
+        setnftmarketaddress(constants.Otestmarket)
       }
     } catch(e){
         console.log(e)

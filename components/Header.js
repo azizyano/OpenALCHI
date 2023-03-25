@@ -11,12 +11,13 @@ const Header =()=>{
     const [networkId, setNetworkId] = useState({ })
     const {address, connectWallet } = useWeb3()
     const { switchNetwork } = useSwitchNetwork();
-    const supportChainIds = [
-      { value: 10, label: 'Optimism' },
-      { value: 1088, label: 'Metis' },
-      { value: 7700, label: 'Canto' },
-      { value: 250, label: 'Fantom' }];
-      
+    // const supportChainIds = [
+    //   { value: 420, label: 'Op-goerli' },
+    //   { value: 10, label: 'Optimism' },
+    //   { value: 1088, label: 'Metis' },
+    //   { value: 7700, label: 'Canto' },
+    //   { value: 250, label: 'Fantom' }];
+    const supportChainIds = [{ value: 7700, label: 'Canto' }];
     useEffect(() => {
         searchnetwork()
         console.log(networkId)
@@ -53,6 +54,8 @@ const Header =()=>{
             setNetworkId({value: network.chainId, label: "Fantom"})
           } else if (network.chainId == 10){
             setNetworkId({value: network.chainId, label: "Optimism"})
+          } else if (network.chainId == 420){
+            setNetworkId({value: network.chainId, label: "Op goerli"})
           } else {
             setNetworkId({value: network.chainId, label: "Unsupported"})
           } 
@@ -87,7 +90,7 @@ const Header =()=>{
                             width={40}
                             alt=''
                             />
-                          <span className="ml-3">OpenALCH</span>
+                          <span className="w-64 ml-3">OpenALCH</span>
                           </Link>
                       </li>
                       {address ? (
@@ -113,6 +116,12 @@ const Header =()=>{
                           <Link href="/Marketpalce" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                           <CgShoppingCart/>
                           <span className="flex-1 ml-3 whitespace-nowrap">Marketpalce</span>
+                          </Link>
+                      </li>
+                      <li>
+                          <Link href="/Stake" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <CgShoppingCart/>
+                          <span className="flex-1 ml-3 whitespace-nowrap">StakeNFT</span>
                           </Link>
                       </li>
                       <li>

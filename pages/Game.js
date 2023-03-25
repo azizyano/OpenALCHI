@@ -139,6 +139,7 @@ const Game = () => {
   const [network, setnetwork] = useState()
   useEffect(() => {
     searchnetwork()
+
   }, [nftaddress])
   useEffect(() => {
     if (!tokenAddress || !network) return
@@ -168,10 +169,12 @@ const Game = () => {
       } else if (network.chainId == 250) {
         setnftaddress(constants.Fgame);
         setTokenAddress(constants.Ftoken)
-      }
-      else if (network.chainId == 10) {
+      } else if (network.chainId == 10) {
         setnftaddress(constants.Ogame);
         setTokenAddress(constants.Otoken)
+      } else if (network.chainId == 420) {
+        setnftaddress(constants.Otestgame);
+        setTokenAddress(constants.Otesttoken)
       }
     } catch (e) {
       console.log(e)
@@ -185,6 +188,7 @@ const Game = () => {
       const contract1 = new ethers.Contract(tokenAddress, Token.abi, signer)
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer)
       const account = await signer.getAddress()
+      console.log(account)
       const value = await contract1.allowance(account, nftaddress)
       const amount = value.toString()
       if (amount === '0') {
@@ -278,7 +282,6 @@ const Game = () => {
     } catch (e) {
       console.log(e.message)
     }
-    console.log('loading account')
     setLoading(false)
   }
   function magicFormula(elementA, elementB) {
@@ -303,7 +306,7 @@ const Game = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner()
       const contract = new ethers.Contract(tokenAddress, Token.abi, signer)
-      const transaction = await contract.approve(nftaddress, "400000000000000000000")
+      const transaction = await contract.approve(nftaddress, "115792089237316195423570985008687907853269984665640564039457584007913129639935")
       await transaction.wait()
       setAllowance(true)
       confirmClaim('Approved successful!')
@@ -318,10 +321,11 @@ const Game = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner()
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
-      const transaction = await contract2.setfundAddress("0x2e72Bd602522F937e350d872D572451f877BC8ec")
+      const transaction = await contract2.setfundAddress("0xCcAC92e41e23A2D97a3884f7f37F8A35830B6a58")
       await transaction.wait()
     }
   }
+
   async function Mint(element) {
     if (account) {
       setLoading2(true)
@@ -369,7 +373,7 @@ const Game = () => {
   return (
     <div className="bg-gray-700 h-screen ">
       <Header />
-      <aside className="fixed left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar" >
+      <aside className="fixed left-0 z-40 w-68 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar" >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2">
             <li>
@@ -399,12 +403,17 @@ const Game = () => {
                           className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
                           <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">SpookySwap</span>
                         </a>
-                      ) : (<a href="https://www.cantoswap.fi/#/swap"
-                       >
+                      ) : (network?.chainId == 7700 ? (
+                      <a href="https://www.cantoswap.fi/#/swap?outputCurrency=0x5e8689741111442Eeb767507Fbf70BB5e8c3Bb6B">
                         <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">CantoSwap</span>
-                      </a>))
+                      </a>)
+                      : (
+                        <a href="https://app.uniswap.org/#/tokens/optimism/0x36996c8642810add6c5bb814ed7a7ca8abc26fe0">
+                        <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">Uniswap</span>
+                      </a>
+                      )))
 
-                    }</li>
+                    }</li> 
               </div>
             </li>
             
@@ -414,7 +423,7 @@ const Game = () => {
                 <span className="flex-1 ml-3 whitespace-nowrap">NFT balance</span>
               </div>
             </li>
-            <div className='bg-gray-700 flex flex-wrap rounded-lg'>
+            <div className='bg-gray-700 flex flex-wrap w-60 rounded-lg'>
               {
                 NftBanalce?.map((item, index) => (
                   <NftElement
@@ -430,12 +439,17 @@ const Game = () => {
         </div>
       </aside>
       <div className="p-2 sm:ml-64">
+      {account === '0xD687ca2fa168e7BAbed632803F6E4b06ef98B764' ? (
+                <div>
+                    <button className={style.button0} onClick={() => setfundAddress()}>setfundAdrress</button>
+                    
+                </div>
+            )
+            : (
+                <div></div>
+            )}
         <div className=' p-2 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700' >
         
-
-          {allowed ? (
-            <>
-            
               <div className="flex flex-wrap items-center justify-center p-2 mb-2 rounded bg-gray-50 dark:bg-gray-800">
               <p className="mb-2 p-4 font-light text-gray-400 dark:text-gray-300">To start you need first to have standard elements "Air", "Fire", "Earth" and "Water", total fee to mint is {4 * mintFee} ALCHI.</p>
                 {loading ? (
@@ -444,8 +458,12 @@ const Game = () => {
                 </div>
 
                 ) : (
+                  allowed ? (
                   <button className={style.button0} onClick={() => mintStandard()}>Mint Standard Elements</button>
-                  
+                  ):
+                    (
+                      <button className={style.button} onClick={() => Approuve()} >Approve 400 ALCHI to play</button>
+                    )
                 )}
               </div>
               
@@ -551,16 +569,7 @@ const Game = () => {
                     )}
 
               </div>
-            </>
-          ) : (
-            <div className='p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700' >
-
-              <button className={style.button} onClick={() => Approuve()} >Approve 400 ALCHI to play</button>
-
               <Toaster />
-            </div>
-          )}
-
         </div>
 
       </div>

@@ -67,6 +67,9 @@ const MakeOffer = ({ selectedNft}) => {
       } else if (network.chainId == 10){
         setnftaddress(constants.Ogame);
         setnftmarketaddress(constants.Omarket)
+      } else if (network.chainId == 420){
+        setnftaddress(constants.Otestgame);
+        setnftmarketaddress(constants.Otestmarket)
       }
     } catch(e){
         console.log(e)
@@ -112,7 +115,7 @@ async function UnApproveMarket() {
         await transaction.wait()
         confirmClaim('listed successful!')
       } catch (error) {
-        confirmClaim(error.data.message.toString())
+        confirmClaim(error.message.toString())
       }
   }
   const changeAmount = ({ target }) => {

@@ -1,14 +1,12 @@
 import '../styles/globals.css'
 import { ThirdwebWeb3Provider } from '@3rdweb/hooks'
 
-/**
- * The chain ID 4 represents the Rinkeby network
- * The `injected` connector is a web3 connection method used by Metamask
- */
-//const supportedChainIds = [10, 1088, 7700, 250, 420]
-const supportedChainIds = [ 7700]
+const supportedChainIds = [ 7700, 7701]
 const connectors = {
   injected: {},
+  walletlink: {
+    appName: "thirdweb - demo", url: "https://thirdweb.com", darkMode: false, },
+    walletconnect: {}
 }
 
 function MyApp({ Component, pageProps }) {

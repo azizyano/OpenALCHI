@@ -63,11 +63,6 @@ const style = {
   bannerImageContainer: `overflow-hidden flex justify-center items-center`,
   info: `flex justfy-between mx-auto text-[#e4e8eb] text-l drop-shadow-xl`,
   title: `text-5xl font-bold mb-4`,
-  statsContainer: `w-[44vw] px-4 py-4 mx-10 flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
-  listContainer: `mx-10 px-10 py-10 flex justify-between my-10 py-4 border border-[#151b22] rounded-xl mb-4`,
-  ethLogo: `h-6 mr-2`,
-  pValue: `w-full px-2 py-2 mx-2 text-[#68baba] text-center text-xl font-bold mt-2`,
-  wrapper: `bg-[#303339]  my-10 mx-5 rounded-2xl overflow-hidden`,
 }
 
 const Profile = () => {
@@ -75,12 +70,11 @@ const Profile = () => {
   const [balanceArray, setBalanceArray] = useState([0])
   const [tokenName, setTokenName] = useState('')
   const [NftBanalce, setNftBanalce] = useState([])
-  const [collection, setCollection] = useState({})
   const [items, setNfts] = useState([])
   const [treasury, setTreasury] = useState(0)
   const [nftaddress, setnftaddress] = useState('')
   const [nftmarketaddress, setnftmarketaddress] = useState('')
-  
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     searchnetwork()
   })
@@ -97,26 +91,14 @@ const Profile = () => {
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
-      if (network.chainId == 1088){
-        setnftaddress(constants.Mgame);
-        setnftmarketaddress(constants.Mmarket)
-        setTokenName('Metis')
-      } else if (network.chainId == 7700){
+      if (network.chainId == 7700){
         setnftaddress(constants.Cgame);
         setnftmarketaddress(constants.Cmarket)
         setTokenName('Canto')
-      } else if (network.chainId == 250){
-        setnftaddress(constants.Fgame);
-        setnftmarketaddress(constants.Fmarket)
-        setTokenName('FTM')
-      } else if (network.chainId == 10){
-        setnftaddress(constants.Ogame);
-        setnftmarketaddress(constants.Omarket)
-        setTokenName('ETH')
-      } else if (network.chainId == 420){
-        setnftaddress(constants.Otestgame);
-        setnftmarketaddress(constants.Otestmarket)
-        setTokenName('ETH')
+      } else if (network.chainId == 7701){
+        setnftaddress(constants.Ctestgame);
+        setnftmarketaddress(constants.Ctestmarket)
+        setTokenName('Canto')
       }
     } catch(e){
         console.log(e)
@@ -173,6 +155,7 @@ const Profile = () => {
 
   }
   async function myElements() {
+    setLoading(true)
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
@@ -261,12 +244,19 @@ const Profile = () => {
     } catch (e){
       console.log(e)
     }
+    setLoading(false)
   }
 
   return (
-    <div className="h-full bg-gray-700 ">
+    <div className="bg-gray-700 h-full ">
       <Header />
-        <div className='p-2 '>
+      { loading ?
+         (<div className=" flex items-center justify-center h-screen">
+            <div className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">loading...</div>
+          </div>
+          ):
+          (
+        <div className='m-auto p-2 bg-gray-700 '>
           <div className={style.bannerImageContainer}>
             <div className=" flex">
               <div className={style.info}>Balance
@@ -288,7 +278,8 @@ const Profile = () => {
               
             </div>
           </div>
-          <div className='p-4 m-2 border rounded-lg'>
+          <div className=' ' >
+            <div className='p-4 m-2 border rounded-lg'>
             <span className="flex-1 ml-3 whitespace-nowrap dark:text-gray-200 ">NFT balance</span>
             <div className=" m-auto p-2 flex flex-wrap justify-center ">
             
@@ -328,7 +319,10 @@ const Profile = () => {
               ))}
           </div>
           </div>
-        </div>
+          </div>
+          
+        </div>)
+      }
     </div>
   )
 }

@@ -6,16 +6,8 @@ import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
 import Staking from './artifacts/NFTStaking.json'
 import Header from './../components/Header'
-import reward1 from './../assets/reward1.png'
-import magician from './../assets/magician.png'
 import NftElement from './../components/NftElement'
-import Image from 'next/image'
-import {
-  CgAttachment,
-  CgChevronDoubleLeftO,
-  CgShoppingBag,
-  CgListTree,
-} from 'react-icons/cg'
+import {CgAttachment} from 'react-icons/cg'
 import toast, { Toaster } from 'react-hot-toast'
 const imagelist = [
   '../imgs/water.png',
@@ -96,14 +88,8 @@ const title = [
   'Bitcoin',
 ]
 const style = {
-  container: ` py-4 px-4 rounded-xl `,
-  wrapper: `justify-between items-stretch grid gap-6 mb-6 md:grid-cols-2 `,
-  titleContainer: `text-4xl font-bold text-white mb-4`,
-  info: `text-lg text-white mb-8`,
-  priceValue: `flex justify-center  font-bold mt-2`,
-  button0: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 `,
-  button: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 `,
-  mintbutton: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
+  button: ` bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 rounded-lg px-5 py-2.5 text-center mr-2 mb-2 `,
+  mintbutton: `bg-gradient-to-r from-gray-400 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 rounded-lg  px-5 py-2.5 text-center mr-2 mb-2`,
 }
 
 const Stake = () => {
@@ -111,10 +97,8 @@ const Stake = () => {
   const [balance, setBalance] = useState()
   const [loading, setLoading] = useState(false)
   const [loading2, setLoading2] = useState(false)
-  const [balanceArray, setBalanceArray] = useState([0])
   const [NftBanalce, setNftBanalce] = useState([])
   const [nftaddress, setnftaddress] = useState()
-  const [NFTid, setNFTid] = useState()
   const [NFTamout, setNFTamount] = useState('0')
   const [stakingBal, setStakingBal] = useState()
   const [APY, setAPY] = useState()
@@ -124,34 +108,27 @@ const Stake = () => {
   const [reward, setReward] = useState()
   const [limitId, setlimitId] = useState()
   const [totalstakedByUser, setTotalstakedByUser] = useState()
-  const [listId, setlistId] = useState({
-    value: 'mintStandard',
-    label: 'staking orders',
-  })
+  const [listId, setlistId] = useState({ value: 'index', label: 'staking orders'})
   const [orderId, setOrderId] = useState('0')
   const [tokenAddress, setTokenAddress] = useState()
   const [stakingAddress, setStakingAdress] = useState()
-  const [allowed, setAllowance] = useState()
   const [network, setnetwork] = useState()
   const [approvStake, setApprovedStake] = useState()
-  const [elementA, setElementA] = useState({ })
+  const [elementA, setElementA] = useState({value: '', label: 'Element' })
   useEffect(() => {
     searchnetwork()
   }, [nftaddress])
   useEffect(() => {
     if (!tokenAddress || !network) return
     accountInfo()
-    readContractstates()
     
     window.ethereum.on('accountsChanged', function (accounts) {
       searchnetwork()
       accountInfo()
-      readContractstates()
     })
     window.ethereum.on('networkChanged', function (networkId) {
       searchnetwork()
       accountInfo()
-      readContractstates()
     })
   }, [tokenAddress, network])
 
@@ -162,25 +139,14 @@ const Stake = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       setnetwork(network)
-      if (network.chainId == 1088) {
-        setnftaddress(constants.Mgame)
-        setTokenAddress(constants.Mtoken)
-        setStakingAdress(constants.MStaking)
-      } else if (network.chainId == 7700) {
+      if (network.chainId == 7700) {
         setnftaddress(constants.Cgame)
         setTokenAddress(constants.Ctoken)
         setStakingAdress(constants.CStaking)
-      } else if (network.chainId == 250) {
-        setnftaddress(constants.Fgame)
-        setTokenAddress(constants.Ftoken)
-        setStakingAdress(constants.FStaking)
-      } else if (network.chainId == 10) {
-        setnftaddress(constants.Ogame)
-        setTokenAddress(constants.Otoken)
-      } else if (network.chainId == 420) {
-        setnftaddress(constants.Otestgame)
-        setTokenAddress(constants.Otesttoken)
-        setStakingAdress(constants.OtestStaking)
+      } else if (network.chainId == 7701){
+        setnftaddress(constants.Ctestgame)
+        setTokenAddress(constants.Ctesttoken)
+        setStakingAdress(constants.CtestStaking)
       }
     } catch (e) {
       console.log(e)
@@ -198,56 +164,44 @@ const Stake = () => {
       console.log(error)
     }
   }
-  async function readContractstates() {
+  async function accountInfo() {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
+      // import contract ABI
+      const contract1 = new ethers.Contract(tokenAddress, Token.abi, signer)
+      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer)
       const contract3 = new ethers.Contract(stakingAddress, Staking.abi, signer)
+      // read states
       const account = await signer.getAddress()
+      const appro = await contract2.isApprovedForAll(account, stakingAddress)
+      const totalstakedByUser = await contract3.getStakingInfo(account)
+      const stakedBal = await contract3.stakedBalance(account)
       const totalstaked = await contract3.totalStaked()
       const selectedNFT = await contract3.selectedNFT()
       const limitId = await contract3.limitId()
       const RewardBox = await contract3.RewardBox()
       const totalReward = await contract3.totalTokenReward()
+      const stakingBal = await contract3.stakedBalance(account)
+      // balance
+      const balance = await contract1.balanceOf(account)
+      // APY
+      const totalRewardPerYear = 0.001 * 5760 * 365
+      const stakedPercentage = (stakedBal * 100) / totalstaked
+      const stakedRewardPerYear = (totalRewardPerYear * stakedPercentage) / 100
+      const apy = (stakedRewardPerYear * 100) / stakedBal
+      // calculate reward
       var reward = 0
       for (var i = 0; i < totalstakedByUser.length; i++) {
         try {
-          const indexreward = await contract3.calculateReward(
-            account,
-            totalstakedByUser[i].index
-          )
+          const indexreward = await contract3.calculateReward(account,totalstakedByUser[i].index)
           reward += parseFloat(ethers.utils.formatEther(indexreward))
-          console.log(totalstakedByUser.length, reward)
+          console.log(parseFloat(ethers.utils.formatEther(indexreward)),reward)
         } catch (error) {
           console.log(error)
         }
       }
-      setReward(reward.toFixed(2))
-      setselectedNFT(selectedNFT.toString())
-      setlimitId(limitId.toString())
-      setRewardBox(parseFloat(ethers.utils.formatEther(RewardBox)).toFixed(2))
-      setTotalReward(
-        parseFloat(ethers.utils.formatEther(totalReward)).toFixed(2)
-      )
-    } catch (e) {
-      console.log(e.message)
-    }
-  }
-  async function accountInfo() {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      const contract1 = new ethers.Contract(tokenAddress, Token.abi, signer)
-      const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer)
-      const contract3 = new ethers.Contract(stakingAddress, Staking.abi, signer)
-      const account = await signer.getAddress()
-      const value = await contract1.allowance(account, nftaddress)
-      const appro = await contract2.isApprovedForAll(account, stakingAddress)
-      const totalstakedByUser = await contract3.getStakingInfo(account)
-      const stakedBal = await contract3.stakedBalance(account)
-      const totalstaked = await contract3.totalStaked()
-      setApprovedStake(appro)
-
+      // staking balance
       const stakingBalance = await Promise.all(
         totalstakedByUser.map(async (i, key) => {
           let bal = {
@@ -259,28 +213,12 @@ const Stake = () => {
           return bal
         })
       )
-      setTotalstakedByUser(stakingBalance)
+      // list of index staking
       let selectstakingId = stakingBalance.map((e) => ({
         value: e.index,
         label: e.index,
       }))
-      setlistId(selectstakingId)
-      const amount = value.toString()
-      if (amount === '0') {
-        setAllowance(false)
-      } else {
-        setAllowance(true)
-      }
-      setAccount(account)
-      // balance
-      const balance = await contract1.balanceOf(account)
-      setBalance(parseFloat(ethers.utils.formatEther(balance)).toFixed(1))
-      // APY
-      const totalRewardPerYear = 0.001 * 5760 * 365
-      const stakedPercentage = (stakedBal * 100) / totalstaked
-      const stakedRewardPerYear = (totalRewardPerYear * stakedPercentage) / 100
-      const apy = (stakedRewardPerYear * 100) / stakedBal
-      setAPY(apy ? apy.toFixed(2) : '0')
+      // NFT balance 
       if (account) {
         const ownerAddress = [
           account,
@@ -338,7 +276,6 @@ const Stake = () => {
           ownerAddress,
           ownerIds
         )
-        setBalanceArray(balanceArray)
         const itemBalance = await Promise.all(
           balanceArray.map(async (i, key) => {
             if (i.toString() !== '0') {
@@ -354,57 +291,31 @@ const Stake = () => {
         )
         var filtered = itemBalance.filter((x) => x !== undefined)
         setNftBanalce(filtered)
-        const stakingBal = await contract3.stakedBalance(account)
+        
         setStakingBal(stakingBal.toString())
       } else {
         console.log('You need to mint your first element')
       }
+      //set data
+      setAccount(account)
+      setReward(reward.toFixed(2))
+      setselectedNFT(selectedNFT.toString())
+      setlimitId(limitId.toString())
+      setRewardBox(parseFloat(ethers.utils.formatEther(RewardBox)).toFixed(2))
+      setTotalReward(parseFloat(ethers.utils.formatEther(totalReward)).toFixed(2))
+      setApprovedStake(appro)
+      setTotalstakedByUser(stakingBalance)
+      setlistId(selectstakingId)
+      setBalance(parseFloat(ethers.utils.formatEther(balance)).toFixed(1))
+      setAPY(apy ? apy.toFixed(2) : '0')
+      
     } catch (e) {
       console.log(e.message)
     }
     setLoading(false)
-    
-  }
-
-  async function setfundAddress() {
-    if (account) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
-      const transaction = await contract2.setfundAddress(
-        '0x2e72Bd602522F937e350d872D572451f877BC8ec'
-      )
-      await transaction.wait()
-    }
-  }
-  async function setSelectedNFT() {
-    if (account) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
-      const transaction = await contract2.setselectedNFT('23')
-      await transaction.wait()
-    }
-  }
-  async function setrewardBox() {
-    if (account) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
-      const transaction = await contract2.setRewardBox('10000000000000000000')
-      await transaction.wait()
-    }
-  }
-  async function setLimitId() {
-    if (account) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
-      const transaction = await contract2.setLimitId('2')
-      await transaction.wait()
-    }
   }
   async function Stake() {
+    setLoading2(true)
     console.log(elementA.value, NFTamout)
     if (account && elementA.value ) {
       try {
@@ -420,17 +331,16 @@ const Stake = () => {
         notification('Grate! you are staking ', NFTamout, 'NFT id:', elementA.value)
       } catch (error) {
         console.log(error)
-        notification(error.message.toString())
+        notification('input Error or NFT not Stakable!')
       }
       
     } else {
       notification('input required!')
     }
     accountInfo()
-    readContractstates()
-    
+    setLoading2(false)
   }
-  async function Claim() {
+  async function Swap() {
     if (account) {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -442,7 +352,28 @@ const Stake = () => {
         )
         const transaction = await contract2.claimBox(selectedNFT)
         await transaction.wait()
-        notification('Swap NFT id:', selectedNFT, ' to ', RewardBox, ' ALCHI')
+        notification('Swap NFT:', selectedNFT, 'for ', RewardBox)
+        accountInfo()
+      } catch (error) {
+        console.log(error)
+        notification(error.message.toString())
+      }
+    }
+  }
+  async function Claim() {
+    if (account) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract2 = new ethers.Contract(
+          stakingAddress,
+          Staking.abi,
+          signer
+        )
+        const transaction = await contract2.claimRewards()
+        await transaction.wait()
+        notification('Reward claimed')
+        accountInfo()
       } catch (error) {
         console.log(error)
         notification(error.message.toString())
@@ -471,40 +402,74 @@ const Stake = () => {
       notification('input required!')
     }
     accountInfo()
-    readContractstates()
   }
   const onChangeHandler = (event) => {
     setNFTamount(event.target.value)
   }
+  async function setfundAddress() {
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
+      const transaction = await contract2.setfundAddress(
+        '0x2e72Bd602522F937e350d872D572451f877BC8ec'
+      )
+      await transaction.wait()
+    }
+  }
+  async function setSelectedNFT() {
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
+      const transaction = await contract2.setselectedNFT('23')
+      await transaction.wait()
+    }
+  }
+  async function setrewardBox() {
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
+      const transaction = await contract2.setRewardBox('20000000000000000000')
+      await transaction.wait()
+    }
+  }
+  async function setLimitId() {
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const contract2 = new ethers.Contract(stakingAddress, Staking.abi, signer)
+      const transaction = await contract2.setLimitId('2')
+      await transaction.wait()
+    }
+  }
+
   
   return (
     <div className="bg-gray-700  ">
       <Header />
-      <div className="text-neutral mb-10 flex items-center text-white">
-        <div className="ml-0.5 flex flex-col gap-1">
-          <div className="bg-light h-2 w-1 rounded-md"></div>
-          <div className="bg-light h-2 w-1 rounded-md"></div>
-          <div className="bg-light h-2 w-1 rounded-md"></div>
-        </div>
+      <div className="text-neutral m-2 flex items-center text-white">
+        
         <div>
           {account === '0xD687ca2fa168e7BAbed632803F6E4b06ef98B764' ? (
             <div>
               <button
-                className={style.button0}
+                className={style.button}
                 onClick={() => setfundAddress()}
               >
                 setfundAdrress
               </button>
               <button
-                className={style.button0}
+                className={style.button}
                 onClick={() => setSelectedNFT()}
               >
                 setselectedNFT
               </button>
-              <button className={style.button0} onClick={() => setrewardBox()}>
+              <button className={style.button} onClick={() => setrewardBox()}>
                 setRewardBox
               </button>
-              <button className={style.button0} onClick={() => setLimitId()}>
+              <button className={style.button} onClick={() => setLimitId()}>
                 setLimitId
               </button>
             </div>
@@ -513,7 +478,7 @@ const Stake = () => {
           )}
         </div>
         
-        <div className="flex p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-red-800 dark:text-blue-400" role="alert">
+        <div className="flex p-4 mb-4 text-sm rounded-lg bg-blue-50 dark:bg-gray-400 dark:text-gray-800" role="alert">
             <CgAttachment/>
             <div>
               <span className="font-medium">Important!</span> Staking will be limited for 4  NFT Elements: Computer, Internet, Blockchain and Bitcoin
@@ -521,17 +486,21 @@ const Stake = () => {
           </div>
       </div>
         
-      <div className="flex flex-col gap-6 text-white lg:flex-row lg:items-stretch">
-        <div className="flex flex-1 flex-col items-center gap-6">
-          <Image className="my-8" src={magician} width="180" alt="" />
-          <div className="flex w-60 ">
+      <div className="flex flex-col p-2 gap-6 text-white lg:flex-row lg:items-stretch">
+        <div className=" flex flex-1 flex-col items-center gap-6">
+          
+          <div className="bg-gray-800 h-full p-2 border-light bg-light block w-full rounded-2xl border-[1px] py-2 font-light leading-5 outline-none focus:outline-none focus-visible:outline-none">
+            NFT Balance:
+          
+          <div className="m-auto justify-between flex flex-wrap w-60 ">
             {NftBanalce?.map((item, index) => (
               <NftElement key={index} item={item} />
             ))}
           </div>
+          </div>
         </div>
 
-        <div className="flex flex-1 flex-col items-center gap-6">
+        <div className="bg-gray-800 p-1 rounded-2xl flex flex-1 flex-col items-center gap-6">
           <div className="w-full max-w-[560px]">
             <div className="text-neutral" data-rttabs="true">
               <ul
@@ -558,7 +527,7 @@ const Stake = () => {
                         options={elementsOptions}
                       />
                     </div>
-                    <div class=" mb-6">
+                    <div class="flex flex-wrap m-auto justify-center mb-6">
                       <input
                         type="number"
                         value={NFTamout}
@@ -567,10 +536,19 @@ const Stake = () => {
                       ></input>
                       
                     </div>
-                    {approvStake ? (
+                    {approvStake ? (loading2 ? (
+                      <div className=" flex items-center justify-center">
+                        <div className="animate-pulse rounded-full bg-blue-200 px-3 py-1 text-center text-xs font-medium leading-none text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                          loading...
+                        </div>
+                      </div>
+                    ): (
                       <button className={style.button} onClick={() => Stake()}>
                         Stake
                       </button>
+                      
+                    )
+                      
                     ) : (
                       <button
                         className={style.button}
@@ -611,8 +589,8 @@ const Stake = () => {
                       </button>
                     </div>
                     <button
-                      className={style.button}
-                      onClick={() => setfundAddress()}
+                      className={style.mintbutton}
+                      onClick={() => Claim()}
                     >
                       Claim
                     </button>
@@ -691,7 +669,7 @@ const Stake = () => {
                 <div className="text-left"> {RewardBox} ALCHI</div>
                 <div className="text-right">
                   <div className="flex items-center gap-2">
-                    <button className={style.button} onClick={() => Claim()}>
+                    <button className={style.mintbutton} onClick={() => Swap()}>
                       Swap
                     </button>
                   </div>
@@ -701,41 +679,43 @@ const Stake = () => {
           </div>
         </div>
         <div className="flex flex-1 flex-col items-center gap-6">
-          {totalstakedByUser ? (
-            <div className="flex p-2">
-              {totalstakedByUser.map((i, key) => (
-                <div className='bg-sky-800 border rounded-lg m-1 shadow-sm text-gray-200' key={key}>
-                  <span className="flex items-center justify-center p-2 text-xs">
-                    {' '}
-                    Index: {i.index}{' '}
-                  </span>
+        <div className="bg-gray-800 h-full p-2 border-light bg-light block w-full rounded-2xl border-[1px] py-2 font-light leading-5 outline-none focus:outline-none focus-visible:outline-none">
+            Staked NFT:
+            {totalstakedByUser ? (
+              <div className="m-auto justify-between flex flex-wrap w-60">
+                {totalstakedByUser.map((i, key) => (
+                  <div className='bg-gray-500 border rounded-lg m-1 shadow-sm text-gray-200' key={key}>
+                    <span className="flex items-center justify-center p-2 text-xs">
+                      {' '}
+                      Index: {i.index}{' '}
+                    </span>
 
-                  <span className="flex items-center justify-center p-2 text-xs "> NFT Id: {i.id} </span>
-                  {i.id <= 20 ? (
-                    <span className="flex items-center justify-center p-2 text-xs">reward factor: 25 %</span>
-                  ): (i.id == 21 ? (
-                    <span className="flex items-center justify-center p-2 text-xs">reward factor: 50 %</span>
-                  ): (i.id == 22 ? (
-                    <span className="flex items-center justify-center p-2 text-xs">reward factor: 75 %</span>
-                  ): (
-                    <span className="flex items-center justify-center p-2 text-xs">reward factor: 75 %</span>
-                  )
-                    )) }
-                  <span className="flex items-center justify-center p-2 text-xs">
-                    {' '}
-                    Amount: {i.amount}{' '}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className=" flex items-center justify-center">
-              <div className="animate-pulse rounded-full bg-blue-200 px-3 py-1 text-center text-xs font-medium leading-none text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                loading...
+                    <span className="flex items-center justify-center p-2 text-xs "> NFT Id: {i.id} </span>
+                    {i.id <= 20 ? (
+                      <span className="flex items-center justify-center p-2 text-xs">reward factor: 25 %</span>
+                    ): (i.id == 21 ? (
+                      <span className="flex items-center justify-center p-2 text-xs">reward factor: 50 %</span>
+                    ): (i.id == 22 ? (
+                      <span className="flex items-center justify-center p-2 text-xs">reward factor: 75 %</span>
+                    ): (
+                      <span className="flex items-center justify-center p-2 text-xs">reward factor: 75 %</span>
+                    )
+                      )) }
+                    <span className="flex items-center justify-center p-2 text-xs">
+                      {' '}
+                      Amount: {i.amount}{' '}
+                    </span>
+                  </div>
+                ))}
               </div>
-            </div>
-          )}
-          <Image className="my-8 py-10" src={reward1} width="100" alt="" />
+            ) : (
+              <div className=" flex items-center justify-center">
+                <div className="animate-pulse rounded-full bg-blue-200 px-3 py-1 text-center text-xs font-medium leading-none text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                  loading...
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

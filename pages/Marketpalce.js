@@ -51,7 +51,7 @@ const title = [
   'Metal',
   'Glass',
   'Swamp',
-  'Eyeglasse',
+  'Eyeglasses',
   'Electricity',
   'Life',
   'Human',
@@ -61,10 +61,6 @@ const title = [
   'Blockchain',
   'Bitcoin',
 ]
-
-const style = {
-  title: `text-5xl font-bold mb-4`,
-}
 
 const Marketpalce = () => {
   const router = useRouter()
@@ -89,26 +85,14 @@ const Marketpalce = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       console.log(network.chainId)
-      if (network.chainId == 1088){
-        setnftmarketaddress(constants.Mmarket)
-        setnftaddress(constants.Mgame);
-        setTokenName('Metis')
-      } else if (network.chainId == 7700){
+      if (network.chainId == 7700){
         setnftmarketaddress(constants.Cmarket)
         setnftaddress(constants.Cgame);
         setTokenName('Canto')
-      } else if (network.chainId == 250){
-        setnftmarketaddress(constants.Fmarket)
-        setnftaddress(constants.Fgame);
-        setTokenName('FTM')
-      } else if (network.chainId == 10){
-        setnftmarketaddress(constants.Omarket)
-        setnftaddress(constants.Ogame);
-        setTokenName('ETH')
-      } else if (network.chainId == 420){
-        setnftmarketaddress(constants.Otestmarket)
-        setnftaddress(constants.Otestgame);
-        setTokenName('ETH')
+      } else if (network.chainId == 7701){
+        setnftaddress(constants.Ctestgame);
+        setnftmarketaddress(constants.Ctestmarket)
+        setTokenName('Canto')
       }
     } catch(e){
         console.log(e)
@@ -155,12 +139,14 @@ const Marketpalce = () => {
                 description: meta.data.description
               }
             return item;
+            
               } catch (error) {
                 console.log('meta error')
               }
           })
         )
         setNfts(items)
+        console.log(items)
     } catch(e){
       console.log(e)
     }
@@ -194,7 +180,6 @@ const Marketpalce = () => {
                   key={id}
                   order={id}
                   nftItem={nftItem}
-                  title={title[nftItem.tokenId]}
                   tokenName={tokenName}
                 />
               ))}

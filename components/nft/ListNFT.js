@@ -55,21 +55,12 @@ const MakeOffer = ({ selectedNft}) => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       console.log(network)
-      if (network.chainId == 1088){
-        setnftaddress(constants.Mgame);
-        setnftmarketaddress(constants.Mmarket)
-      } else if (network.chainId == 7700){
+      if (network.chainId == 7700){
         setnftaddress(constants.Cgame);
         setnftmarketaddress(constants.Cmarket)
-      } else if (network.chainId == 250){
-        setnftaddress(constants.Fgame);
-        setnftmarketaddress(constants.Fmarket)
-      } else if (network.chainId == 10){
-        setnftaddress(constants.Ogame);
-        setnftmarketaddress(constants.Omarket)
-      } else if (network.chainId == 420){
-        setnftaddress(constants.Otestgame);
-        setnftmarketaddress(constants.Otestmarket)
+      } else if (network.chainId == 7701){
+        setnftaddress(constants.Ctestgame);
+        setnftmarketaddress(constants.Ctestmarket)
       }
     } catch(e){
         console.log(e)

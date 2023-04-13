@@ -1,54 +1,50 @@
-fantom testnet
-token deployed to: 0x142e9F429e4ECF181C2Ac9b53966D947c4f6D84C
-Game deployed to: 0x51dDcB73f8F1204450c860c6e3CD41791d3b5a2E
-Market deployed to: 0x36996c8642810add6c5bb814ed7a7ca8abc26fe0
+## OpenAlchi 
 
-0x5f2E88786214Ab5E4993d14C49f38ceA031B1004
-# Little Alchemy
+ OpenALCHI is a platform for creating, trading, and staking NFTs, can unlock their potential. OpenALCHI offers unique features like the ability to use NFTs to mint new NFTs with specific combinations and earn ALCHI tokens by staking NFTs. The platform also has a unique fee structure that incentivizes NFT creators to mint their NFTs earlier. Additionally, OpenALCHI supports community rewards and staking to build a strong and engaged community within the platform. Overall, OpenALCHI offers a variety of features and benefits for NFT creators, traders, and collectors and helps users harness the full potential of NFTs.
+
+## deploy:
+### canto testnet:
+token deployed to: 0x36996c8642810Add6c5Bb814ED7a7cA8Abc26Fe0
+Game deployed to: 0x142e9F429e4ECF181C2Ac9b53966D947c4f6D84C      
+Market deployed to: 0x51dDcB73f8F1204450c860c6e3CD41791d3b5a2E    
+NFTStaking deployed to: 0x5f2E88786214Ab5E4993d14C49f38ceA031B1004
+### canto mainnet
 
 
-there are 2 contracts, the first for the little alchemy game, it's an NFT game where users search to mint new elements
-from the 4 standard elements Air, Fir, Earth, and Water.
+## Introduction
 
-there are 23 elements. the last one is the Bitcoin.
-to mint, you need to have ALCHI token to pay a fee.
+Submission to CANTO Hackathon, 
 
-the 2nd contract for the marketplace, users can put elements in the market for sale. 
+### Demo: 
 
-## Description
+search and mint new Elements
 
-### marketpalce
-list of listed element and prcie to buy. claick any element you will be derected to purchase page.
+[![Watch the video](https://img.youtube.com/vi/2o1jPHbqV0Q/maxresdefault.jpg)](https://youtu.be/2o1jPHbqV0Q)
 
-### the game
-1- approuve contract to use your ALCHI token (contact me if you want to try the game i will send to you some ALCHI token)
-2- mint the 4 standart elements
-3- try to find new element to mint.
+Stake and earn ALCHI
 
-### account
-all NFT balance: in your account, NFTs listed in the market
+
+[![Watch the video](https://img.youtube.com/vi/JvdxVPJsxhA/maxresdefault.jpg)](https://youtu.be/JvdxVPJsxhA)
+
+
+List and buy NFT Elements
+
+[![Watch the video](https://img.youtube.com/vi/2Xy05pwdwO8/maxresdefault.jpg)](https://youtu.be/2Xy05pwdwO8)
+
 
 ## Getting Started
-
-1st set Metamask in Mumbai polygon testnet (you can use https://chainlist.org/chain/80001 to add network)
-
-- use this faucet to get some Matic https://faucet.polygon.technology/
-- buy some ALCHI token so you can mint NFT and play the game. https://quickswap.exchange/#/swap?inputCurrency=0x8bC7cbA6AA0d62dcaB317F859125ce37345Fa666
-- try demo: https://open-alchi.vercel.app/
-
-to try the demo in your localhost :
+ run 
 
 =======
 - buy some ALCHI token so you can mint NFT and play the game.
-- try demo: https://open-alchi.vercel.app/
 
 to try the demo in your localhost :
 - clone this repo 
 
 ```
-git clone https://github.com/azizyano/OpenALCHI.git
+git clone https://github.com/azizyano/chapter_1_season_2_openALCHI.git
 
-cd OpenALCHI 
+cd OpenAlchi
 
 yarn
 
@@ -56,23 +52,13 @@ yarn dev
 
 ```
 
-please contact me if you find any issue or to contribute 
 
 ## Authors
+Azizyano 
 
 Twitter
 =======
-Twiiter
+Twitter
 [@arablockchain1](https://twitter.com/arablockchain1)
 
-## Version History
 
-* 0.1
-    * Initial Release
-
-
-## Acknowledgments
-
-Inspiration and  code snippets 
-* [CleverProgrammers](https://github.com/CleverProgrammers/opensea-blockchain-youtube)
-* [littlealchemy](https://littlealchemy.com/)

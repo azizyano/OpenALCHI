@@ -115,16 +115,10 @@ const Nft = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       console.log(network)
-      if (network.chainId == 1088){
-        setnftmarketaddress(constants.Mmarket)
-      } else if (network.chainId == 7700){
+      if (network.chainId == 7700){
         setnftmarketaddress(constants.Cmarket)
-      } else if (network.chainId == 250){
-        setnftmarketaddress(constants.Fmarket)
-      } else if (network.chainId == 10){
-        setnftmarketaddress(constants.Omarket)
-      } else if (network.chainId == 420){
-        setnftmarketaddress(constants.Otestmarket)
+      } else if (network.chainId == 7701){
+        setnftmarketaddress(constants.Ctestmarket)
       }
     } catch(e){
         console.log(e)

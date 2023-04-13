@@ -5,6 +5,7 @@ import constants from './../components/constants'
 import NFT from './artifacts/LittleAlchemy.json'
 import Token from './artifacts/Token.json'
 import Header from './../components/Header'
+import SalePage from './../components/Salepage'
 import {CgChevronDoubleRightO, CgChevronDoubleLeftO,CgShoppingBag, CgListTree} from "react-icons/cg"
 import NftElement from './../components/NftElement'
 import toast, { Toaster } from 'react-hot-toast'
@@ -50,7 +51,7 @@ const title = [
   'Metal',
   'Glass',
   'Swamp',
-  'Eyeglasse',
+  'Eyeglasses',
   'Electricity',
   'Life',
   'Human',
@@ -72,12 +73,12 @@ const options = [
   { value: 'mintLava', label: 'FireEarth' },
   { value: 'mintMetal', label: 'FireRock' },
   { value: 'mintGlass', label: 'SandFire' },
-  { value: 'mintSwamp', label: 'PantMud' },
-  { value: 'mintEyeglasse', label: 'GlassGlass' },
+  { value: 'mintSwamp', label: 'PlantMud' },
+  { value: 'mintEyeglasses', label: 'GlassGlass' },
   { value: 'mintElectricity', label: 'EnergyMetal' },
   { value: 'mintLife', label: 'EnergyMud' },
   { value: 'mintHuman', label: 'LifeEarth' },
-  { value: 'mintNerd', label: 'EyeglasseHuman' },
+  { value: 'mintNerd', label: 'EyeglassesHuman' },
   { value: 'mintComputer', label: 'ElectricityNerd' },
   { value: 'mintInternet', label: 'ComputerComputer' },
   { value: 'mintBlockchain', label: 'ComputerInternet' },
@@ -99,7 +100,7 @@ const elementsOptions = [
   { value: 12, label: 'Metal' },
   { value: 13, label: 'Glass' },
   { value: 14, label: 'Swamp' },
-  { value: 15, label: 'Eyeglasse' },
+  { value: 15, label: 'Eyeglasses' },
   { value: 16, label: 'Electricity' },
   { value: 17, label: 'Life' },
   { value: 18, label: 'Human' },
@@ -115,9 +116,9 @@ const style = {
   titleContainer: `text-4xl font-bold text-white mb-4`,
   info: `text-lg text-white mb-8`,
   priceValue: `flex justify-center  font-bold mt-2`,
-  button0: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 `,
-  button: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 `,
-  mintbutton: `text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
+  button0: `text-white bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 `,
+  button: `text-white bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 `,
+  mintbutton: `text-white bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
 }
 
 const Game = () => {
@@ -160,26 +161,16 @@ const Game = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const network = await provider.getNetwork()
       setnetwork(network)
-      if (network.chainId == 1088) {
-        setnftaddress(constants.Mgame);
-        setTokenAddress(constants.Mtoken)
-      } else if (network.chainId == 7700) {
+      if (network.chainId == 7700) {
         setnftaddress(constants.Cgame);
         setTokenAddress(constants.Ctoken)
-      } else if (network.chainId == 250) {
-        setnftaddress(constants.Fgame);
-        setTokenAddress(constants.Ftoken)
-      } else if (network.chainId == 10) {
-        setnftaddress(constants.Ogame);
-        setTokenAddress(constants.Otoken)
-      } else if (network.chainId == 420) {
-        setnftaddress(constants.Otestgame);
-        setTokenAddress(constants.Otesttoken)
+      } else if (network.chainId == 7701){
+        setnftaddress(constants.Ctestgame);
+        setTokenAddress(constants.Ctesttoken)
       }
     } catch (e) {
       console.log(e)
     }
-    console.log("setaddress")
   }
   async function accountInfo() {
     try {
@@ -188,10 +179,9 @@ const Game = () => {
       const contract1 = new ethers.Contract(tokenAddress, Token.abi, signer)
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer)
       const account = await signer.getAddress()
-      console.log(account)
       const value = await contract1.allowance(account, nftaddress)
-      const amount = value.toString()
-      if (amount === '0') {
+      const amount = (value/10**18).toString()
+      if (amount <= 40) {
         setAllowance(false)
       } else {
         setAllowance(true)
@@ -316,12 +306,14 @@ const Game = () => {
       
     }
   }
+  //only owner
   async function setfundAddress() {
     if (account) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner()
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
-      const transaction = await contract2.setfundAddress("0xCcAC92e41e23A2D97a3884f7f37F8A35830B6a58")
+      // set fund address to staking contract
+      const transaction = await contract2.setfundAddress("0x5f2E88786214Ab5E4993d14C49f38ceA031B1004")
       await transaction.wait()
     }
   }
@@ -333,6 +325,7 @@ const Game = () => {
       const signer = provider.getSigner();
       const contract2 = new ethers.Contract(nftaddress, NFT.abi, signer);
       const mintelement = element.toString();
+      console.log(mintelement)
       try {
         const transaction = await contract2[mintelement]();
         await transaction.wait()
@@ -340,12 +333,7 @@ const Game = () => {
         confirmClaim('transaction successful!')
       } catch (error) {
         console.log(error)
-        if (error.data) {
-          confirmClaim(error.data.message.toString())
-          console.log(error.data.message.toString())
-        } else {
-          confirmClaim("you can't mint this element")
-        }
+        confirmClaim("you can't mint this element")
       }
       setLoading2(false)
     }
@@ -371,9 +359,9 @@ const Game = () => {
   }
 
   return (
-    <div className="bg-gray-700 h-screen ">
+    <div className="bg-gray-700 ">
       <Header />
-      <aside className="fixed left-0 z-40 w-68 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar" >
+        <aside className="fixed left-0 z-40 w-68  transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar" >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2">
             <li>
@@ -398,10 +386,10 @@ const Game = () => {
                         >
                         <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">Netswap </span>
                         
-                      </a> : (network?.chainId == 250 ? (
-                        <a href="https://spooky.fi/#/swap?inputCurrency=FTM&outputCurrency=0x36996c8642810add6c5bb814ed7a7ca8abc26fe0"
+                      </a> : (network?.chainId == 7701 ? (
+                        <a href="#"
                           className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                          <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">SpookySwap</span>
+                          <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">CantoSwap</span>
                         </a>
                       ) : (network?.chainId == 7700 ? (
                       <a href="https://www.cantoswap.fi/#/swap?outputCurrency=0x5e8689741111442Eeb767507Fbf70BB5e8c3Bb6B">
@@ -438,7 +426,8 @@ const Game = () => {
 
         </div>
       </aside>
-      <div className="p-2 sm:ml-64">
+      
+      <div className="p-2 mt-20  sm:ml-64">
       {account === '0xD687ca2fa168e7BAbed632803F6E4b06ef98B764' ? (
                 <div>
                     <button className={style.button0} onClick={() => setfundAddress()}>setfundAdrress</button>
@@ -449,7 +438,7 @@ const Game = () => {
                 <div></div>
             )}
         <div className=' p-2 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700' >
-        
+              <SalePage />
               <div className="flex flex-wrap items-center justify-center p-2 mb-2 rounded bg-gray-50 dark:bg-gray-800">
               <p className="mb-2 p-4 font-light text-gray-400 dark:text-gray-300">To start you need first to have standard elements "Air", "Fire", "Earth" and "Water", total fee to mint is {4 * mintFee} ALCHI.</p>
                 {loading ? (
@@ -462,7 +451,7 @@ const Game = () => {
                   <button className={style.button0} onClick={() => mintStandard()}>Mint Standard Elements</button>
                   ):
                     (
-                      <button className={style.button} onClick={() => Approuve()} >Approve 400 ALCHI to play</button>
+                      <button className={style.button} onClick={() => Approuve()} >Approve ALCHI token</button>
                     )
                 )}
               </div>

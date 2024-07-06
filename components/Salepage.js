@@ -47,9 +47,9 @@ function SalePage() {
     <></>
   ):
   (
-    <div className=" flex items-center justify-between">
-      <div>
-        <p className='mb-2 p-4 font-light text-gray-400 dark:text-gray-300' >
+    <div className=" flex items-center ">
+      <div className=''>
+        <p className='mb-2 p-4 max-w-md font-light text-gray-400 dark:text-gray-300' >
       Hello everyone, we are excited to announce that our new token is now available for purchase!
       Our token is being sold for a fixed price of 10000 ALCHI for 1 ETH during a limited period of time,
       from 15th April to 5th May. Once the sale is finished,
@@ -58,9 +58,9 @@ function SalePage() {
       Each ETH will be exchanged for [insert token amount] of our tokens at the fixed price.
       </p>
       <div className="text-center">
-        <h1 className="text-6xl font-bold mb-4">{days} days</h1>
-        <h2 className="text-4xl font-medium mb-4">{hours} hours, {minutes} minutes, {seconds} seconds</h2>
-        <p className="text-gray-500">until the countdown ends</p>
+        <h1 className="text-4xl font-bold mb-4">{days} days</h1>
+        <h2 className="text-2xl font-medium mb-4">{hours} hours, {minutes} minutes, {seconds} seconds</h2>
+        
       </div>
       </div>
       
@@ -86,7 +86,7 @@ function SalePage() {
           <label className="block font-bold mb-2" htmlFor="tokenAmount">
              {tokenAmount? (<> {tokenAmount} ALCHI </>) : (<> {tokenAmount} ALCHI </>) } 
           </label>
-          <button className={style.button} onClick={() => Buy()} >Buy</button>
+          <button className={style.button}  >Buy</button>
         </div>
       </div>
     </div>

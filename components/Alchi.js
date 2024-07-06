@@ -9,11 +9,14 @@ import { useWeb3, useSwitchNetwork } from '@3rdweb/hooks'
 
 
 const Alchi = () => {
-  const { address } = useWeb3()
+  const {address, connectWallet, getNetworkMetadata } = useWeb3()
+  // const supportChainIds = [10, 1088, 7700, 250, 420];
+  const supportChainIds = [ 7700, 7701];
+  const { switchNetwork } = useSwitchNetwork();
 
   return <div className="mt-20 bg-white dark:bg-gray-900">
           
-    <div className="flex ">
+    <div className="flex flex-wrap">
     
         <div className=" p-4 ">
         <div className=" max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert ">
@@ -37,9 +40,14 @@ const Alchi = () => {
             ) : (
               <div >
 
-                <div className='mx-auto p-2 '>
-                <span className="inline-flex items-center justify-center p-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">switch to your favorite network</span>
-                  
+                <div className='inline-flex items-center justify-center p-2 ml-3 text-sm font-medium  bg-gray-200 rounded-full dark:bg-gray-700  '>
+                <p className="p-2 ml-3 text-red-400 font-medium text-sm" >Your wallet's current network is unsupported.</p>  
+                <span className=""> switch to:</span>
+                {supportChainIds.map((cId) => (
+                      <button key={cId} className="inline-flex items-center justify-center p-2 ml-3 text-sm font-medium text-green-400 hover:text-gray-600 bg-gray-200 rounded-full dark:bg-gray-700 hover:dark:bg-blue-400 dark:text-green-200" onClick={() => switchNetwork(cId)}>
+                        {getNetworkMetadata(cId)?.chainName ? getNetworkMetadata(cId)?.chainName : (cId == 10 ? '  Optimism  ' : (cId == 7700 ? '  Canto  ' : (cId == 250 ? '  Fantom  ' : (cId == 7701 ? '  canto test  ' : 'Metis' ) ) )) }
+                      </button>
+                    ))}
                 
                 </div>
 
@@ -84,10 +92,9 @@ const Alchi = () => {
         </div>
         
       <Image
-          className="m-auto py-2 rounded-t-lg  "
+          className=" m-auto py-2 rounded-t-lg  "
           src={elric}
           width="400"
-          alt=""
         />
     </div>
     
